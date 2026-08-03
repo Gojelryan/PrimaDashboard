@@ -1,8 +1,59 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import { ClipboardCheck, WalletCards } from 'lucide-vue-next'
 
+import DetailAction from '../../../components/cards/DetailAction.vue'
+import DetailTableModal from '../../../components/modals/DetailTableModal.vue'
 import TechnicianPanelCard from '../../../components/cards/TechnicianPanelCard.vue'
-import { humanResourceDashboard } from '../../../mock/dashboard/human-resource-dashboard'
+import {
+  employeeLeaveRequests,
+  humanResourceDashboard,
+} from '../../../mock/dashboard/human-resource-dashboard'
+
+const isLeaveRequestDetailOpen = ref(false)
+
+const leaveRequestColumns = [
+  { key: 'id', label: 'ID Pengajuan' },
+  { key: 'employee', label: 'Nama Karyawan' },
+  { key: 'division', label: 'Divisi' },
+  { key: 'leaveType', label: 'Jenis Cuti' },
+  { key: 'submittedAt', label: 'Diajukan' },
+  { key: 'period', label: 'Periode Cuti' },
+  { key: 'duration', label: 'Durasi', align: 'right' as const },
+  { key: 'reason', label: 'Alasan' },
+  { key: 'supervisor', label: 'Atasan Langsung' },
+  { key: 'supervisorStatus', label: 'Persetujuan Atasan', type: 'badge' as const },
+  { key: 'hrStatus', label: 'Persetujuan HR', type: 'badge' as const },
+  { key: 'status', label: 'Status Proses', type: 'badge' as const },
+]
+
+const leaveRequestRows = employeeLeaveRequests.map(request => ({
+  id: request.id,
+  employee: `${request.employee} (${request.employeeId})`,
+  division: request.division,
+  leaveType: request.leaveType,
+  submittedAt: request.submittedAt,
+  period: request.period,
+  duration: `${request.totalDays} hari`,
+  reason: request.reason,
+  supervisor: request.directSupervisor.name,
+  supervisorStatus: request.directSupervisor.status,
+  hrStatus: request.hrApproval.status,
+  status: request.status,
+}))
+
+const waitingSupervisorTotal = computed(() =>
+  employeeLeaveRequests.filter(
+    request => request.directSupervisor.status === 'Menunggu'
+  ).length
+)
+
+const waitingHrTotal = computed(() =>
+  employeeLeaveRequests.filter(
+    request => request.directSupervisor.status === 'Disetujui' &&
+      request.hrApproval.status === 'Menunggu'
+  ).length
+)
 </script>
 
 <template>
@@ -20,7 +71,15 @@ import { humanResourceDashboard } from '../../../mock/dashboard/human-resource-d
           class="flex flex-col gap-1 sm:flex-row sm:justify-between sm:gap-4"
         >
           <span class="text-[#6F6B7D]">{{ item.label }}</span>
-          <span class="font-medium text-[#5D596C]">{{ item.value }}</span>
+          <div class="flex items-center justify-between gap-2 sm:justify-end">
+            <span class="font-medium text-[#5D596C]">{{ item.value }}</span>
+            <DetailAction
+              v-if="item.detailType === 'leave-request'"
+              inline
+              label="Lihat pengajuan"
+              @click="isLeaveRequestDetailOpen = true"
+            />
+          </div>
         </div>
       </div>
     </TechnicianPanelCard>
@@ -57,5 +116,20 @@ import { humanResourceDashboard } from '../../../mock/dashboard/human-resource-d
         </div>
       </div>
     </TechnicianPanelCard>
+
+    <DetailTableModal
+      :open="isLeaveRequestDetailOpen"
+      title="Pengajuan Cuti Menunggu"
+      description="Daftar pemohon dan tahapan persetujuan atasan langsung serta Human Resource."
+      :columns="leaveRequestColumns"
+      :rows="leaveRequestRows"
+      :summary="[
+        { label: 'Total Pengajuan', value: String(employeeLeaveRequests.length) },
+        { label: 'Menunggu Atasan', value: String(waitingSupervisorTotal), tone: 'warning' },
+        { label: 'Menunggu HR', value: String(waitingHrTotal), tone: 'error' }
+      ]"
+      search-placeholder="Cari pemohon, divisi, jenis cuti, atau status..."
+      @close="isLeaveRequestDetailOpen = false"
+    />
   </section>
 </template>

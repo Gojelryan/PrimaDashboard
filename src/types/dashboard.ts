@@ -251,6 +251,15 @@ export interface HumanResourceDashboardResponse extends DashboardResponseMeta {
     employees: {
       name: string
       hours: number
+      details: {
+        id: string
+        date: string
+        startTime: string
+        endTime: string
+        hours: number
+        description: string
+        status: 'approved' | 'pending' | 'rejected'
+      }[]
     }[]
     divisions: {
       division: string
@@ -261,6 +270,21 @@ export interface HumanResourceDashboardResponse extends DashboardResponseMeta {
     label: string
     priority: 'high' | 'medium' | 'low'
   }[]
+  leaveRequests: {
+    id: string
+    employeeId: string
+    employeeName: string
+    division: string
+    leaveType: string
+    submittedAt: string
+    startDate: string
+    endDate: string
+    totalDays: number
+    reason: string
+    directSupervisor: LeaveApprovalStep
+    hrApproval: LeaveApprovalStep
+    status: 'waiting-supervisor' | 'waiting-hr' | 'approved' | 'rejected'
+  }[]
   payroll: {
     total: number
     growthPercent: number
@@ -268,6 +292,14 @@ export interface HumanResourceDashboardResponse extends DashboardResponseMeta {
     overtime: number
     allowance: number
   }
+}
+
+export interface LeaveApprovalStep {
+  approverId?: string
+  approverName: string
+  status: 'pending' | 'approved' | 'rejected'
+  decidedAt?: string
+  note?: string
 }
 
 export interface FinanceDashboardResponse extends DashboardResponseMeta {

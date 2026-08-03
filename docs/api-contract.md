@@ -121,8 +121,17 @@ sumber distribusi mitra yang sama.
 - `employees.divisions`
 - `overtime.employees`
 - `overtime.divisions`
+- `leaveRequests`
 - `priorities`
 - `payroll`
+
+Setiap item `overtime.employees[]` memuat `name`, total `hours`, dan `details[]`.
+Detail lembur memuat `id`, `date`, `startTime`, `endTime`, `hours`,
+`description`, serta `status` (`approved`, `pending`, atau `rejected`).
+
+Setiap `leaveRequests[]` memuat identitas pemohon, jenis dan periode cuti,
+jumlah hari, alasan, `directSupervisor`, `hrApproval`, serta status proses.
+Persetujuan HR tetap `pending` sampai atasan langsung menyetujui pengajuan.
 
 ## Operasional
 

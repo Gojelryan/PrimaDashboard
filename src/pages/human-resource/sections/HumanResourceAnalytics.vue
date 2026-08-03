@@ -1,9 +1,37 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import { Clock3, Users } from 'lucide-vue-next'
 
+import DetailAction from '../../../components/cards/DetailAction.vue'
+import DetailTableModal from '../../../components/modals/DetailTableModal.vue'
 import TechnicianPanelCard from '../../../components/cards/TechnicianPanelCard.vue'
 import HumanResourceOvertimeChart from '../../../components/charts/HumanResourceOvertimeChart.vue'
-import { humanResourceDashboard } from '../../../mock/dashboard/human-resource-dashboard'
+import {
+  employeeOvertimeDetails,
+  humanResourceDashboard,
+} from '../../../mock/dashboard/human-resource-dashboard'
+
+const isOvertimeDetailOpen = ref(false)
+
+const overtimeColumns = [
+  { key: 'id', label: 'ID Lembur' },
+  { key: 'employee', label: 'Nama Karyawan' },
+  { key: 'date', label: 'Tanggal' },
+  { key: 'startTime', label: 'Mulai', align: 'center' as const },
+  { key: 'endTime', label: 'Selesai', align: 'center' as const },
+  { key: 'duration', label: 'Durasi', align: 'right' as const },
+  { key: 'description', label: 'Keterangan Pekerjaan' },
+  { key: 'status', label: 'Status', type: 'badge' as const },
+]
+
+const overtimeRows = employeeOvertimeDetails.map(item => ({
+  ...item,
+  duration: `${item.hours} jam`,
+}))
+
+const totalOvertimeHours = computed(() =>
+  employeeOvertimeDetails.reduce((total, item) => total + item.hours, 0)
+)
 </script>
 
 <template>
@@ -30,6 +58,11 @@ import { humanResourceDashboard } from '../../../mock/dashboard/human-resource-d
             </template>
           </div>
         </div>
+
+        <DetailAction
+          label="Lihat detail lembur"
+          @click="isOvertimeDetailOpen = true"
+        />
       </TechnicianPanelCard>
     </div>
 
@@ -46,5 +79,20 @@ import { humanResourceDashboard } from '../../../mock/dashboard/human-resource-d
         />
       </TechnicianPanelCard>
     </div>
+
+    <DetailTableModal
+      :open="isOvertimeDetailOpen"
+      title="Detail Lembur Karyawan"
+      :description="`Rincian jam dan pekerjaan lembur periode ${humanResourceDashboard.period}.`"
+      :columns="overtimeColumns"
+      :rows="overtimeRows"
+      :summary="[
+        { label: 'Karyawan Lembur', value: String(humanResourceDashboard.overtime.length) },
+        { label: 'Total Aktivitas', value: String(employeeOvertimeDetails.length) },
+        { label: 'Total Jam', value: `${totalOvertimeHours} jam`, tone: 'warning' }
+      ]"
+      search-placeholder="Cari karyawan, tanggal, atau pekerjaan..."
+      @close="isOvertimeDetailOpen = false"
+    />
   </section>
 </template>
