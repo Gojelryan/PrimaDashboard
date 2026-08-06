@@ -148,6 +148,8 @@ Data source:
 
 ```text
 src/mock/dashboard/
+|-- customer-detail-data.ts
+|-- customer-metrics.ts
 |-- marketing-customer-summary.ts
 |-- marketing-customers-by-service.ts
 |-- marketing-port-status.ts

@@ -3,7 +3,7 @@ import { RadioTower, UsersRound } from 'lucide-vue-next'
 
 import InformationListCard from '../../../components/cards/InformationListCard.vue'
 import MarketingStatusCard from '../../../components/cards/MarketingStatusCard.vue'
-import { marketingCustomersByService } from '../../../mock/dashboard/marketing-customers-by-service'
+import { marketingCustomerSegments } from '../../../mock/dashboard/marketing-customers-by-service'
 import { portStatus } from '../../../mock/dashboard/marketing-port-status'
 </script>
 
@@ -22,11 +22,11 @@ import { portStatus } from '../../../mock/dashboard/marketing-port-status'
   >
     <div class="min-h-[360px]">
       <InformationListCard
-        title="Pelanggan dengan Layanan"
+        title="Pelanggan per Segmen"
         :icon="UsersRound"
         icon-bg="bg-[#D9F7FC]"
         icon-color="text-[#00CFE8]"
-        :items="marketingCustomersByService"
+        :items="marketingCustomerSegments"
       />
     </div>
 

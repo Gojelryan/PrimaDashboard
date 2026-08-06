@@ -32,8 +32,8 @@ import { partnerDistribution } from '../../../mock/dashboard/partner-distributio
 
       <div class="col-span-12 h-[460px] sm:h-[500px] xl:col-span-4">
         <AnalyticsCard
-          title="Grafik Kenaikan Pelanggan"
-          subtitle="2026"
+          title="Tren Pelanggan & Pendapatan"
+          :subtitle="customerGrowth.periodLabel"
           :icon="TrendingUp"
           icon-bg="bg-[#E9E7FD]"
           icon-color="text-[#7367F0]"
@@ -44,7 +44,7 @@ import { partnerDistribution } from '../../../mock/dashboard/partner-distributio
 
       <div class="col-span-12 h-[500px] xl:col-span-3">
         <AnalyticsCard
-          title="Total Mitra"
+          title="Distribusi Mitra"
           :icon="Handshake"
           icon-bg="bg-[#FFF0E1]"
           icon-color="text-[#FF9F43]"

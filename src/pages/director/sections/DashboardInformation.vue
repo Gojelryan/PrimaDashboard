@@ -7,7 +7,7 @@ import {
 
 import InformationListCard from '../../../components/cards/InformationListCard.vue'
 import NetworkCapacityCard from '../../../components/cards/NetworkCapacityCard.vue'
-import { customersByService } from '../../../mock/dashboard/customers-by-service'
+import { customerSegments } from '../../../mock/dashboard/customers-by-service'
 import { infrastructureExpansion } from '../../../mock/dashboard/infrastructure-expansion'
 import { internetCapacity } from '../../../mock/dashboard/internet-capacity'
 import { networkHealth } from '../../../mock/dashboard/network-health'
@@ -22,11 +22,11 @@ import { networkHealth } from '../../../mock/dashboard/network-health'
         <div class="col-span-12 lg:col-span-3">
             <InformationListCard
                 title="Pelanggan"
-                subtitle="Berdasarkan layanan"
+                subtitle="Berdasarkan segmen"
                 :icon="UsersRound"
                 icon-bg="bg-[#D9F7FC]"
                 icon-color="text-[#00CFE8]"
-                :items="customersByService"
+                :items="customerSegments"
             />
         </div>
 

@@ -1,16 +1,20 @@
 import {
   customerMetrics,
   formatCustomerCount,
+  formatCustomerCurrency,
+  retailAcquisitionCapacity,
 } from './customer-metrics'
 
-const retailTarget = 2900
+const corporateRevenueTarget = 25_000_000_000
+const corporateRevenueCurrent = 12_000_000_000
+const retailTarget = retailAcquisitionCapacity.targetHomeConnect
 
 export const targetCorporatePerformance = {
   title: 'Target Corporate',
-  target: 'Rp 15.000.000.000',
+  target: formatCustomerCurrency(corporateRevenueTarget),
   currentLabel: 'Total saat ini',
-  current: 'Rp 12.000.000.000',
-  progress: 70
+  current: formatCustomerCurrency(corporateRevenueCurrent),
+  progress: Math.round((corporateRevenueCurrent / corporateRevenueTarget) * 100)
 }
 
 export const targetRetailPerformance = {

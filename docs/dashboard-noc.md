@@ -33,6 +33,15 @@ Card Kapasitas Internet memakai `NetworkCapacityCard` yang sama dengan dashboard
 Direksi. Pola visual NOC menjadi acuan dan data dikirim sebagai angka mentah
 dalam Gbps.
 
+Seluruh 27 aset POP memiliki data kapasitas. Total Kapasitas Internet diturunkan
+dari penjumlahan kapasitas POP: 200 Gbps total, 150 Gbps terpakai, dan 50 Gbps
+tersedia. Setiap baris POP menampilkan kapasitas, pemakaian, sisa kapasitas, dan
+persentase utilisasi yang dihitung dari sumber yang sama.
+
+Card Kapasitas POP pada tampilan awal hanya menampilkan enam POP dengan
+utilisasi tertinggi. Aksi `Lihat detail 27 POP` membuka tabel seluruh POP yang
+dapat dicari dan tetap diurutkan dari utilisasi tertinggi.
+
 Card Kesehatan Jaringan ditempatkan di bawah Riwayat Gangguan dan memakai
 `InformationListCard` serta sumber `network-health.ts` yang sama dengan Direksi.
 

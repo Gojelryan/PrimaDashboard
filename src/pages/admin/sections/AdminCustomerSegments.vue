@@ -46,7 +46,7 @@ const segmentPresentation = [
       <div>
         <h2 class="text-lg font-semibold text-[#5D596C]">Segmen Pelanggan</h2>
         <p class="mt-1 text-sm text-[#A5A2AD]">
-          Pertumbuhan dan outstanding per layanan
+          Mutasi dan outstanding per segmen
         </p>
       </div>
     </div>
@@ -66,6 +66,9 @@ const segmentPresentation = [
 
         <p class="mt-3 text-2xl font-semibold text-[#101828]">
           {{ segment.total }}
+        </p>
+        <p class="mt-1 text-xs text-[#A5A2AD]">
+          Periode mutasi: {{ segment.periodLabel }}
         </p>
 
         <div class="mt-5 grid grid-cols-2 gap-3">

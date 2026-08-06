@@ -5,6 +5,10 @@ import {
   formatFinancialCurrencyCompact,
   selectedFinancialMetric,
 } from './financial-metrics'
+import {
+  formatCustomerCurrency,
+  totalCustomerOutstanding,
+} from './customer-metrics'
 
 const selectedCashFlow = selectedFinancialMetric.income - selectedFinancialMetric.expense
 
@@ -19,7 +23,7 @@ export const financeDashboard = {
       note: `Keluar ${formatFinancialCurrencyCompact(selectedFinancialMetric.expense)}`,
       period: ''
     },
-    { title: 'Piutang', value: 'Rp 2.100.000.000', detail: '', note: '', period: 'Per 20 Juli 2026' },
+    { title: 'Piutang', value: formatCustomerCurrency(totalCustomerOutstanding), detail: '', note: '', period: 'Per Juli 2026' },
     { title: 'Hutang', value: 'Rp 550.000.000', detail: '', note: 'Jatuh tempo terdekat 28 Juli 2026', period: '' }
   ],
   monthlyCashFlow: financialMetrics,

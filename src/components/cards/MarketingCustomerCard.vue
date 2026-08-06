@@ -3,16 +3,21 @@ import type { Component } from 'vue'
 import BaseCard from './BaseCard.vue'
 import CardHeader from './CardHeader.vue'
 
-defineProps<{
+withDefaults(defineProps<{
   title: string
   total: string
   newCustomer: string
   churnCustomer: string
   outstanding: string
+  newCustomerLabel?: string
+  churnCustomerLabel?: string
   icon: Component
   iconBg: string
   iconColor: string
-}>()
+}>(), {
+  newCustomerLabel: 'Pelanggan Baru',
+  churnCustomerLabel: 'Pelanggan Putus',
+})
 </script>
 
 <template>
@@ -32,7 +37,7 @@ defineProps<{
     <div class="mt-4 space-y-2">
       <div class="flex items-center justify-between gap-4 text-sm leading-tight">
         <span class="min-w-0 truncate text-[#344054]">
-          Pelanggan Baru
+          {{ newCustomerLabel }}
         </span>
 
         <span class="shrink-0 font-semibold text-[#101828]">
@@ -42,7 +47,7 @@ defineProps<{
 
       <div class="flex items-center justify-between gap-4 text-sm leading-tight">
         <span class="min-w-0 truncate text-[#344054]">
-          Pelanggan Putus
+          {{ churnCustomerLabel }}
         </span>
 
         <span class="shrink-0 font-semibold text-[#101828]">

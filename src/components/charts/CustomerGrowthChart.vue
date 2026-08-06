@@ -3,8 +3,15 @@ import { computed, ref, watch } from 'vue'
 import ApexChart from 'vue3-apexcharts'
 import type { ApexOptions } from 'apexcharts'
 interface GrowthSeries {
-  categories: string[]
-  series: number[]
+  categories: readonly string[]
+  series: readonly number[]
+  newCustomers?: readonly number[]
+  churnCustomers?: readonly number[]
+}
+
+interface TooltipContext {
+  seriesIndex: number
+  dataPointIndex: number
 }
 
 const props = defineProps<{
@@ -29,7 +36,7 @@ const chartSeries = computed(() => {
     return [
       {
         name: 'Pendapatan Corporate',
-        data: props.data.corporate.series
+        data: [...props.data.corporate.series]
       }
     ]
   }
@@ -38,11 +45,11 @@ const chartSeries = computed(() => {
     return [
       {
         name: 'Retail',
-        data: props.data.retail.series
+        data: [...props.data.retail.series]
       },
       {
         name: 'Mitra',
-        data: props.data.partner.series
+        data: [...props.data.partner.series]
       }
     ]
   }
@@ -50,15 +57,15 @@ const chartSeries = computed(() => {
   return [
     {
       name: 'Retail',
-      data: props.data.retail.series
+      data: [...props.data.retail.series]
     }
   ]
 })
 
 const chartCategories = computed(() =>
   selectedType.value === 'corporate'
-    ? props.data.corporate.categories
-    : props.data.retail.categories
+    ? [...props.data.corporate.categories]
+    : [...props.data.retail.categories]
 )
 
 const chartOptions = computed<ApexOptions>(() => {
@@ -133,7 +140,6 @@ const chartOptions = computed<ApexOptions>(() => {
     }
   : {
       min: 0,
-      max: 2500,
       tickAmount: 5,
 
       labels: {
@@ -145,10 +151,10 @@ const chartOptions = computed<ApexOptions>(() => {
 
     tooltip: {
       y: {
-        formatter(value: number) {
+        formatter(value: number, context?: TooltipContext) {
           return isCorporate
             ? formatCorporateRevenue(value)
-            : `${value.toLocaleString('id-ID')} pelanggan`
+            : formatCustomerMovement(context)
         }
       }
     },
@@ -164,6 +170,22 @@ function formatCorporateRevenue(value: number) {
   }
 
   return `Rp ${value.toLocaleString('id-ID')} Jt`
+}
+
+function formatCustomerMovement(context?: TooltipContext) {
+  if (!context) return 'Baru: – · Putus: –'
+
+  const growthData = showPartner.value && context.seriesIndex === 1
+    ? props.data.partner
+    : props.data.retail
+  const newCustomer = growthData.newCustomers?.[context.dataPointIndex]
+  const churnCustomer = growthData.churnCustomers?.[context.dataPointIndex]
+
+  if (newCustomer === undefined || churnCustomer === undefined) {
+    return 'Baru: – · Putus: –'
+  }
+
+  return `Baru: ${newCustomer} · Putus: ${churnCustomer}`
 }
 </script>
 

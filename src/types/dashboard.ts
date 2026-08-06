@@ -25,10 +25,18 @@ export interface TicketSummary {
   hold: number
 }
 
+export type CustomerMovementPeriod = 'monthly' | 'ytd'
+
+export interface CustomerMovementSummary {
+  period: CustomerMovementPeriod
+  periodLabel: string
+  newCustomer: number
+  churnCustomer: number
+}
+
 export interface CustomerSegmentSummary {
   total: number
-  newCustomer: number
-  churn: number
+  movement: CustomerMovementSummary
   outstandingAmount: number
 }
 
@@ -54,22 +62,27 @@ export interface FinancialMovementData {
 
 export type DirectorDashboardFinancial = FinancialMovementData
 
-export interface CustomerByService {
-  service: string
+export interface CustomerSegmentTotal {
+  segment: 'corporate' | 'retail' | 'partner' | 'analog'
   total: number
 }
 
-export interface CustomerGrowthPoint {
+export interface DashboardTrendPoint {
   month: string
-  total: number
+  value: number
+}
+
+export interface CustomerMovementTrendPoint extends DashboardTrendPoint {
+  newCustomer: number
+  churnCustomer: number
 }
 
 export interface DirectorDashboardCustomers {
-  byService: CustomerByService[]
+  bySegment: CustomerSegmentTotal[]
   growth: {
-    corporate: CustomerGrowthPoint[]
-    retail: CustomerGrowthPoint[]
-    partner: CustomerGrowthPoint[]
+    corporateRevenue: DashboardTrendPoint[]
+    retailCustomers: CustomerMovementTrendPoint[]
+    partnerCustomers: CustomerMovementTrendPoint[]
   }
 }
 
@@ -103,6 +116,12 @@ export interface PartnerAreaDistribution {
 export interface DirectorDashboardPartners {
   totalPartner: number
   totalCustomer: number
+  partners: {
+    id: string
+    name: string
+    area: string
+    totalCustomer: number
+  }[]
   areas: PartnerAreaDistribution[]
 }
 
@@ -139,14 +158,19 @@ export interface MarketingDashboardResponse extends DashboardResponseMeta {
   customerSegments: {
     segment: 'corporate' | 'retail'
     total: number
-    newCustomer: number
-    churnCustomer: number
+    movement: CustomerMovementSummary
     outstandingAmount: number
   }[]
   targets: MarketingTarget[]
   branchRetailPartners: {
     totalPartner: number
     totalCustomer: number
+    partners: {
+      id: string
+      name: string
+      area: string
+      totalCustomer: number
+    }[]
     areas: {
       name: string
       partner: number
@@ -159,11 +183,11 @@ export interface MarketingDashboardResponse extends DashboardResponseMeta {
     emptyPort: number
     potentialAreas: string[]
   }
-  customersByService: MetricItem[]
+  customerSegmentTotals: CustomerSegmentTotal[]
   growth: {
-    corporateRevenue: CustomerGrowthPoint[]
-    retailCustomers: CustomerGrowthPoint[]
-    partnerCustomers: CustomerGrowthPoint[]
+    corporateRevenue: DashboardTrendPoint[]
+    retailCustomers: CustomerMovementTrendPoint[]
+    partnerCustomers: CustomerMovementTrendPoint[]
   }
 }
 
@@ -213,10 +237,9 @@ export interface AdminDashboardResponse extends DashboardResponseMeta {
     inactive: number
   }
   customerSegments: {
-    segment: string
+    segment: 'corporate' | 'retail' | 'partner' | 'analog'
     total: number
-    newCustomer: number
-    churnCustomer: number
+    movement: CustomerMovementSummary
     outstandingAmount: number
   }[]
   receipts: {
@@ -415,6 +438,8 @@ export interface NocDashboardResponse extends DashboardResponseMeta {
   popCapacity: {
     name: string
     capacityGbps: number
+    usedGbps: number
+    availableGbps: number
     utilizationPercent: number
   }[]
 }

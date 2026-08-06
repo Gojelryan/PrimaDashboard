@@ -64,7 +64,10 @@ Konstanta endpoint berada di `src/api/endpoints.ts` dan pemanggilan API berada d
 
 - `summary`
 - `financial`
-- `customers`
+- `customers.bySegment`
+- `customers.growth.corporateRevenue`
+- `customers.growth.retailCustomers`
+- `customers.growth.partnerCustomers`
 - `infrastructure`
 - `internetCapacity`
 - `networkHealth`
@@ -80,7 +83,7 @@ bulanan berisi `month`, `label`, `income`, dan `expense`.
 - `targets`
 - `branchRetailPartners`
 - `portStatus`
-- `customersByService`
+- `customerSegmentTotals`
 - `growth.corporateRevenue`
 - `growth.retailCustomers`
 - `growth.partnerCustomers`
@@ -89,9 +92,19 @@ Data Corporate pada grafik merupakan pendapatan dalam rupiah. Data Retail
 internal dan pelanggan Mitra merupakan jumlah pelanggan dan tetap menjadi seri
 terpisah.
 
-`branchRetailPartners` memuat `totalPartner`, `totalCustomer`, serta pembagian
+Setiap titik `growth.retailCustomers` dan `growth.partnerCustomers` memuat
+`month`, `value` sebagai total akhir bulan, `newCustomer`, serta
+`churnCustomer`.
+
+`branchRetailPartners` memuat `totalPartner`, `totalCustomer`, daftar
+`partners[]` (`id`, `name`, `area`, dan `totalCustomer`), serta pembagian
 `partner` dan `customer` per wilayah. Dashboard Marketing dan Direksi memakai
 sumber distribusi mitra yang sama.
+
+Setiap ringkasan di `customerSegments` memuat `movement.period`
+(`monthly` atau `ytd`), `movement.periodLabel`, `movement.newCustomer`, dan
+`movement.churnCustomer`. Nilai uang dan jumlah dikirim sebagai angka mentah;
+format rupiah serta pemisah ribuan dilakukan di frontend.
 
 ## Teknisi
 
@@ -113,6 +126,10 @@ sumber distribusi mitra yang sama.
 - `receipts.categories`
 - `receipts.collectors`
 - `payments`
+
+`customerStatus.total`, penjumlahan `customerSegments[].total`, dan
+penjumlahan `payments[].total` harus sama. `Finance.receivables.total` harus
+sama dengan penjumlahan `customerSegments[].outstandingAmount`.
 
 ## Human Resource
 
@@ -184,6 +201,11 @@ memiliki kontrak dan penanda terpisah.
 - `incidentCategories`
 - `incidentHistory`
 - `popCapacity`
+
+`internetCapacity` merupakan agregasi seluruh `popCapacity[]` sehingga
+`totalGbps`, `usedGbps`, dan `availableGbps` selalu sama dengan penjumlahan
+field terkait pada setiap POP. Setiap POP memuat `capacityGbps`, `usedGbps`,
+`availableGbps`, dan `utilizationPercent`.
 
 `serviceAlarms[].occurredAt` memakai waktu ISO 8601 dan menunjukkan waktu
 gangguan atau informasi layanan terjadi. Formatting jam dan zona waktu dilakukan

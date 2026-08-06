@@ -109,7 +109,7 @@ const statusPresentation = [
     <DetailTableModal
       :open="isIsolatedDetailOpen"
       title="Pelanggan Isolir"
-      description="Pelanggan prioritas yang memerlukan verifikasi pembayaran dan jadwal aktivasi kembali."
+      description="Sampel 10 dari 100 pelanggan isolir yang memerlukan verifikasi dan jadwal aktivasi kembali."
       :columns="isolatedCustomerColumns"
       :rows="isolatedCustomerDetails"
       :summary="isolatedCustomerSummary"

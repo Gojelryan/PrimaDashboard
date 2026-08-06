@@ -6,8 +6,8 @@ import CardHeader from './CardHeader.vue'
 defineProps<{
   title: string
   progress: number
-  homePass: string
-  emptyPort: string
+  homePass: number
+  emptyPort: number
   potentialAreas: string[]
   icon: Component
   iconBg: string
@@ -31,12 +31,12 @@ defineProps<{
     <div class="mt-5 space-y-2 text-sm text-[#344054]">
       <div class="flex items-center justify-between gap-4">
         <span>Home Pass</span>
-        <span class="font-semibold text-[#101828]">{{ homePass }}</span>
+        <span class="font-semibold text-[#101828]">{{ homePass.toLocaleString('id-ID') }}</span>
       </div>
 
       <div class="flex items-center justify-between gap-4">
         <span>Port Kosong</span>
-        <span class="font-semibold text-[#101828]">{{ emptyPort }}</span>
+        <span class="font-semibold text-[#101828]">{{ emptyPort.toLocaleString('id-ID') }}</span>
       </div>
     </div>
 

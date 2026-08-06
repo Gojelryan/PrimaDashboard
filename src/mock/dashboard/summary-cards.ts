@@ -71,8 +71,8 @@ export const summaryCards = [
     iconColor: 'text-[#00CFE8]',
     borderColor: 'border-[#00CFE8]',
     items: [
-      { label: 'Pelanggan Baru', value: formatCustomerCount(customerMetrics.corporate.newCustomer) },
-      { label: 'Pelanggan Putus', value: formatCustomerCount(customerMetrics.corporate.churnCustomer) },
+      { label: 'Pelanggan Baru', value: formatCustomerCount(customerMetrics.corporate.movement.newCustomer) },
+      { label: 'Pelanggan Putus', value: formatCustomerCount(customerMetrics.corporate.movement.churnCustomer) },
       { label: 'Outstanding', value: formatCustomerCurrencyCompact(customerMetrics.corporate.outstanding) },
     ],
   },
@@ -85,9 +85,9 @@ export const summaryCards = [
     iconColor: 'text-[#28C76F]',
     borderColor: 'border-[#28C76F]',
     items: [
-      { label: 'Pelanggan Baru', value: '95' },
-      { label: 'Pelanggan Putus', value: '15' },
-      { label: 'Outstanding', value: 'Rp 7 M' },
+      { label: 'Pelanggan Baru', value: formatCustomerCount(customerMetrics.retail.movement.newCustomer) },
+      { label: 'Pelanggan Putus', value: formatCustomerCount(customerMetrics.retail.movement.churnCustomer) },
+      { label: 'Outstanding', value: formatCustomerCurrencyCompact(customerMetrics.retail.outstanding) },
     ],
   },
   

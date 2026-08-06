@@ -40,13 +40,18 @@ const technicianLowStock = technicianDashboard.materialStock
         icon-bg="bg-[#DDF6E8]"
         icon-color="text-[#28C76F]"
       >
-        <div class="overflow-x-auto">
+        <div class="h-full min-h-0 overflow-auto">
           <div
             class="
+              sticky
+              top-0
+              z-10
               grid
               min-w-[460px]
               grid-cols-[minmax(0,1.5fr)_minmax(96px,0.8fr)_minmax(120px,1fr)]
               gap-4
+              bg-white
+              pb-2
               text-xs
               font-semibold
               text-[#5D596C]

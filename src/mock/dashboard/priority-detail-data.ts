@@ -1,4 +1,3 @@
-import { customerMetrics } from './customer-metrics'
 import { technicianEmployeeNames } from './employee-metrics'
 
 export const isolatedCustomerDetails = [
@@ -33,7 +32,7 @@ export const receivableDetails = [
   { id: 'AR-2026-073', customer: 'Universitas Sulawesi', invoice: 'INV-AR-073', dueDate: '22 Jul 2026', age: '—', amount: 'Rp 350.000.000', status: 'Belum Jatuh Tempo' },
   { id: 'AR-2026-074', customer: 'RS Sehat Makassar', invoice: 'INV-AR-074', dueDate: '25 Jul 2026', age: '—', amount: 'Rp 300.000.000', status: 'Belum Jatuh Tempo' },
   { id: 'AR-2026-075', customer: 'PT Maros Industri', invoice: 'INV-AR-075', dueDate: '28 Jul 2026', age: '—', amount: 'Rp 280.000.000', status: 'Belum Jatuh Tempo' },
-  { id: 'AR-2026-076', customer: 'Hotel Bahari Indah', invoice: 'INV-AR-076', dueDate: '31 Jul 2026', age: '—', amount: 'Rp 240.000.000', status: 'Belum Jatuh Tempo' }
+  { id: 'AR-2026-076', customer: 'Hotel Bahari Indah', invoice: 'INV-AR-076', dueDate: '31 Jul 2026', age: '—', amount: 'Rp 305.800.000', status: 'Belum Jatuh Tempo' }
 ]
 
 export const payableDetails = [
@@ -72,26 +71,4 @@ export const outOfStockDetails = [
   { id: 'STK-OLT-011', item: 'Router Mikrotik', minimum: '5 unit', available: '0 unit', lastRequest: '27 Jul 2026', supplier: 'CV Solusi Network', eta: '2 Agu 2026', status: 'Dipesan' },
   { id: 'STK-SW-024', item: 'Switch Managed 24 Port', minimum: '3 unit', available: '0 unit', lastRequest: '26 Jul 2026', supplier: 'PT Network Utama', eta: '31 Jul 2026', status: 'Diproses' },
   { id: 'STK-RACK-42', item: 'Rack Server 42U', minimum: '2 unit', available: '0 unit', lastRequest: '25 Jul 2026', supplier: 'CV Data Center Mandiri', eta: '5 Agu 2026', status: 'Menunggu' }
-]
-
-export const corporateCustomerDetails = [
-  { id: `COR-${String(customerMetrics.corporate.total).padStart(4, '0')}`, customer: 'PT Nusantara Digital', area: 'Makassar', package: 'Corporate 500 Mbps', joinedAt: '4 Jul 2026', outstanding: 'Rp 0', status: 'Baru' },
-  { id: `COR-${String(customerMetrics.corporate.total - 1).padStart(4, '0')}`, customer: 'Pemkab Gowa', area: 'Gowa', package: 'Corporate 200 Mbps', joinedAt: '8 Jul 2026', outstanding: 'Rp 240.000.000', status: 'Aktif' },
-  { id: `COR-${String(customerMetrics.corporate.total - 2).padStart(4, '0')}`, customer: 'Universitas Sulawesi', area: 'Makassar', package: 'Corporate 300 Mbps', joinedAt: '10 Jul 2026', outstanding: 'Rp 180.000.000', status: 'Baru' },
-  { id: `COR-${String(customerMetrics.corporate.total - 3).padStart(4, '0')}`, customer: 'RS Sehat Makassar', area: 'Makassar', package: 'Corporate 100 Mbps', joinedAt: '12 Jul 2026', outstanding: 'Rp 95.000.000', status: 'Aktif' },
-  { id: `COR-${String(customerMetrics.corporate.total - 4).padStart(4, '0')}`, customer: 'PT Maros Industri', area: 'Maros', package: 'Corporate 200 Mbps', joinedAt: '15 Jul 2026', outstanding: 'Rp 210.000.000', status: 'Baru' },
-  { id: `COR-${String(customerMetrics.corporate.total - 5).padStart(4, '0')}`, customer: 'Hotel Bahari Indah', area: 'Parepare', package: 'Corporate 100 Mbps', joinedAt: '18 Jul 2026', outstanding: 'Rp 75.000.000', status: 'Aktif' },
-  { id: `COR-${String(customerMetrics.corporate.total - 6).padStart(4, '0')}`, customer: 'CV Mandiri Jaya', area: 'Pangkep', package: 'Corporate 50 Mbps', joinedAt: '20 Jul 2026', outstanding: 'Rp 48.000.000', status: 'Putus' },
-  { id: `COR-${String(customerMetrics.corporate.total - 7).padStart(4, '0')}`, customer: 'Klinik Sehat Sentosa', area: 'Bone', package: 'Corporate 75 Mbps', joinedAt: '21 Jul 2026', outstanding: 'Rp 32.000.000', status: 'Baru' }
-]
-
-export const retailCustomerDetails = [
-  { id: `RTL-${customerMetrics.retail.total}`, customer: 'Andi Saputra', area: 'Makassar', package: 'Retail 50 Mbps', joinedAt: '6 Jul 2026', outstanding: 'Rp 0', status: 'Baru' },
-  { id: `RTL-${customerMetrics.retail.total - 1}`, customer: 'Nur Aisyah', area: 'Gowa', package: 'Retail 30 Mbps', joinedAt: '8 Jul 2026', outstanding: 'Rp 350.000', status: 'Aktif' },
-  { id: `RTL-${customerMetrics.retail.total - 2}`, customer: 'Muhammad Rizal', area: 'Maros', package: 'Retail 50 Mbps', joinedAt: '11 Jul 2026', outstanding: 'Rp 0', status: 'Baru' },
-  { id: `RTL-${customerMetrics.retail.total - 3}`, customer: 'Sitti Aminah', area: 'Pangkep', package: 'Retail 30 Mbps', joinedAt: '13 Jul 2026', outstanding: 'Rp 525.000', status: 'Aktif' },
-  { id: `RTL-${customerMetrics.retail.total - 4}`, customer: 'Fajar Hidayat', area: 'Bone', package: 'Retail 100 Mbps', joinedAt: '15 Jul 2026', outstanding: 'Rp 0', status: 'Baru' },
-  { id: `RTL-${customerMetrics.retail.total - 5}`, customer: 'Rahmawati', area: 'Sidrap', package: 'Retail 50 Mbps', joinedAt: '17 Jul 2026', outstanding: 'Rp 420.000', status: 'Putus' },
-  { id: `RTL-${customerMetrics.retail.total - 6}`, customer: 'Irfan Maulana', area: 'Palopo', package: 'Retail 30 Mbps', joinedAt: '19 Jul 2026', outstanding: 'Rp 0', status: 'Baru' },
-  { id: `RTL-${customerMetrics.retail.total - 7}`, customer: 'Yuliana Putri', area: 'Pinrang', package: 'Retail 50 Mbps', joinedAt: '22 Jul 2026', outstanding: 'Rp 280.000', status: 'Aktif' }
 ]

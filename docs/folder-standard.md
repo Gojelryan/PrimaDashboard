@@ -208,7 +208,9 @@ mock/
     |-- admin-customer-status.ts
     |-- admin-payment-customers.ts
     |-- admin-receipt-collectors.ts
+    |-- customer-detail-data.ts
     |-- customer-growth.ts
+    |-- customer-metrics.ts
     |-- customers-by-service.ts
     |-- financial-metrics.ts
     |-- infrastructure-expansion.ts

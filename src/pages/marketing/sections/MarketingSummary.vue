@@ -22,18 +22,45 @@ import {
 import {
   corporateCustomerDetails,
   retailCustomerDetails,
-} from '../../../mock/dashboard/priority-detail-data'
+} from '../../../mock/dashboard/customer-detail-data'
 
 const activeCustomerDetail = ref<'corporate' | 'retail' | null>(null)
 
-const customerColumns = [
-  { key: 'id', label: 'ID Pelanggan' },
-  { key: 'customer', label: 'Pelanggan' },
-  { key: 'area', label: 'Area' },
-  { key: 'package', label: 'Paket Layanan' },
-  { key: 'joinedAt', label: 'Tanggal Bergabung' },
-  { key: 'outstanding', label: 'Outstanding', align: 'right' as const },
-  { key: 'status', label: 'Status', type: 'badge' as const }
+const baseCustomerColumns = [
+  { key: 'id', label: 'ID Pelanggan', sortable: true },
+  { key: 'customer', label: 'Pelanggan', sortable: true },
+  { key: 'area', label: 'Area', sortable: true },
+  { key: 'package', label: 'Paket Layanan', sortable: true },
+  { key: 'joinedAt', label: 'Tanggal Bergabung', sortable: true, sortType: 'date' as const }
+]
+
+const serviceStatusColumn = {
+  key: 'customerStatus',
+  label: 'Status Layanan',
+  type: 'badge' as const,
+  sortable: true
+}
+
+const billingStatusColumn = {
+  key: 'billingStatus',
+  label: 'Status Tagihan',
+  type: 'badge' as const,
+  sortable: true
+}
+
+const corporateCustomerColumns = [
+  ...baseCustomerColumns,
+  { key: 'outstanding', label: 'Outstanding', align: 'right' as const, sortable: true, sortType: 'currency' as const },
+  serviceStatusColumn,
+  { key: 'periodStatus', label: 'Keterangan Periode', type: 'badge' as const, sortable: true },
+  billingStatusColumn
+]
+
+const retailCustomerColumns = [
+  ...baseCustomerColumns,
+  { key: 'monthlyFee', label: 'Iuran', align: 'right' as const, sortable: true, sortType: 'currency' as const },
+  serviceStatusColumn,
+  billingStatusColumn
 ]
 </script>
 
@@ -89,15 +116,16 @@ const customerColumns = [
     <DetailTableModal
       :open="activeCustomerDetail === 'corporate'"
       title="Detail Pelanggan Corporate"
-      description="Pelanggan Corporate terbaru beserta nilai outstanding."
-      :columns="customerColumns"
+      description="Ringkasan populasi Corporate dan sampel 100 pelanggan. Label YTD hanya untuk mutasi tahun 2026."
+      :columns="corporateCustomerColumns"
       :rows="corporateCustomerDetails"
       :summary="[
         { label: 'Total Pelanggan', value: corporateCustomerSummary.total },
-        { label: 'Pelanggan Baru', value: corporateCustomerSummary.newCustomer, tone: 'success' },
-        { label: 'Pelanggan Putus', value: corporateCustomerSummary.churnCustomer, tone: 'error' },
+        { label: `Pelanggan Baru ${corporateCustomerSummary.periodLabel}`, value: corporateCustomerSummary.newCustomer, tone: 'success' },
+        { label: `Pelanggan Putus ${corporateCustomerSummary.periodLabel}`, value: corporateCustomerSummary.churnCustomer, tone: 'error' },
         { label: 'Outstanding', value: corporateCustomerSummary.outstanding, tone: 'warning' }
       ]"
+      :page-size="10"
       search-placeholder="Cari pelanggan, area, atau paket..."
       @close="activeCustomerDetail = null"
     />
@@ -105,15 +133,16 @@ const customerColumns = [
     <DetailTableModal
       :open="activeCustomerDetail === 'retail'"
       title="Detail Pelanggan Retail"
-      description="Pelanggan Retail terbaru beserta nilai outstanding."
-      :columns="customerColumns"
+      description="Ringkasan populasi Retail Agustus 2026 dan sampel 100 pelanggan beserta status tagihannya."
+      :columns="retailCustomerColumns"
       :rows="retailCustomerDetails"
       :summary="[
         { label: 'Total Pelanggan', value: retailCustomerSummary.total },
-        { label: 'Pelanggan Baru', value: retailCustomerSummary.newCustomer, tone: 'success' },
-        { label: 'Pelanggan Putus', value: retailCustomerSummary.churnCustomer, tone: 'error' },
+        { label: retailCustomerSummary.newCustomerLabel, value: retailCustomerSummary.newCustomer, tone: 'success' },
+        { label: retailCustomerSummary.churnCustomerLabel, value: retailCustomerSummary.churnCustomer, tone: 'error' },
         { label: 'Outstanding', value: retailCustomerSummary.outstanding, tone: 'warning' }
       ]"
+      :page-size="10"
       search-placeholder="Cari pelanggan, area, atau paket..."
       @close="activeCustomerDetail = null"
     />

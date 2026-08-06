@@ -7,15 +7,19 @@ import {
 export const corporateCustomerSummary = {
   title: 'Corporate',
   total: formatCustomerCount(customerMetrics.corporate.total),
-  newCustomer: formatCustomerCount(customerMetrics.corporate.newCustomer),
-  churnCustomer: formatCustomerCount(customerMetrics.corporate.churnCustomer),
+  newCustomer: formatCustomerCount(customerMetrics.corporate.movement.newCustomer),
+  churnCustomer: formatCustomerCount(customerMetrics.corporate.movement.churnCustomer),
+  periodLabel: customerMetrics.corporate.movement.periodLabel,
   outstanding: formatCustomerCurrency(customerMetrics.corporate.outstanding)
 }
 
 export const retailCustomerSummary = {
   title: 'Retail',
   total: formatCustomerCount(customerMetrics.retail.total),
-  newCustomer: formatCustomerCount(customerMetrics.retail.newCustomer),
-  churnCustomer: formatCustomerCount(customerMetrics.retail.churnCustomer),
-  outstanding: 'Rp 27.000.000'
+  newCustomerLabel: 'Pelanggan Baru Bulan Ini',
+  newCustomer: formatCustomerCount(customerMetrics.retail.movement.newCustomer),
+  churnCustomerLabel: 'Pelanggan Putus Bulan Ini',
+  churnCustomer: formatCustomerCount(customerMetrics.retail.movement.churnCustomer),
+  periodLabel: customerMetrics.retail.movement.periodLabel,
+  outstanding: formatCustomerCurrency(customerMetrics.retail.outstanding)
 }

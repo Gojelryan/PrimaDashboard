@@ -58,11 +58,14 @@ Catatan:
 - Jumlah dan nama anggota Tim Teknisi diturunkan dari roster bersama
   `src/mock/dashboard/employee-metrics.ts` agar konsisten dengan Dashboard
   Human Resource dan ringkasan Direksi.
+- Total aktif tim Teknis adalah 52 orang. Breakdown onsite dan standby serta
+  jumlah baris performa tim mengikuti total tersebut.
 - File mock yang sama digunakan Dashboard NOC untuk menjaga konsistensi data
   operasi teknis.
 - Penarikan FO disimpan dan ditampilkan dalam satuan meter.
 - Total/rincian infrastruktur memiliki satu sumber dan jumlah wilayah sama
   dengan nilai total.
+- Total aset OLT dan POP pada card Aset Infrastruktur masing-masing 27 unit.
 
 ## 2. TeknisiAnalytics
 

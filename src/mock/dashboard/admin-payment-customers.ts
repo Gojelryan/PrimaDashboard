@@ -1,15 +1,24 @@
+import {
+  formatCustomerCount,
+  formatCustomerPercentage,
+  totalCustomerCount
+} from './customer-metrics'
+
+const cashCustomerTotal = Math.round(totalCustomerCount * 0.34)
+const nonCashCustomerTotal = totalCustomerCount - cashCustomerTotal
+
 export const adminPaymentCustomers = {
   title: 'Payment Customer',
   items: [
     {
       label: 'Tunai',
-      value: '1.500',
-      percentage: '34%'
+      value: formatCustomerCount(cashCustomerTotal),
+      percentage: `${formatCustomerPercentage(cashCustomerTotal, totalCustomerCount)}%`
     },
     {
       label: 'Non-Tunai',
-      value: '2.910',
-      percentage: '66%'
+      value: formatCustomerCount(nonCashCustomerTotal),
+      percentage: `${formatCustomerPercentage(nonCashCustomerTotal, totalCustomerCount)}%`
     }
   ]
 }

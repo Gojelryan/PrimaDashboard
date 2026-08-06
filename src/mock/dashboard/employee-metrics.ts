@@ -23,59 +23,59 @@ const lastNames = [
 
 const divisionProfiles = [
   {
-    key: 'marketing',
-    label: 'Marketing',
-    cardLabel: 'Div. Marketing',
-    total: 21,
-    positions: ['Account Executive', 'Marketing Analyst', 'Sales Support']
+    key: 'technical',
+    label: 'Teknis',
+    cardLabel: 'Teknis',
+    total: 52,
+    positions: ['Teknisi Senior', 'Teknisi FO', 'Teknisi Instalasi']
   },
   {
-    key: 'technician',
-    label: 'Teknisi',
-    cardLabel: 'Div. Teknisi',
+    key: 'market',
+    label: 'Market',
+    cardLabel: 'Market',
     total: 7,
-    positions: ['Teknisi Senior', 'Teknisi FO', 'Teknisi Instalasi']
+    positions: ['Account Executive', 'Marketing Analyst', 'Sales Support']
   },
   {
     key: 'admin',
     label: 'Admin',
-    cardLabel: 'Div. Admin',
-    total: 18,
+    cardLabel: 'Admin',
+    total: 8,
     positions: ['Admin Billing', 'Admin Customer', 'Kolektor']
   },
   {
     key: 'finance',
     label: 'Finance',
-    cardLabel: 'Div. Finance',
-    total: 12,
+    cardLabel: 'Finance',
+    total: 8,
     positions: ['Finance Officer', 'Accountant', 'Treasury Staff']
-  },
-  {
-    key: 'warehouse',
-    label: 'Gudang',
-    cardLabel: 'Gudang',
-    total: 14,
-    positions: ['Koordinator Gudang', 'Inventory Staff', 'Logistic Staff']
   },
   {
     key: 'noc',
     label: 'NOC',
     cardLabel: 'NOC',
-    total: 16,
+    total: 15,
     positions: ['NOC Engineer', 'Network Monitoring', 'NOC Support']
   },
   {
     key: 'it',
     label: 'IT',
     cardLabel: 'IT',
-    total: 10,
+    total: 5,
     positions: ['System Administrator', 'Software Engineer', 'IT Support']
+  },
+  {
+    key: 'warehouse',
+    label: 'Gudang',
+    cardLabel: 'Gudang',
+    total: 10,
+    positions: ['Koordinator Gudang', 'Inventory Staff', 'Logistic Staff']
   },
   {
     key: 'general',
     label: 'Umum',
     cardLabel: 'Umum',
-    total: 18,
+    total: 11,
     positions: ['General Affairs', 'Security', 'Office Support']
   }
 ] as const
@@ -98,7 +98,7 @@ export const employeeDetails = divisionProfiles.flatMap(profile =>
   Array.from({ length: profile.total }, (_, divisionIndex) => {
     employeeSequence += 1
     const generatedName = `${firstNames[(employeeSequence - 1) % firstNames.length]} ${lastNames[Math.floor((employeeSequence - 1) / firstNames.length) % lastNames.length]}`
-    const employeeName = profile.key === 'technician'
+    const employeeName = profile.key === 'technical' && technicianNames[divisionIndex]
       ? technicianNames[divisionIndex]
       : generatedName
     const joinedDay = String(1 + ((employeeSequence * 7) % 28)).padStart(2, '0')
@@ -117,6 +117,10 @@ export const employeeDetails = divisionProfiles.flatMap(profile =>
 )
 
 const attendanceOrder = ['Hadir', 'Terlambat', 'Cuti', 'Sakit', 'Tidak Hadir']
+const technicalEmployeeDetails = employeeDetails.filter(
+  employee => employee.division === 'Teknis'
+)
+const technicalOnsiteTotal = Math.round(technicalEmployeeDetails.length * 5 / 7)
 
 export const employeeMetrics = {
   total: employeeDetails.length,
@@ -130,14 +134,13 @@ export const employeeMetrics = {
     total: employeeDetails.filter(employee => employee.division === profile.label).length
   })),
   technician: {
-    total: employeeDetails.filter(employee => employee.division === 'Teknisi').length,
-    onsite: 5,
-    standby: 2
+    total: technicalEmployeeDetails.length,
+    onsite: technicalOnsiteTotal,
+    standby: technicalEmployeeDetails.length - technicalOnsiteTotal
   }
 }
 
-export const technicianEmployeeNames = employeeDetails
-  .filter(employee => employee.division === 'Teknisi')
+export const technicianEmployeeNames = technicalEmployeeDetails
   .map(employee => employee.employee)
 
 export function formatEmployeeCount(value: number) {

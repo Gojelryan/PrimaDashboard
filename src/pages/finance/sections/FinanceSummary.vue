@@ -15,6 +15,10 @@ import DetailAction from '../../../components/cards/DetailAction.vue'
 import DetailTableModal from '../../../components/modals/DetailTableModal.vue'
 import { financeDashboard } from '../../../mock/dashboard/finance-dashboard'
 import {
+  formatCustomerCurrency,
+  totalCustomerOutstanding,
+} from '../../../mock/dashboard/customer-metrics'
+import {
   payableDetails,
   receivableDetails,
 } from '../../../mock/dashboard/priority-detail-data'
@@ -41,10 +45,12 @@ const payableColumns = [
   { key: 'status', label: 'Status', type: 'badge' as const }
 ]
 
+const overdueReceivable = 930_000_000
+
 const receivableSummary = [
-  { label: 'Total Piutang', value: 'Rp 2.100.000.000' },
-  { label: 'Lewat Jatuh Tempo', value: 'Rp 930.000.000', tone: 'error' as const },
-  { label: 'Belum Jatuh Tempo', value: 'Rp 1.170.000.000', tone: 'warning' as const }
+  { label: 'Total Piutang', value: formatCustomerCurrency(totalCustomerOutstanding) },
+  { label: 'Lewat Jatuh Tempo', value: formatCustomerCurrency(overdueReceivable), tone: 'error' as const },
+  { label: 'Belum Jatuh Tempo', value: formatCustomerCurrency(totalCustomerOutstanding - overdueReceivable), tone: 'warning' as const }
 ]
 
 const payableSummary = [
@@ -169,7 +175,7 @@ const cardPresentation = [
     <DetailTableModal
       :open="activeFinanceDetail === 'receivable'"
       title="Detail Piutang"
-      description="Daftar piutang pelanggan per 20 Juli 2026."
+      description="Daftar piutang pelanggan per Juli 2026."
       :columns="receivableColumns"
       :rows="receivableDetails"
       :summary="receivableSummary"

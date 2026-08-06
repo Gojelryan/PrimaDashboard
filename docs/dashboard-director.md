@@ -88,6 +88,7 @@ Status:
 - Pergerakan Keuangan memakai sumber dan periode yang sama dengan Finance.
 - Data Corporate pada `CustomerGrowthChart.vue` merupakan pendapatan.
 - Data Retail internal dan Mitra merupakan jumlah pelanggan dan tetap dipisahkan.
+- Tren pelanggan Retail dan Mitra memuat realisasi Januari–Agustus 2026.
 
 ## 3. Information
 
@@ -108,7 +109,7 @@ Mock:
 
 Card:
 
-- Pelanggan berdasarkan layanan
+- Pelanggan berdasarkan segmen
 - Ekspansi & Infrastruktur
 - Kapasitas Internet
 - Kesehatan Jaringan

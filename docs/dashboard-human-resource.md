@@ -21,6 +21,23 @@ src/mock/dashboard/employee-metrics.ts
 Roster bersama menjadi sumber total, kehadiran, pembagian divisi, dan tabel
 detail karyawan. Total pada card tidak ditulis ulang secara manual.
 
+Distribusi aktif berjumlah 116 karyawan:
+
+| Divisi | Total |
+|---|---:|
+| Teknis | 52 |
+| Market | 7 |
+| Admin | 8 |
+| Finance | 8 |
+| NOC | 15 |
+| IT | 5 |
+| Gudang | 10 |
+| Umum | 11 |
+
+Total karyawan Direksi dan total tim pada dashboard Teknisi diturunkan dari
+roster yang sama. Status onsite dan standby pada tim Teknis selalu berjumlah
+sama dengan total anggota Teknis.
+
 Daftar lembur karyawan menampilkan total jam per karyawan. Aksi `Lihat detail
 lembur` membuka rincian tanggal, jam mulai dan selesai, durasi, keterangan
 pekerjaan, serta status verifikasi.

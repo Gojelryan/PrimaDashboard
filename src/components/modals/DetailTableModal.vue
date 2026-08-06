@@ -6,13 +6,23 @@ import {
   ref,
   watch,
 } from 'vue'
-import { Search, X } from 'lucide-vue-next'
+import {
+  ArrowDown,
+  ArrowUp,
+  ArrowUpDown,
+  ChevronLeft,
+  ChevronRight,
+  Search,
+  X,
+} from 'lucide-vue-next'
 
 export interface DetailTableColumn {
   key: string
   label: string
   align?: 'left' | 'center' | 'right'
   type?: 'text' | 'badge'
+  sortable?: boolean
+  sortType?: 'text' | 'number' | 'currency' | 'date'
 }
 
 export interface DetailTableRow {
@@ -31,15 +41,17 @@ const props = withDefaults(defineProps<{
   title: string
   description?: string
   columns: DetailTableColumn[]
-  rows: DetailTableRow[]
+  rows: readonly DetailTableRow[]
   summary?: DetailModalSummary[]
   searchPlaceholder?: string
   emptyText?: string
+  pageSize?: number
 }>(), {
   description: undefined,
   summary: () => [],
   searchPlaceholder: 'Cari data...',
-  emptyText: 'Data tidak ditemukan.'
+  emptyText: 'Data tidak ditemukan.',
+  pageSize: 0
 })
 
 const emit = defineEmits<{
@@ -47,6 +59,9 @@ const emit = defineEmits<{
 }>()
 
 const searchQuery = ref('')
+const currentPage = ref(1)
+const sortKey = ref<string | null>(null)
+const sortDirection = ref<'ascending' | 'descending'>('ascending')
 const closeButton = ref<HTMLButtonElement | null>(null)
 let previousActiveElement: HTMLElement | null = null
 let previousBodyOverflow = ''
@@ -67,8 +82,123 @@ const filteredRows = computed(() => {
   )
 })
 
+const textCollator = new Intl.Collator('id-ID', {
+  numeric: true,
+  sensitivity: 'base'
+})
+
+const sortedRows = computed(() => {
+  if (!sortKey.value) return filteredRows.value
+
+  const column = props.columns.find(item => item.key === sortKey.value)
+  if (!column) return filteredRows.value
+
+  const directionMultiplier = sortDirection.value === 'ascending' ? 1 : -1
+
+  return [...filteredRows.value].sort((firstRow, secondRow) => {
+    const comparison = compareValues(
+      firstRow[column.key],
+      secondRow[column.key],
+      column.sortType ?? 'text'
+    )
+
+    return comparison * directionMultiplier
+  })
+})
+
+const hasPagination = computed(() => props.pageSize > 0)
+const totalPages = computed(() => {
+  if (!hasPagination.value) return 1
+  return Math.max(1, Math.ceil(filteredRows.value.length / props.pageSize))
+})
+const displayedRows = computed(() => {
+  if (!hasPagination.value) return sortedRows.value
+
+  const startIndex = (currentPage.value - 1) * props.pageSize
+  return sortedRows.value.slice(startIndex, startIndex + props.pageSize)
+})
+const firstDisplayedRow = computed(() => {
+  if (filteredRows.value.length === 0) return 0
+  if (!hasPagination.value) return 1
+  return ((currentPage.value - 1) * props.pageSize) + 1
+})
+const lastDisplayedRow = computed(() => {
+  if (!hasPagination.value) return filteredRows.value.length
+  return Math.min(currentPage.value * props.pageSize, filteredRows.value.length)
+})
+
 function closeModal() {
   emit('close')
+}
+
+function previousPage() {
+  currentPage.value = Math.max(1, currentPage.value - 1)
+}
+
+function nextPage() {
+  currentPage.value = Math.min(totalPages.value, currentPage.value + 1)
+}
+
+function sortBy(column: DetailTableColumn) {
+  if (!column.sortable) return
+
+  if (sortKey.value === column.key) {
+    sortDirection.value = sortDirection.value === 'ascending'
+      ? 'descending'
+      : 'ascending'
+  } else {
+    sortKey.value = column.key
+    sortDirection.value = 'ascending'
+  }
+
+  currentPage.value = 1
+}
+
+function getAriaSort(column: DetailTableColumn) {
+  if (!column.sortable || sortKey.value !== column.key) return undefined
+  return sortDirection.value
+}
+
+function compareValues(
+  firstValue: string | number,
+  secondValue: string | number,
+  sortType: NonNullable<DetailTableColumn['sortType']>
+) {
+  if (sortType === 'currency' || sortType === 'number') {
+    return parseNumericValue(firstValue) - parseNumericValue(secondValue)
+  }
+
+  if (sortType === 'date') {
+    return parseIndonesianDate(firstValue) - parseIndonesianDate(secondValue)
+  }
+
+  return textCollator.compare(String(firstValue), String(secondValue))
+}
+
+function parseNumericValue(value: string | number) {
+  if (typeof value === 'number') return value
+  return Number(value.replace(/[^\d-]/g, '')) || 0
+}
+
+function parseIndonesianDate(value: string | number) {
+  const monthIndexes: Record<string, number> = {
+    Jan: 0,
+    Feb: 1,
+    Mar: 2,
+    Apr: 3,
+    Mei: 4,
+    Jun: 5,
+    Jul: 6,
+    Agu: 7,
+    Sep: 8,
+    Okt: 9,
+    Nov: 10,
+    Des: 11
+  }
+  const [day, month, year] = String(value).split(' ')
+
+  if (!day || !month || !year || monthIndexes[month] === undefined) return 0
+  return Date.UTC(Number(year), monthIndexes[month], Number(day))
 }
 
 function handleKeydown(event: KeyboardEvent) {
@@ -119,6 +249,7 @@ function getBadgeClass(value: string | number) {
 
   if (
     normalizedValue.includes('tunda') ||
+    normalizedValue.includes('peringatan') ||
     normalizedValue.includes('tempo') ||
     normalizedValue.includes('verifikasi') ||
     normalizedValue.includes('menunggu') ||
@@ -136,6 +267,9 @@ watch(
   async isOpen => {
     if (isOpen) {
       searchQuery.value = ''
+      currentPage.value = 1
+      sortKey.value = null
+      sortDirection.value = 'ascending'
       previousActiveElement = document.activeElement as HTMLElement | null
       previousBodyOverflow = document.body.style.overflow
       document.body.style.overflow = 'hidden'
@@ -150,6 +284,16 @@ watch(
     previousActiveElement?.focus()
   }
 )
+
+watch(searchQuery, () => {
+  currentPage.value = 1
+})
+
+watch(totalPages, pages => {
+  if (currentPage.value > pages) {
+    currentPage.value = pages
+  }
+})
 
 onBeforeUnmount(() => {
   document.body.style.overflow = previousBodyOverflow
@@ -237,7 +381,12 @@ onBeforeUnmount(() => {
               </label>
 
               <p class="text-sm text-[#667085]" aria-live="polite">
-                {{ filteredRows.length }} dari {{ rows.length }} data
+                <template v-if="hasPagination">
+                  {{ firstDisplayedRow }}–{{ lastDisplayedRow }} dari {{ filteredRows.length }} data
+                </template>
+                <template v-else>
+                  {{ filteredRows.length }} dari {{ rows.length }} data
+                </template>
               </p>
             </div>
 
@@ -251,14 +400,40 @@ onBeforeUnmount(() => {
                       scope="col"
                       class="px-4 py-3 font-semibold"
                       :class="getAlignmentClass(column.align)"
+                      :aria-sort="getAriaSort(column)"
                     >
-                      {{ column.label }}
+                      <button
+                        v-if="column.sortable"
+                        type="button"
+                        class="inline-flex w-full items-center gap-1.5 rounded-sm hover:text-[#344054] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7367F0]"
+                        :class="column.align === 'right' ? 'justify-end' : ''"
+                        :aria-label="`Urutkan berdasarkan ${column.label}`"
+                        @click="sortBy(column)"
+                      >
+                        <span>{{ column.label }}</span>
+                        <ArrowUp
+                          v-if="sortKey === column.key && sortDirection === 'ascending'"
+                          class="h-3.5 w-3.5"
+                          aria-hidden="true"
+                        />
+                        <ArrowDown
+                          v-else-if="sortKey === column.key && sortDirection === 'descending'"
+                          class="h-3.5 w-3.5"
+                          aria-hidden="true"
+                        />
+                        <ArrowUpDown
+                          v-else
+                          class="h-3.5 w-3.5 opacity-60"
+                          aria-hidden="true"
+                        />
+                      </button>
+                      <template v-else>{{ column.label }}</template>
                     </th>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-[#EAECF0]">
                   <tr
-                    v-for="row in filteredRows"
+                    v-for="row in displayedRows"
                     :key="row.id"
                     class="hover:bg-[#F8F7FA]"
                   >
@@ -292,7 +467,40 @@ onBeforeUnmount(() => {
             </div>
           </div>
 
-          <footer class="flex shrink-0 justify-end border-t border-[#EAECF0] px-4 py-3 sm:px-6">
+          <footer class="flex shrink-0 items-center justify-between gap-4 border-t border-[#EAECF0] px-4 py-3 sm:px-6">
+            <div
+              v-if="hasPagination && filteredRows.length"
+              class="flex items-center gap-2"
+            >
+              <button
+                type="button"
+                class="inline-flex items-center gap-1 rounded-lg border border-[#EAECF0] bg-white px-3 py-2 text-sm font-semibold text-[#344054] transition-colors hover:bg-[#F8F7FA] disabled:cursor-not-allowed disabled:opacity-40"
+                :disabled="currentPage === 1"
+                aria-label="Halaman sebelumnya"
+                @click="previousPage"
+              >
+                <ChevronLeft class="h-4 w-4" aria-hidden="true" />
+                <span class="hidden sm:inline">Sebelumnya</span>
+              </button>
+
+              <span class="min-w-24 text-center text-sm text-[#667085]">
+                Halaman {{ currentPage }} dari {{ totalPages }}
+              </span>
+
+              <button
+                type="button"
+                class="inline-flex items-center gap-1 rounded-lg border border-[#EAECF0] bg-white px-3 py-2 text-sm font-semibold text-[#344054] transition-colors hover:bg-[#F8F7FA] disabled:cursor-not-allowed disabled:opacity-40"
+                :disabled="currentPage === totalPages"
+                aria-label="Halaman berikutnya"
+                @click="nextPage"
+              >
+                <span class="hidden sm:inline">Berikutnya</span>
+                <ChevronRight class="h-4 w-4" aria-hidden="true" />
+              </button>
+            </div>
+
+            <span v-else />
+
             <button
               type="button"
               class="rounded-lg border border-[#EAECF0] bg-white px-4 py-2 text-sm font-semibold text-[#344054] transition-colors hover:bg-[#F8F7FA]"

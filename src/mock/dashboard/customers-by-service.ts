@@ -1,3 +1,3 @@
 export {
-  sharedCustomersByService as customersByService
+  sharedCustomerSegments as customerSegments
 } from './customer-metrics'

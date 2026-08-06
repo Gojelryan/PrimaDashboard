@@ -2,6 +2,7 @@
 import type { Component } from 'vue'
 import BaseCard from './BaseCard.vue'
 import CardHeader from './CardHeader.vue'
+import DetailAction from './DetailAction.vue'
 
 defineProps<{
   title: string
@@ -18,6 +19,10 @@ defineProps<{
     }[]
   }
 }>()
+
+defineEmits<{
+  detail: []
+}>()
 </script>
 
 <template>
@@ -27,9 +32,22 @@ defineProps<{
       :icon="icon"
       :icon-bg="iconBg"
       :icon-color="iconColor"
-    />
+    >
+      <template #aside>
+        <div class="flex shrink-0 items-center gap-1">
+          <DetailAction inline @click="$emit('detail')" />
+          <span
+            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
+            :class="[iconBg, iconColor]"
+            aria-hidden="true"
+          >
+            <component :is="icon" class="h-5 w-5" />
+          </span>
+        </div>
+      </template>
+    </CardHeader>
 
-    <div class="mt-5 grid grid-cols-2 gap-3">
+    <div class="mt-4 grid grid-cols-2 gap-3">
       <div
         class="rounded-lg bg-[#F9F5FF] p-3"
       >
@@ -51,7 +69,7 @@ defineProps<{
       </div>
     </div>
 
-    <div class="mt-5 grid grid-cols-[minmax(0,1fr)_72px_104px] gap-3 border-b border-[#EAECF0] pb-2 text-xs font-semibold uppercase tracking-wide text-[#667085]">
+    <div class="mt-4 grid grid-cols-[minmax(0,1fr)_72px_104px] gap-3 border-b border-[#EAECF0] pb-2 text-xs font-semibold uppercase tracking-wide text-[#667085]">
       <span>Wilayah</span>
       <span class="text-right">Mitra</span>
       <span class="text-right">Pelanggan</span>
@@ -74,5 +92,6 @@ defineProps<{
         </span>
       </div>
     </div>
+
   </BaseCard>
 </template>

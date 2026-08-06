@@ -111,6 +111,10 @@ Dashboard Teknisi dan NOC memakai satu sumber mock bersama:
 src/mock/dashboard/technical-operations-dashboard.ts
 ```
 
+Kapasitas internet Direksi dan NOC serta rincian kapasitas seluruh POP
+dipusatkan di `src/mock/dashboard/internet-capacity.ts`. Total internet dihitung
+dari agregasi data POP, bukan ditulis ulang pada masing-masing dashboard.
+
 Dashboard Operasional memakai satu sumber inventaris:
 
 ```text
@@ -129,13 +133,20 @@ Metrik pelanggan yang dipakai lintas dashboard dipusatkan di:
 src/mock/dashboard/customer-metrics.ts
 ```
 
-Total pelanggan Retail, ringkasan layanan, target, titik grafik terbaru, dan
-agregat status Admin diturunkan dari sumber dummy bersama tersebut.
+Sumber tersebut menetapkan periode pelanggan Agustus 2026 serta total Corporate
+271, Retail 5.625, Mitra 1.945, dan Analog 420. Total lintas segmen menjadi
+8.261.
+Ringkasan Direksi, Marketing, Admin, metode pembayaran, distribusi Mitra,
+target, tren, dan piutang Finance selalu diturunkan dari nilai numerik ini.
+Kapasitas akuisisi Retail pada sumber yang sama menetapkan 35.000 Home Pass,
+target 25.000 Home Connect, dan 10.000 port kosong.
 
-Metrik pelanggan Corporate pada Direksi, Marketing, Admin, dan detail diturunkan
-dari sumber yang sama. Seri Corporate pada `CustomerGrowthChart` adalah
-pendapatan, bukan jumlah pelanggan. Retail internal dan Mitra tetap disimpan
-sebagai kelompok berbeda.
+Mutasi Corporate memakai periode YTD 2026, sedangkan mutasi Retail dan Mitra
+memakai periode bulanan Agustus 2026. Seri Corporate pada
+`CustomerGrowthChart` adalah
+pendapatan, bukan jumlah pelanggan. Dataset popup Corporate dan Retail berada
+di `customer-detail-data.ts`; masing-masing berisi sampel dummy 100 pelanggan
+dan tidak dianggap sebagai seluruh populasi.
 
 Data karyawan lintas dashboard dipusatkan di:
 

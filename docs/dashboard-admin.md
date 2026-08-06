@@ -91,6 +91,7 @@ Sudah ada:
 - KPI card dengan icon dan warna semantik Untitled UI
 - Alert pelanggan isolir
 - Indikator pelanggan baru, putus, dan outstanding per segmen
+- Total segmen dan metode pembayaran direkonsiliasi ke total 8.261 pelanggan
 - Tabel kolektor dengan badge penyelesaian
 - Progress kwitansi dan metode pembayaran
 - Reusable `DashboardPanelCard.vue`

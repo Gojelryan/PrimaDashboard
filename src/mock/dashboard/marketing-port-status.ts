@@ -1,7 +1,11 @@
+import { retailAcquisitionCapacity } from './customer-metrics'
+
 export const portStatus = {
-  progress: 50,
-  homePass: '20.000',
-  emptyPort: '10.000',
+  progress: Math.round(
+    (retailAcquisitionCapacity.targetHomeConnect / retailAcquisitionCapacity.homePass) * 100
+  ),
+  homePass: retailAcquisitionCapacity.homePass,
+  emptyPort: retailAcquisitionCapacity.emptyPort,
   potentialAreas: [
     'Rappocini - Makassar',
     'Latimojong - Sinjai',

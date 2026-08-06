@@ -6,6 +6,10 @@ import {
   employeeMetrics,
   technicianEmployeeNames,
 } from './employee-metrics'
+import { internetCapacity, popCapacity } from './internet-capacity'
+
+const dailyInstallationPerformance = [2, 3, 2, 2, 4, 3, 5]
+const foWithdrawalPerformance = [3000, 800, 12100, 20000, 8400, 2800, 12000]
 
 export const technicalOperationsDashboard = {
   technician: {
@@ -67,8 +71,12 @@ export const technicalOperationsDashboard = {
     ],
     teamPerformance: technicianEmployeeNames.map((name, index) => ({
       name,
-      dailyInstallation: [2, 3, 2, 2, 4, 3, 5][index],
-      foWithdrawalMeters: [3000, 800, 12100, 20000, 8400, 2800, 12000][index]
+      dailyInstallation: dailyInstallationPerformance[
+        index % dailyInstallationPerformance.length
+      ] ?? 0,
+      foWithdrawalMeters: foWithdrawalPerformance[
+        index % foWithdrawalPerformance.length
+      ] ?? 0
     })),
     materialStock: [
       { material: 'Kabel Fiber 48 Core', available: 1000, minimum: 5000, unit: 'm' },
@@ -81,7 +89,7 @@ export const technicalOperationsDashboard = {
       { label: 'ODP', value: 210 },
       { label: 'ODC', value: 34 },
       { label: 'OLT', value: 27 },
-      { label: 'POP', value: 11 },
+      { label: 'POP', value: 27 },
       { label: 'Tiang', value: 163 }
     ]
   },
@@ -102,11 +110,7 @@ export const technicalOperationsDashboard = {
       inProgress: 8,
       pending: 4
     },
-    internetCapacity: {
-      totalGbps: 200,
-      usedGbps: 150,
-      availableGbps: 50
-    },
+    internetCapacity,
     serviceAlarms: [
       {
         label: 'Link Down - Makassar - Gowa',
@@ -155,19 +159,7 @@ export const technicalOperationsDashboard = {
       { area: 'Pinrang', total: 3 },
       { area: 'Palopo', total: 5 }
     ],
-    popCapacity: [
-      { name: 'Makassar A', capacityGbps: 5, utilizationPercent: 80 },
-      { name: 'Makassar AB', capacityGbps: 5, utilizationPercent: 75 },
-      { name: 'Makassar A12', capacityGbps: 2, utilizationPercent: 90 },
-      { name: 'Gowa A', capacityGbps: 1, utilizationPercent: 95 },
-      { name: 'Gowa B', capacityGbps: 5, utilizationPercent: 48 },
-      { name: 'Gowa C', capacityGbps: 5, utilizationPercent: 65 },
-      { name: 'Gowa ABC', capacityGbps: 5, utilizationPercent: 30 },
-      { name: 'Maros A', capacityGbps: 2, utilizationPercent: 25 },
-      { name: 'Palopo A', capacityGbps: 2, utilizationPercent: 15 },
-      { name: 'Palopo B', capacityGbps: 5, utilizationPercent: 30 },
-      { name: 'Palopo C', capacityGbps: 5, utilizationPercent: 70 }
-    ]
+    popCapacity
   }
 } satisfies {
   technician: TechnicianDashboardResponse
