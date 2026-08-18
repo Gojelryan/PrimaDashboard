@@ -1,14 +1,20 @@
 import {
   financialMetrics,
   financialReportingPeriod,
-  formatFinancialCurrency,
-  formatFinancialCurrencyCompact,
   selectedFinancialMetric,
 } from './financial-metrics'
 import {
-  formatCustomerCurrency,
   totalCustomerOutstanding,
 } from './customer-metrics'
+import {
+  commercialProjects,
+  totalCommercialProjectValue,
+} from './commercial-performance'
+import {
+  formatCustomerCurrency,
+  formatFinancialCurrency,
+  formatFinancialCurrencyCompact,
+} from '../../utils/dashboard-formatters'
 
 const selectedCashFlow = selectedFinancialMetric.income - selectedFinancialMetric.expense
 
@@ -42,5 +48,10 @@ export const financeDashboard = {
     { date: '27-7-2026', item: 'ODP 16 core', quantity: '20 Unit', amount: 'Rp 4.500.000', status: 'Jatuh Tempo' },
     { date: '29-7-2026', item: 'Fiber Optic 48c', quantity: '5.000 meter', amount: 'Rp 5.600.000', status: 'Diproses' },
     { date: '25-7-2026', item: 'IP Transit', quantity: '5 Gbps', amount: 'Rp 10.000.000', status: 'Lunas' }
-  ]
+  ],
+  projectContracts: {
+    period: 'Per Agustus 2026',
+    totalValue: totalCommercialProjectValue,
+    items: commercialProjects,
+  }
 }

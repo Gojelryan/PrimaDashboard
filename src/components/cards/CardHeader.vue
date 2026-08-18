@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import type { Component } from 'vue'
 
 withDefaults(defineProps<{
@@ -12,8 +12,8 @@ withDefaults(defineProps<{
 }>(), {
   subtitle: undefined,
   icon: undefined,
-  iconBg: 'bg-[#F4EBFF]',
-  iconColor: 'text-[#7F56D9]',
+  iconBg: 'bg-[var(--uui-brand-100)]',
+  iconColor: 'text-[var(--uui-brand-600)]',
   titleAs: 'h3',
   iconSize: 'md'
 })
@@ -27,14 +27,14 @@ withDefaults(defineProps<{
       <div class="min-w-0">
         <component
           :is="titleAs"
-          class="truncate text-lg font-semibold text-[#101828]"
+          class="break-words text-base font-semibold leading-6 text-[var(--uui-gray-900)] sm:text-lg"
         >
           {{ title }}
         </component>
 
         <p
           v-if="subtitle"
-          class="mt-1 text-sm text-[#667085]"
+          class="mt-1 text-sm text-[var(--uui-gray-500)]"
         >
           {{ subtitle }}
         </p>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { ref } from 'vue'
 import { Users } from 'lucide-vue-next'
 
@@ -31,11 +31,11 @@ const employeeColumns = [
     <TechnicianPanelCard
       title="Total Karyawan"
       :icon="Users"
-      icon-bg="bg-[#E9E7FD]"
-      icon-color="text-[#7367F0]"
+      icon-bg="bg-[var(--uui-brand-100)]"
+      icon-color="text-[var(--uui-brand-600)]"
     >
       <div class="flex h-full flex-col">
-        <p class="text-3xl font-bold text-[#5D596C]">
+        <p class="text-3xl font-bold text-[var(--uui-gray-900)]">
           {{ humanResourceDashboard.employeeSummary.total }}
         </p>
 
@@ -45,8 +45,8 @@ const employeeColumns = [
             :key="item.label"
             class="flex justify-between gap-4"
           >
-            <span class="text-[#6F6B7D]">{{ item.label }}</span>
-            <span class="font-semibold text-[#5D596C]">{{ item.value }}</span>
+            <span class="text-[var(--uui-gray-700)]">{{ item.label }}</span>
+            <span class="font-semibold text-[var(--uui-gray-900)]">{{ item.value }}</span>
           </div>
         </div>
 
@@ -61,7 +61,7 @@ const employeeColumns = [
         padding="compact"
       >
         <CardHeader :title="division.label" />
-        <p class="mt-5 text-2xl font-bold text-[#7367F0]">
+        <p class="mt-5 text-2xl font-bold text-[var(--uui-brand-600)]">
           {{ division.value }}
         </p>
       </BaseCard>

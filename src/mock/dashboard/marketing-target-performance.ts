@@ -1,9 +1,11 @@
 import {
   customerMetrics,
-  formatCustomerCount,
-  formatCustomerCurrency,
   retailAcquisitionCapacity,
 } from './customer-metrics'
+import {
+  formatCustomerCount,
+  formatCustomerCurrency,
+} from '../../utils/dashboard-formatters'
 
 const corporateRevenueTarget = 25_000_000_000
 const corporateRevenueCurrent = 12_000_000_000

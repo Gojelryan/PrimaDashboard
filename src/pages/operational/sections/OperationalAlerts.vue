@@ -1,6 +1,6 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { ref } from 'vue'
-import { AlertCircle, CarFront, PackageX } from 'lucide-vue-next'
+import { AlertCircle, CarFront, ExternalLink, PackageX } from 'lucide-vue-next'
 
 import BaseCard from '../../../components/cards/BaseCard.vue'
 import CardHeader from '../../../components/cards/CardHeader.vue'
@@ -39,8 +39,8 @@ const cards = [
     title: 'Barang Habis',
     items: outOfStock.map(item => item.item),
     icon: PackageX,
-    iconClass: 'bg-[#FCE5E6] text-[#EA5455]',
-    badgeClass: 'bg-[#FCE5E6] text-[#EA5455]',
+    iconClass: 'bg-[var(--uui-error-50)] text-[var(--uui-error-600)]',
+    badgeClass: 'bg-[var(--uui-error-50)] text-[var(--uui-error-600)]',
     badge: `${outOfStock.length} item`,
     role: 'alert' as const
   },
@@ -52,8 +52,8 @@ const cards = [
       `Service · ${operationalDashboard.vehicles.service}`
     ],
     icon: CarFront,
-    iconClass: 'bg-[#D9F7FC] text-[#00CFE8]',
-    badgeClass: 'bg-[#E9E7FD] text-[#7367F0]',
+    iconClass: 'bg-[var(--uui-blue-50)] text-[var(--uui-blue-600)]',
+    badgeClass: 'bg-[var(--uui-brand-100)] text-[var(--uui-brand-600)]',
     badge: `${operationalDashboard.vehicles.total} unit`,
     role: undefined
   }
@@ -87,12 +87,24 @@ const cards = [
           </template>
         </CardHeader>
 
-        <ul class="mt-4 space-y-2 text-sm text-[#6F6B7D]">
+        <ul class="mt-4 space-y-2 text-sm text-[var(--uui-gray-700)]">
           <li v-for="item in card.items" :key="item" class="flex items-start gap-2">
-            <AlertCircle class="mt-0.5 h-4 w-4 shrink-0 text-[#A5A2AD]" aria-hidden="true" />
+            <AlertCircle class="mt-0.5 h-4 w-4 shrink-0 text-[var(--uui-gray-500)]" aria-hidden="true" />
             <span>{{ item }}</span>
           </li>
         </ul>
+
+        <a
+          v-if="card.title === 'Kendaraan'"
+          href="https://primatrack.id/login"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-4 inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--uui-brand-600)] px-3.5 py-2 text-sm font-semibold text-[var(--uui-surface)] shadow-[var(--uui-shadow-xs)] transition-colors hover:bg-[var(--uui-brand-700)]"
+          aria-label="Buka PrimaTrack di tab baru"
+        >
+          Buka PrimaTrack
+          <ExternalLink class="h-4 w-4" aria-hidden="true" />
+        </a>
 
         <DetailAction
           v-if="card.title === 'Barang Habis'"

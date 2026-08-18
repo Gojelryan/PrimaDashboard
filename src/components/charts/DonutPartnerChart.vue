@@ -1,7 +1,8 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { computed } from 'vue'
 import ApexChart from 'vue3-apexcharts'
 import type { ApexOptions } from 'apexcharts'
+import { formatNumber } from '../../utils/dashboard-formatters'
 
 interface PartnerArea {
   name: string
@@ -17,14 +18,14 @@ const props = defineProps<{
 }>()
 
 const chartColors = [
-  '#7F56D9',
-  '#079455',
-  '#DC6803',
-  '#D92D20',
-  '#1570EF',
-  '#9E77ED',
-  '#F97066',
-  '#17B26A'
+  'var(--uui-brand-600)',
+  'var(--uui-success-600)',
+  'var(--uui-warning-600)',
+  'var(--uui-error-600)',
+  'var(--uui-blue-600)',
+  'var(--uui-brand-500)',
+  'var(--uui-error-500)',
+  'var(--uui-success-500)'
 ]
 
 const chartSeries = computed(() => props.data.areas.map(
@@ -91,24 +92,24 @@ const chartOptions = computed<ApexOptions>(() => ({
 
         <div>
 
-            <p class="text-[11px] uppercase tracking-wide text-[#A5A2AD]">
+            <p class="text-[11px] uppercase tracking-wide text-[var(--uui-gray-500)]">
                 Total Mitra
             </p>
 
-            <p class="mt-1 text-2xl font-bold text-[#5D596C]">
-                {{ data.totalPartner.toLocaleString('id-ID') }}
+            <p class="mt-1 text-2xl font-bold text-[var(--uui-gray-900)]">
+                {{ formatNumber(data.totalPartner) }}
             </p>
 
         </div>
 
         <div class="text-right">
 
-            <p class="text-[11px] uppercase tracking-wide text-[#A5A2AD]">
+            <p class="text-[11px] uppercase tracking-wide text-[var(--uui-gray-500)]">
                 Total Pelanggan
             </p>
 
-            <p class="mt-1 text-2xl font-bold text-[#5D596C]">
-                {{ totalCustomer.toLocaleString('id-ID') }}
+            <p class="mt-1 text-2xl font-bold text-[var(--uui-gray-900)]">
+                {{ formatNumber(totalCustomer) }}
             </p>
 
         </div>
@@ -129,7 +130,7 @@ const chartOptions = computed<ApexOptions>(() => ({
 
     </div>
 
-    <div class="shrink-0 border-t border-[#DBDADE]"></div>
+    <div class="shrink-0 border-t border-[var(--uui-gray-200)]"></div>
 
     <!-- LIST -->
 
@@ -187,7 +188,7 @@ const chartOptions = computed<ApexOptions>(() => ({
                                 class="
                                     text-sm
                                     font-medium
-                                    text-[#5D596C]
+                                    text-[var(--uui-gray-900)]
                                     truncate
                                 "
                             >
@@ -198,7 +199,7 @@ const chartOptions = computed<ApexOptions>(() => ({
                                 class="
                                     mt-1
                                     text-xs
-                                    text-[#A5A2AD]
+                                    text-[var(--uui-gray-500)]
                                 "
                             >
                                 {{ area.partner }} Mitra
@@ -212,11 +213,11 @@ const chartOptions = computed<ApexOptions>(() => ({
                         class="
                             text-sm
                             font-semibold
-                            text-[#5D596C]
+                            text-[var(--uui-gray-900)]
                             shrink-0
                         "
                     >
-                        {{ area.customer.toLocaleString('id-ID') }}
+                        {{ formatNumber(area.customer) }}
                     </span>
 
                 </div>

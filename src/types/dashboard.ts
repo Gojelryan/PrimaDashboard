@@ -154,6 +154,16 @@ export interface MarketingTarget {
   progressPercent: number
 }
 
+export interface CommercialProject {
+  id: string
+  name: string
+  customer: string
+  employeeId: string
+  contractValue: number
+  progressPercent: number
+  billingStatus: string
+}
+
 export interface MarketingDashboardResponse extends DashboardResponseMeta {
   customerSegments: {
     segment: 'corporate' | 'retail'
@@ -189,6 +199,24 @@ export interface MarketingDashboardResponse extends DashboardResponseMeta {
     retailCustomers: CustomerMovementTrendPoint[]
     partnerCustomers: CustomerMovementTrendPoint[]
   }
+  teamPerformance: {
+    employeeId: string
+    employeeName: string
+    area: string
+    retailCustomer: number
+    corporateCustomer: number
+    project: number
+  }[]
+  teamCorporateCustomers: {
+    id: string
+    employeeId: string
+    customer: string
+    area: string
+    package: string
+    joinedAt: string
+    contractValue: number
+    customerStatus: string
+  }[]
 }
 
 export interface TechnicianDashboardResponse extends DashboardResponseMeta {
@@ -357,6 +385,11 @@ export interface FinanceDashboardResponse extends DashboardResponseMeta {
     amount: number
     status: 'due' | 'processing' | 'paid'
   }[]
+  projectContracts: {
+    period: string
+    totalValue: number
+    items: CommercialProject[]
+  }
 }
 
 export interface OperationalDashboardResponse extends DashboardResponseMeta {

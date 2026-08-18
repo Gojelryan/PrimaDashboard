@@ -1,4 +1,6 @@
-const customerCountFormatter = new Intl.NumberFormat('id-ID')
+import {
+  formatCustomerCount,
+} from '../../utils/dashboard-formatters'
 
 export const customerReportingPeriod = {
   year: 2026,
@@ -106,35 +108,3 @@ export const sharedCustomerSegments = [
     value: formatCustomerCount(customerMetrics.analog.total)
   }
 ]
-
-export function formatCustomerCount(value: number) {
-  return customerCountFormatter.format(value)
-}
-
-export function formatCustomerCurrency(value: number) {
-  return `Rp ${new Intl.NumberFormat('id-ID').format(value)}`
-}
-
-export function formatCustomerCurrencyCompact(value: number) {
-  if (value >= 1_000_000_000) {
-    return `Rp ${new Intl.NumberFormat('id-ID', {
-      maximumFractionDigits: 2
-    }).format(value / 1_000_000_000)} M`
-  }
-
-  if (value >= 1_000_000) {
-    return `Rp ${new Intl.NumberFormat('id-ID', {
-      maximumFractionDigits: 2
-    }).format(value / 1_000_000)} Jt`
-  }
-
-  return formatCustomerCurrency(value)
-}
-
-export function formatCustomerPercentage(value: number, total: number) {
-  if (total === 0) return '0'
-
-  return new Intl.NumberFormat('id-ID', {
-    maximumFractionDigits: 1
-  }).format((value / total) * 100)
-}

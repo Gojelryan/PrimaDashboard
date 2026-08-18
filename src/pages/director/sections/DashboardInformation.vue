@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import {
     Activity,
     Network,
@@ -24,8 +24,8 @@ import { networkHealth } from '../../../mock/dashboard/network-health'
                 title="Pelanggan"
                 subtitle="Berdasarkan segmen"
                 :icon="UsersRound"
-                icon-bg="bg-[#D9F7FC]"
-                icon-color="text-[#00CFE8]"
+                icon-bg="bg-[var(--uui-blue-50)]"
+                icon-color="text-[var(--uui-blue-600)]"
                 :items="customerSegments"
             />
         </div>
@@ -34,8 +34,8 @@ import { networkHealth } from '../../../mock/dashboard/network-health'
             <InformationListCard
                 title="Ekspansi & Infrastruktur"
                 :icon="Network"
-                icon-bg="bg-[#E9E7FD]"
-                icon-color="text-[#7367F0]"
+                icon-bg="bg-[var(--uui-brand-100)]"
+                icon-color="text-[var(--uui-brand-600)]"
                 :items="infrastructureExpansion"
             />
         </div>
@@ -53,8 +53,8 @@ import { networkHealth } from '../../../mock/dashboard/network-health'
                 title="Kesehatan Jaringan"
                 :value="networkHealth.value"
                 :icon="Activity"
-                icon-bg="bg-[#DDF6E8]"
-                icon-color="text-[#28C76F]"
+                icon-bg="bg-[var(--uui-success-50)]"
+                icon-color="text-[var(--uui-success-600)]"
                 item-layout="stacked"
                 :items="networkHealth.items"
             />

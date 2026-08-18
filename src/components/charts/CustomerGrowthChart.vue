@@ -1,7 +1,8 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import ApexChart from 'vue3-apexcharts'
 import type { ApexOptions } from 'apexcharts'
+import { formatNumber } from '../../utils/dashboard-formatters'
 interface GrowthSeries {
   categories: readonly string[]
   series: readonly number[]
@@ -83,7 +84,7 @@ const chartOptions = computed<ApexOptions>(() => {
       }
     },
 
-    colors: ['#7F56D9', '#079455'],
+    colors: ['var(--uui-brand-600)', 'var(--uui-success-600)'],
 
     stroke: {
       curve: 'smooth',
@@ -101,7 +102,7 @@ const chartOptions = computed<ApexOptions>(() => {
     },
 
     grid: {
-      borderColor: '#EAECF0'
+      borderColor: 'var(--uui-gray-200)'
     },
 
     xaxis: {
@@ -131,7 +132,7 @@ const chartOptions = computed<ApexOptions>(() => {
               return `Rp ${billion} M`
             }
 
-            return `Rp ${billion.toLocaleString('id-ID')} M`
+            return `Rp ${formatNumber(billion)} M`
           }
 
           return `Rp ${value} Jt`
@@ -144,7 +145,7 @@ const chartOptions = computed<ApexOptions>(() => {
 
       labels: {
         formatter(value: number) {
-          return value.toLocaleString('id-ID')
+          return formatNumber(value)
         }
       }
     },
@@ -164,12 +165,10 @@ const chartOptions = computed<ApexOptions>(() => {
 
 function formatCorporateRevenue(value: number) {
   if (value >= 1000) {
-    return `Rp ${(value / 1000).toLocaleString('id-ID', {
-      maximumFractionDigits: 2
-    })} M`
+    return `Rp ${formatNumber(value / 1000, 2)} M`
   }
 
-  return `Rp ${value.toLocaleString('id-ID')} Jt`
+  return `Rp ${formatNumber(value)} Jt`
 }
 
 function formatCustomerMovement(context?: TooltipContext) {
@@ -201,9 +200,9 @@ function formatCustomerMovement(context?: TooltipContext) {
             v-model="selectedType"
             type="radio"
             value="corporate"
-            class="accent-[#7367F0]"
+            class="accent-[var(--uui-brand-600)]"
           >
-          <span class="text-sm font-medium text-[#6F6B7D]">
+          <span class="text-sm font-medium text-[var(--uui-gray-700)]">
             Corporate
           </span>
         </label>
@@ -213,9 +212,9 @@ function formatCustomerMovement(context?: TooltipContext) {
             v-model="selectedType"
             type="radio"
             value="retail"
-            class="accent-[#7367F0]"
+            class="accent-[var(--uui-brand-600)]"
           >
-          <span class="text-sm font-medium text-[#6F6B7D]">
+          <span class="text-sm font-medium text-[var(--uui-gray-700)]">
             Retail
           </span>
         </label>
@@ -229,7 +228,7 @@ function formatCustomerMovement(context?: TooltipContext) {
           : ''"
       >
 
-        <span class="text-sm text-[#6F6B7D]">
+        <span class="text-sm text-[var(--uui-gray-700)]">
           Mitra
         </span>
 
@@ -241,8 +240,8 @@ function formatCustomerMovement(context?: TooltipContext) {
           :disabled="selectedType === 'corporate'"
           class="relative h-6 w-11 rounded-full transition"
           :class="[
-            showPartner ? 'bg-[#7367F0]' : 'bg-[#DBDADE]',
-            'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7367F0]'
+            showPartner ? 'bg-[var(--uui-brand-600)]' : 'bg-[var(--uui-gray-300)]',
+            'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--uui-brand-600)]'
           ]"
           @click="showPartner = !showPartner"
         >
@@ -256,7 +255,7 @@ function formatCustomerMovement(context?: TooltipContext) {
 
     </div>
 
-    <div class="my-5 shrink-0 border-b border-[#DBDADE]"></div>
+    <div class="my-5 shrink-0 border-b border-[var(--uui-gray-200)]"></div>
 
     <div class="min-h-0 flex-1 overflow-hidden">
 

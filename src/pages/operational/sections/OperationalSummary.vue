@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { ref } from 'vue'
 import { ClipboardList, PackageMinus, PackagePlus } from 'lucide-vue-next'
 
@@ -8,8 +8,8 @@ import DetailAction from '../../../components/cards/DetailAction.vue'
 import DetailTableModal from '../../../components/modals/DetailTableModal.vue'
 import { operationalDashboard } from '../../../mock/dashboard/operational-dashboard'
 import { operationalItemRequestDetails } from '../../../mock/dashboard/priority-detail-data'
+import { formatNumber } from '../../../utils/dashboard-formatters'
 
-const numberFormatter = new Intl.NumberFormat('id-ID')
 const activeDetail = ref<'incoming' | 'outgoing' | 'request' | null>(null)
 
 const movementDateFormatter = new Intl.DateTimeFormat('id-ID', {
@@ -81,9 +81,9 @@ const cards = [
     value: operationalDashboard.summary.incomingItems,
     detail: operationalDashboard.period.label,
     icon: PackagePlus,
-    iconBg: 'bg-[#DDF6E8]',
-    iconColor: 'text-[#28C76F]',
-    accentClass: 'bg-[#28C76F]',
+    iconBg: 'bg-[var(--uui-success-50)]',
+    iconColor: 'text-[var(--uui-success-600)]',
+    accentClass: 'bg-[var(--uui-success-600)]',
     detailType: 'incoming' as const
   },
   {
@@ -91,9 +91,9 @@ const cards = [
     value: operationalDashboard.summary.outgoingItems,
     detail: operationalDashboard.period.label,
     icon: PackageMinus,
-    iconBg: 'bg-[#FFF0E1]',
-    iconColor: 'text-[#FF9F43]',
-    accentClass: 'bg-[#FF9F43]',
+    iconBg: 'bg-[var(--uui-warning-50)]',
+    iconColor: 'text-[var(--uui-warning-600)]',
+    accentClass: 'bg-[var(--uui-warning-600)]',
     detailType: 'outgoing' as const
   },
   {
@@ -101,9 +101,9 @@ const cards = [
     value: operationalDashboard.summary.itemRequests,
     detail: `${operationalDashboard.summary.pendingRequests} menunggu persetujuan`,
     icon: ClipboardList,
-    iconBg: 'bg-[#E9E7FD]',
-    iconColor: 'text-[#7367F0]',
-    accentClass: 'bg-[#7367F0]',
+    iconBg: 'bg-[var(--uui-brand-100)]',
+    iconColor: 'text-[var(--uui-brand-600)]',
+    accentClass: 'bg-[var(--uui-brand-600)]',
     detailType: 'request' as const
   }
 ]
@@ -125,10 +125,10 @@ const cards = [
           :icon-color="card.iconColor"
         />
 
-        <p class="mt-4 text-3xl font-bold text-[#101828]">
-          {{ numberFormatter.format(card.value) }}
+        <p class="mt-4 text-3xl font-bold text-[var(--uui-gray-900)]">
+          {{ formatNumber(card.value) }}
         </p>
-        <p class="mt-1 text-sm text-[#667085]">{{ card.detail }}</p>
+        <p class="mt-1 text-sm text-[var(--uui-gray-500)]">{{ card.detail }}</p>
 
         <DetailAction
           @click="activeDetail = card.detailType"
@@ -143,7 +143,7 @@ const cards = [
       :columns="incomingColumns"
       :rows="incomingRows"
       :summary="[
-        { label: 'Total Barang Masuk', value: numberFormatter.format(operationalDashboard.summary.incomingItems), tone: 'success' },
+        { label: 'Total Barang Masuk', value: formatNumber(operationalDashboard.summary.incomingItems), tone: 'success' },
         { label: 'Jumlah Transaksi', value: String(incomingRows.length) },
         { label: 'Transaksi Terakhir', value: '27 Juli 2026' }
       ]"
@@ -158,7 +158,7 @@ const cards = [
       :columns="outgoingColumns"
       :rows="outgoingRows"
       :summary="[
-        { label: 'Total Barang Keluar', value: numberFormatter.format(operationalDashboard.summary.outgoingItems), tone: 'warning' },
+        { label: 'Total Barang Keluar', value: formatNumber(operationalDashboard.summary.outgoingItems), tone: 'warning' },
         { label: 'Jumlah Transaksi', value: String(outgoingRows.length) },
         { label: 'Transaksi Terakhir', value: '27 Juli 2026' }
       ]"

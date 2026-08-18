@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import { internetCapacity, popCapacity } from './internet-capacity'
+import { commercialProjects } from './commercial-performance'
 import { technicalOperationsDashboard } from './technical-operations-dashboard'
 
 describe('technical operations infrastructure capacity', () => {
@@ -45,5 +46,14 @@ describe('technical operations infrastructure capacity', () => {
         1
       )
     }
+  })
+
+  it('uses the shared commercial project portfolio', () => {
+    expect(technicalOperationsDashboard.technician.runningProjects).toEqual(
+      commercialProjects.map(project => ({
+        name: project.name,
+        progressPercent: project.progressPercent,
+      }))
+    )
   })
 })

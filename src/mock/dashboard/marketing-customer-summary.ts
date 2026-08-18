@@ -1,8 +1,10 @@
 import {
   customerMetrics,
+} from './customer-metrics'
+import {
   formatCustomerCount,
   formatCustomerCurrency,
-} from './customer-metrics'
+} from '../../utils/dashboard-formatters'
 
 export const corporateCustomerSummary = {
   title: 'Corporate',

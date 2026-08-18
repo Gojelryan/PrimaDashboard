@@ -1,7 +1,8 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { computed } from 'vue'
 import ApexChart from 'vue3-apexcharts'
 import type { ApexOptions } from 'apexcharts'
+import { formatCompactNumber, formatCurrency } from '../../utils/dashboard-formatters'
 
 const props = defineProps<{
   items: {
@@ -18,7 +19,7 @@ const chartSeries = computed(() => [
 
 const chartOptions = computed<ApexOptions>(() => ({
   chart: { type: 'area', toolbar: { show: false }, zoom: { enabled: false } },
-  colors: ['#7F56D9', '#079455'],
+  colors: ['var(--uui-brand-600)', 'var(--uui-success-600)'],
   dataLabels: { enabled: false },
   stroke: { curve: 'smooth', width: 2.5 },
   fill: {
@@ -26,35 +27,22 @@ const chartOptions = computed<ApexOptions>(() => ({
     gradient: { opacityFrom: 0.2, opacityTo: 0.01, stops: [0, 90, 100] }
   },
   legend: { position: 'top', horizontalAlign: 'left' },
-  grid: { borderColor: '#EAECF0', strokeDashArray: 4 },
+  grid: { borderColor: 'var(--uui-gray-200)', strokeDashArray: 4 },
   xaxis: {
     categories: props.items.map(item => item.month),
-    labels: { style: { colors: '#667085' } },
+    labels: { style: { colors: 'var(--uui-gray-500)' } },
     axisBorder: { show: false },
     axisTicks: { show: false }
   },
   yaxis: {
     labels: {
-      formatter: formatCompact,
-      style: { colors: ['#667085'] }
+      formatter: formatCompactNumber,
+      style: { colors: ['var(--uui-gray-500)'] }
     }
   },
   tooltip: { y: { formatter: formatCurrency } }
 }))
 
-function formatCurrency(value: number) {
-  return new Intl.NumberFormat('id-ID', {
-    style: 'currency',
-    currency: 'IDR',
-    maximumFractionDigits: 0
-  }).format(value)
-}
-
-function formatCompact(value: number) {
-  return value >= 1000000000
-    ? `${(value / 1000000000).toLocaleString('id-ID', { maximumFractionDigits: 1 })}M`
-    : `${Math.round(value / 1000000).toLocaleString('id-ID')}jt`
-}
 </script>
 
 <template>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import {
   Banknote,
   CreditCard,
@@ -13,15 +13,15 @@ import { adminReceiptCollectors } from '../../../mock/dashboard/admin-receipt-co
 const paymentPresentation = [
   {
     icon: Banknote,
-    iconBg: 'bg-[#DDF6E8]',
-    iconColor: 'text-[#28C76F]',
-    barColor: 'bg-[#28C76F]'
+    iconBg: 'bg-[var(--uui-success-50)]',
+    iconColor: 'text-[var(--uui-success-600)]',
+    barColor: 'bg-[var(--uui-success-600)]'
   },
   {
     icon: CreditCard,
-    iconBg: 'bg-[#E9E7FD]',
-    iconColor: 'text-[#7367F0]',
-    barColor: 'bg-[#7367F0]'
+    iconBg: 'bg-[var(--uui-brand-100)]',
+    iconColor: 'text-[var(--uui-brand-600)]',
+    barColor: 'bg-[var(--uui-brand-600)]'
   }
 ]
 
@@ -32,42 +32,42 @@ function getProgress(completed: string, total: string) {
 
 <template>
   <section class="mt-4 grid grid-cols-1 gap-4 sm:mt-6 sm:gap-6 xl:grid-cols-12">
-    <div class="min-h-[420px] xl:col-span-9">
+    <div class="xl:col-span-9">
       <DashboardPanelCard
         :title="adminReceiptCollectors.title"
         subtitle="Distribusi dan penyelesaian kwitansi"
         :icon="ReceiptText"
-        icon-bg="bg-[#E9E7FD]"
-        icon-color="text-[#7367F0]"
+        icon-bg="bg-[var(--uui-brand-100)]"
+        icon-color="text-[var(--uui-brand-600)]"
       >
         <div class="grid h-full min-h-0 grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1.55fr)_minmax(230px,0.65fr)]">
           <div class="min-h-0 overflow-x-auto">
             <table class="w-full min-w-[560px] text-left text-sm">
               <thead>
-                <tr class="border-b border-[#DBDADE] text-xs uppercase tracking-wide text-[#A5A2AD]">
+                <tr class="border-b border-[var(--uui-gray-200)] text-xs uppercase tracking-wide text-[var(--uui-gray-500)]">
                   <th class="pb-3 font-medium">Kolektor</th>
                   <th class="pb-3 text-center font-medium">Internet</th>
                   <th class="pb-3 text-center font-medium">Analog</th>
                   <th class="pb-3 text-right font-medium">Selesai</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-[#DBDADE]">
+              <tbody class="divide-y divide-[var(--uui-gray-200)]">
                 <tr
                   v-for="collector in adminReceiptCollectors.collectors"
                   :key="collector.name"
-                  class="transition hover:bg-[#F8F7FA]"
+                  class="transition hover:bg-[var(--uui-gray-50)]"
                 >
-                  <td class="py-2.5 font-medium text-[#5D596C]">
+                  <td class="py-2.5 font-medium text-[var(--uui-gray-900)]">
                     {{ collector.name }}
                   </td>
-                  <td class="py-2.5 text-center text-[#6F6B7D]">
+                  <td class="py-2.5 text-center text-[var(--uui-gray-700)]">
                     {{ collector.internet }}
                   </td>
-                  <td class="py-2.5 text-center text-[#6F6B7D]">
+                  <td class="py-2.5 text-center text-[var(--uui-gray-700)]">
                     {{ collector.analog }}
                   </td>
                   <td class="py-2.5 text-right">
-                    <span class="rounded bg-[#DDF6E8] px-2 py-1 text-xs font-medium text-[#28C76F]">
+                    <span class="rounded bg-[var(--uui-success-50)] px-2 py-1 text-xs font-medium text-[var(--uui-success-600)]">
                       {{ collector.completed }}
                     </span>
                   </td>
@@ -77,9 +77,9 @@ function getProgress(completed: string, total: string) {
           </div>
 
           <div>
-            <div class="rounded-lg bg-[#F8F7FA] p-4">
-              <p class="text-sm text-[#A5A2AD]">Total Kwitansi</p>
-              <p class="mt-1 text-3xl font-semibold text-[#5D596C]">
+            <div class="rounded-lg bg-[var(--uui-gray-50)] p-4">
+              <p class="text-sm text-[var(--uui-gray-500)]">Total Kwitansi</p>
+              <p class="mt-1 text-3xl font-semibold text-[var(--uui-gray-900)]">
                 {{ adminReceiptCollectors.totalReceipt }}
               </p>
             </div>
@@ -90,19 +90,19 @@ function getProgress(completed: string, total: string) {
                 :key="category.label"
               >
                 <div class="flex items-center justify-between gap-3 text-sm">
-                  <span class="font-medium text-[#5D596C]">{{ category.label }}</span>
-                  <span class="text-[#6F6B7D]">
+                  <span class="font-medium text-[var(--uui-gray-900)]">{{ category.label }}</span>
+                  <span class="text-[var(--uui-gray-700)]">
                     {{ category.completed }}/{{ category.value }}
                   </span>
                 </div>
-                <div class="mt-2 h-2 overflow-hidden rounded-full bg-[#F1F0F2]">
+                <div class="mt-2 h-2 overflow-hidden rounded-full bg-[var(--uui-gray-100)]">
                   <div
                     class="h-full rounded-full"
-                    :class="index === 0 ? 'bg-[#7367F0]' : 'bg-[#00CFE8]'"
+                    :class="index === 0 ? 'bg-[var(--uui-brand-600)]' : 'bg-[var(--uui-blue-600)]'"
                     :style="{ width: `${getProgress(category.completed, category.value)}%` }"
                   />
                 </div>
-                <p class="mt-1 text-xs text-[#A5A2AD]">
+                <p class="mt-1 text-xs text-[var(--uui-gray-500)]">
                   {{ category.remaining }} belum selesai
                 </p>
               </div>
@@ -112,13 +112,13 @@ function getProgress(completed: string, total: string) {
       </DashboardPanelCard>
     </div>
 
-    <div class="min-h-[340px] xl:col-span-3">
+    <div class="xl:col-span-3">
       <DashboardPanelCard
         :title="adminPaymentCustomers.title"
         subtitle="Metode pembayaran pelanggan"
         :icon="WalletCards"
-        icon-bg="bg-[#DDF6E8]"
-        icon-color="text-[#28C76F]"
+        icon-bg="bg-[var(--uui-success-50)]"
+        icon-color="text-[var(--uui-success-600)]"
       >
         <div class="space-y-6">
           <div
@@ -138,21 +138,21 @@ function getProgress(completed: string, total: string) {
               </div>
               <div class="min-w-0 flex-1">
                 <div class="flex items-center justify-between gap-3">
-                  <span class="text-sm font-medium text-[#5D596C]">
+                  <span class="text-sm font-medium text-[var(--uui-gray-900)]">
                     {{ payment.label }}
                   </span>
-                  <span class="text-sm font-semibold text-[#5D596C]">
+                  <span class="text-sm font-semibold text-[var(--uui-gray-900)]">
                     {{ payment.value }}
                   </span>
                 </div>
-                <div class="mt-2 h-2 overflow-hidden rounded-full bg-[#F1F0F2]">
+                <div class="mt-2 h-2 overflow-hidden rounded-full bg-[var(--uui-gray-100)]">
                   <div
                     class="h-full rounded-full"
                     :class="paymentPresentation[index].barColor"
                     :style="{ width: payment.percentage }"
                   />
                 </div>
-                <p class="mt-1 text-right text-xs text-[#A5A2AD]">
+                <p class="mt-1 text-right text-xs text-[var(--uui-gray-500)]">
                   {{ payment.percentage }}
                 </p>
               </div>

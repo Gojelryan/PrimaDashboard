@@ -1,7 +1,8 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { computed } from 'vue'
 import ApexChart from 'vue3-apexcharts'
 import type { ApexOptions } from 'apexcharts'
+import { formatNumber, formatUnit } from '../../utils/dashboard-formatters'
 
 const props = defineProps<{
   categories: string[]
@@ -33,7 +34,7 @@ const chartOptions = computed<ApexOptions>(() => ({
     }
   },
 
-  colors: ['#7F56D9'],
+  colors: ['var(--uui-brand-600)'],
 
   stroke: {
     curve: 'smooth',
@@ -43,7 +44,7 @@ const chartOptions = computed<ApexOptions>(() => ({
   markers: {
     size: 4,
     strokeWidth: 2,
-    strokeColors: '#FFFFFF'
+    strokeColors: 'var(--uui-surface)'
   },
 
   dataLabels: {
@@ -55,7 +56,7 @@ const chartOptions = computed<ApexOptions>(() => ({
   },
 
   grid: {
-    borderColor: '#EAECF0',
+    borderColor: 'var(--uui-gray-200)',
     strokeDashArray: 4
   },
 
@@ -63,7 +64,7 @@ const chartOptions = computed<ApexOptions>(() => ({
     categories: props.categories,
     labels: {
       style: {
-        colors: '#667085'
+        colors: 'var(--uui-gray-500)'
       }
     }
   },
@@ -74,7 +75,7 @@ const chartOptions = computed<ApexOptions>(() => ({
     tickAmount: 5,
     labels: {
       formatter(value: number) {
-        return value.toLocaleString('id-ID')
+        return formatNumber(value)
       }
     }
   },
@@ -82,7 +83,7 @@ const chartOptions = computed<ApexOptions>(() => ({
   tooltip: {
     y: {
       formatter(value: number) {
-        return `${value.toLocaleString('id-ID')} instalasi`
+        return formatUnit(value, 'instalasi')
       }
     }
   }
@@ -92,12 +93,12 @@ const chartOptions = computed<ApexOptions>(() => ({
 <template>
   <div class="flex h-full min-h-0 flex-col overflow-hidden">
     <div class="shrink-0">
-      <p class="text-sm text-[#A5A2AD]">
+      <p class="text-sm text-[var(--uui-gray-500)]">
         Total pemasangan pekan ini
       </p>
 
-      <p class="mt-1 text-2xl font-bold leading-none text-[#5D596C]">
-        {{ totalWeeklyInstallation.toLocaleString('id-ID') }}
+      <p class="mt-1 text-2xl font-bold leading-none text-[var(--uui-gray-900)]">
+        {{ formatNumber(totalWeeklyInstallation) }}
       </p>
     </div>
 

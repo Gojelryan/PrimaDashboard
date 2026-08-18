@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import {
   Banknote,
   Building2,
@@ -18,48 +18,48 @@ import { financeDashboard } from '../../../mock/dashboard/finance-dashboard'
 const categoryPresentation = {
   'Gaji Karyawan': {
     icon: Banknote,
-    iconBg: 'bg-[#E9E7FD]',
-    iconColor: 'text-[#7367F0]'
+    iconBg: 'bg-[var(--uui-brand-100)]',
+    iconColor: 'text-[var(--uui-brand-600)]'
   },
   Operasional: {
     icon: Wrench,
-    iconBg: 'bg-[#DDF6E8]',
-    iconColor: 'text-[#28C76F]'
+    iconBg: 'bg-[var(--uui-success-50)]',
+    iconColor: 'text-[var(--uui-success-600)]'
   },
   Infrastruktur: {
     icon: Router,
-    iconBg: 'bg-[#D9F7FC]',
-    iconColor: 'text-[#00CFE8]'
+    iconBg: 'bg-[var(--uui-blue-50)]',
+    iconColor: 'text-[var(--uui-blue-600)]'
   },
   Property: {
     icon: Building2,
-    iconBg: 'bg-[#FFF0E1]',
-    iconColor: 'text-[#FF9F43]'
+    iconBg: 'bg-[var(--uui-warning-50)]',
+    iconColor: 'text-[var(--uui-warning-600)]'
   },
   Utilitas: {
     icon: Zap,
-    iconBg: 'bg-[#FCE5E6]',
-    iconColor: 'text-[#EA5455]'
+    iconBg: 'bg-[var(--uui-error-50)]',
+    iconColor: 'text-[var(--uui-error-600)]'
   }
 }
 
 function getCategoryPresentation(category: string) {
   return categoryPresentation[category as keyof typeof categoryPresentation] ?? {
     icon: CircleDollarSign,
-    iconBg: 'bg-[#F1F0F2]',
-    iconColor: 'text-[#6F6B7D]'
+    iconBg: 'bg-[var(--uui-gray-100)]',
+    iconColor: 'text-[var(--uui-gray-700)]'
   }
 }
 </script>
 
 <template>
   <section class="mt-4 grid grid-cols-1 gap-4 sm:mt-6 sm:gap-6 xl:grid-cols-2">
-    <div class="h-[460px] sm:h-[500px]">
+    <div class="dashboard-chart-panel">
       <AnalyticsCard
         title="Pergerakan Keuangan"
         :icon="WalletCards"
-        icon-bg="bg-[#DDF6E8]"
-        icon-color="text-[#28C76F]"
+        icon-bg="bg-[var(--uui-success-50)]"
+        icon-color="text-[var(--uui-success-600)]"
       >
         <RevenueChart :data="financeDashboard.monthlyCashFlow" />
       </AnalyticsCard>
@@ -69,10 +69,10 @@ function getCategoryPresentation(category: string) {
       title="Pengeluaran Terakhir"
       subtitle="Aktivitas pengeluaran Juli 2026"
       :icon="ReceiptText"
-      icon-bg="bg-[#FFF0E1]"
-      icon-color="text-[#FF9F43]"
+      icon-bg="bg-[var(--uui-warning-50)]"
+      icon-color="text-[var(--uui-warning-600)]"
     >
-      <div class="divide-y divide-[#DBDADE]">
+      <div class="divide-y divide-[var(--uui-gray-200)]">
         <div
           v-for="item in financeDashboard.expenses"
           :key="item.date + item.category"
@@ -93,15 +93,12 @@ function getCategoryPresentation(category: string) {
           </div>
 
           <div class="min-w-0 flex-1">
-            <p class="truncate text-sm font-medium text-[#5D596C]">
+            <p class="truncate text-sm font-medium text-[var(--uui-gray-900)]">
               {{ item.description }}
-            </p>
-            <p class="mt-0.5 truncate text-xs text-[#A5A2AD]">
-              {{ item.category }} · {{ item.date }}
             </p>
           </div>
 
-          <span class="shrink-0 text-right text-sm font-semibold text-[#EA5455]">
+          <span class="shrink-0 text-right text-sm font-semibold text-[var(--uui-error-600)]">
             -{{ item.amount }}
           </span>
         </div>

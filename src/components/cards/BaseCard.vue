@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { computed } from 'vue'
 
 defineOptions({
@@ -9,10 +9,12 @@ const props = withDefaults(defineProps<{
   as?: string
   padding?: 'none' | 'compact' | 'default'
   overflow?: 'hidden' | 'visible'
+  hierarchy?: 'prominent' | 'default' | 'subtle'
 }>(), {
   as: 'article',
   padding: 'default',
-  overflow: 'hidden'
+  overflow: 'hidden',
+  hierarchy: 'default'
 })
 
 const paddingClass = computed(() => {
@@ -37,13 +39,17 @@ const paddingClass = computed(() => {
       flex-col
       rounded-xl
       border
-      border-[#EAECF0]
+      border-[var(--uui-gray-200)]
       bg-white
-      shadow-[0_1px_3px_rgba(16,24,40,0.10),0_1px_2px_rgba(16,24,40,0.06)]
     "
     :class="[
       paddingClass,
-      overflow === 'hidden' ? 'overflow-hidden' : 'overflow-visible'
+      overflow === 'hidden' ? 'overflow-hidden' : 'overflow-visible',
+      hierarchy === 'prominent'
+        ? 'shadow-[var(--uui-shadow-sm)]'
+        : hierarchy === 'subtle'
+          ? 'bg-[var(--uui-gray-25)] shadow-none'
+          : 'shadow-[var(--uui-shadow-xs)]'
     ]"
   >
     <slot />

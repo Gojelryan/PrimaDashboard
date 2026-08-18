@@ -1,8 +1,8 @@
 import {
   customerMetrics,
   customerReportingPeriod,
-  formatCustomerCurrency
 } from './customer-metrics'
+import { formatCustomerCurrency } from '../../utils/dashboard-formatters'
 
 export interface CustomerDetailRow {
   id: string

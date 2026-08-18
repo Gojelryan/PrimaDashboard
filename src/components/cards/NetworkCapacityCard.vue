@@ -1,8 +1,9 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { Gauge, Wifi } from 'lucide-vue-next'
 
 import BaseCard from './BaseCard.vue'
 import CardHeader from './CardHeader.vue'
+import { formatNumber } from '../../utils/dashboard-formatters'
 
 withDefaults(defineProps<{
   totalGbps: number
@@ -13,9 +14,6 @@ withDefaults(defineProps<{
   title: 'Kapasitas Internet'
 })
 
-const numberFormatter = new Intl.NumberFormat('id-ID', {
-  maximumFractionDigits: 2
-})
 </script>
 
 <template>
@@ -23,32 +21,32 @@ const numberFormatter = new Intl.NumberFormat('id-ID', {
     <CardHeader
       :title="title"
       :icon="Wifi"
-      icon-bg="bg-[#D9F7FC]"
-      icon-color="text-[#00CFE8]"
+      icon-bg="bg-[var(--uui-blue-50)]"
+      icon-color="text-[var(--uui-blue-600)]"
     />
 
-    <p class="mt-3 text-2xl font-semibold text-[#101828]">
-      {{ numberFormatter.format(totalGbps) }} Gbps
+    <p class="mt-3 text-2xl font-semibold text-[var(--uui-gray-900)]">
+      {{ formatNumber(totalGbps, 2) }} Gbps
     </p>
 
     <div class="mt-4 space-y-2">
       <div class="flex items-center justify-between gap-3 text-sm">
-        <span class="flex items-center gap-2 text-[#667085]">
-          <Gauge class="h-4 w-4 text-[#7367F0]" aria-hidden="true" />
+        <span class="flex items-center gap-2 text-[var(--uui-gray-500)]">
+          <Gauge class="h-4 w-4 text-[var(--uui-brand-600)]" aria-hidden="true" />
           Terpakai
         </span>
-        <span class="font-semibold text-[#101828]">
-          {{ numberFormatter.format(usedGbps) }} Gbps
+        <span class="font-semibold text-[var(--uui-gray-900)]">
+          {{ formatNumber(usedGbps, 2) }} Gbps
         </span>
       </div>
 
       <div class="flex items-center justify-between gap-3 text-sm">
-        <span class="flex items-center gap-2 text-[#667085]">
-          <Wifi class="h-4 w-4 text-[#28C76F]" aria-hidden="true" />
+        <span class="flex items-center gap-2 text-[var(--uui-gray-500)]">
+          <Wifi class="h-4 w-4 text-[var(--uui-success-600)]" aria-hidden="true" />
           Tersedia
         </span>
-        <span class="font-semibold text-[#101828]">
-          {{ numberFormatter.format(availableGbps) }} Gbps
+        <span class="font-semibold text-[var(--uui-gray-900)]">
+          {{ formatNumber(availableGbps, 2) }} Gbps
         </span>
       </div>
     </div>

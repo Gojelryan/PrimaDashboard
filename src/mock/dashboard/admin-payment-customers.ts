@@ -1,8 +1,10 @@
 import {
-  formatCustomerCount,
-  formatCustomerPercentage,
   totalCustomerCount
 } from './customer-metrics'
+import {
+  formatCustomerCount,
+  formatCustomerPercentage,
+} from '../../utils/dashboard-formatters'
 
 const cashCustomerTotal = Math.round(totalCustomerCount * 0.34)
 const nonCashCustomerTotal = totalCustomerCount - cashCustomerTotal

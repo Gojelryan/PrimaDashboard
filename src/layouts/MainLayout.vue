@@ -1,5 +1,5 @@
-<script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+﻿<script setup lang="ts">
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import type { Component } from 'vue'
 
 import AppSidebar from '../components/sidebar/AppSidebar.vue'
@@ -20,17 +20,41 @@ import {
 const sidebarOpen = ref(false)
 const activePage = ref<DashboardPage>('director')
 type ThemeMode = 'light' | 'dark'
+type ThemePreference = ThemeMode | 'system'
 
 const storedTheme = window.localStorage.getItem('pinisi-theme')
-const theme = ref<ThemeMode>(
-  storedTheme === 'light' || storedTheme === 'dark' ? storedTheme : 'light'
+const theme = ref<ThemePreference>(
+  storedTheme === 'light' || storedTheme === 'dark' || storedTheme === 'system'
+    ? storedTheme
+    : 'system'
+)
+const systemThemeQuery = window.matchMedia('(prefers-color-scheme: dark)')
+const systemTheme = ref<ThemeMode>(systemThemeQuery.matches ? 'dark' : 'light')
+const resolvedTheme = computed<ThemeMode>(() =>
+  theme.value === 'system' ? systemTheme.value : theme.value
 )
 
 watch(theme, (value) => {
-  document.documentElement.dataset.theme = value
-  document.documentElement.style.colorScheme = value
+  document.documentElement.dataset.themePreference = value
   window.localStorage.setItem('pinisi-theme', value)
 }, { immediate: true })
+
+watch(resolvedTheme, (value) => {
+  document.documentElement.dataset.theme = value
+  document.documentElement.style.colorScheme = value
+}, { immediate: true })
+
+function handleSystemThemeChange(event: MediaQueryListEvent) {
+  systemTheme.value = event.matches ? 'dark' : 'light'
+}
+
+onMounted(() => {
+  systemThemeQuery.addEventListener('change', handleSystemThemeChange)
+})
+
+onBeforeUnmount(() => {
+  systemThemeQuery.removeEventListener('change', handleSystemThemeChange)
+})
 
 const dashboardComponents: Record<DashboardPage, Component> = {
   director: DirectorDashboard,
@@ -58,20 +82,20 @@ function selectPage(page: DashboardPage) {
   sidebarOpen.value = false
 }
 
-function setTheme(value: ThemeMode) {
+function setTheme(value: ThemePreference) {
   theme.value = value
 }
 </script>
 
 <template>
-  <div class="theme-shell flex h-dvh overflow-hidden bg-[#F9FAFB] text-[#344054]">
+  <div class="theme-shell flex h-dvh overflow-hidden bg-[var(--uui-page)] text-[var(--uui-gray-700)]">
 
     <!-- Backdrop Mobile -->
     <button
       v-if="sidebarOpen"
       type="button"
       aria-label="Tutup navigasi"
-      class="fixed inset-0 z-40 bg-[#101828]/45 backdrop-blur-[1px] lg:hidden"
+      class="fixed inset-0 z-40 bg-[var(--uui-gray-900)]/45 backdrop-blur-[1px] lg:hidden"
       @click="sidebarOpen = false"
     />
 
@@ -102,6 +126,7 @@ function setTheme(value: ThemeMode) {
         :title="pageTitle"
         :sidebar-open="sidebarOpen"
         :theme="theme"
+        :resolved-theme="resolvedTheme"
         @toggle-sidebar="sidebarOpen = !sidebarOpen"
         @set-theme="setTheme"
       />

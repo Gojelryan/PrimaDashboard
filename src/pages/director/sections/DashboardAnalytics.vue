@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import {
   Handshake,
   TrendingUp,
@@ -19,35 +19,35 @@ import { partnerDistribution } from '../../../mock/dashboard/partner-distributio
   <section class="mt-4 sm:mt-6">
     <div class="grid grid-cols-12 gap-4 sm:gap-6">
 
-      <div class="col-span-12 h-[460px] sm:h-[500px] xl:col-span-5">
+      <div class="dashboard-chart-panel col-span-12 xl:col-span-5">
         <AnalyticsCard
           title="Pergerakan Keuangan"
           :icon="WalletCards"
-          icon-bg="bg-[#DDF6E8]"
-          icon-color="text-[#28C76F]"
+          icon-bg="bg-[var(--uui-success-50)]"
+          icon-color="text-[var(--uui-success-600)]"
         >
           <RevenueChart :data="financialMetrics" />
         </AnalyticsCard>
       </div>
 
-      <div class="col-span-12 h-[460px] sm:h-[500px] xl:col-span-4">
+      <div class="dashboard-chart-panel col-span-12 xl:col-span-4">
         <AnalyticsCard
           title="Tren Pelanggan & Pendapatan"
           :subtitle="customerGrowth.periodLabel"
           :icon="TrendingUp"
-          icon-bg="bg-[#E9E7FD]"
-          icon-color="text-[#7367F0]"
+          icon-bg="bg-[var(--uui-brand-100)]"
+          icon-color="text-[var(--uui-brand-600)]"
         >
           <CustomerGrowthChart :data="customerGrowth" />
         </AnalyticsCard>
       </div>
 
-      <div class="col-span-12 h-[500px] xl:col-span-3">
+      <div class="dashboard-chart-panel col-span-12 xl:col-span-3">
         <AnalyticsCard
           title="Distribusi Mitra"
           :icon="Handshake"
-          icon-bg="bg-[#FFF0E1]"
-          icon-color="text-[#FF9F43]"
+          icon-bg="bg-[var(--uui-warning-50)]"
+          icon-color="text-[var(--uui-warning-600)]"
         >
           <DonutPartnerChart :data="partnerDistribution" />
         </AnalyticsCard>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { ChevronRight } from 'lucide-vue-next'
 
 withDefaults(defineProps<{
@@ -21,7 +21,7 @@ defineEmits<{
   >
     <button
       type="button"
-      class="inline-flex items-center gap-1 rounded-md px-2 py-1.5 text-sm font-semibold text-[#7F56D9] transition-colors hover:bg-[#F9F5FF]"
+      class="inline-flex items-center gap-1 rounded-md px-2 py-1.5 text-sm font-semibold text-[var(--uui-brand-600)] transition-colors hover:bg-[var(--uui-brand-50)]"
       @click="$emit('click')"
     >
       {{ label }}

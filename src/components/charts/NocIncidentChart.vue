@@ -1,7 +1,8 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { computed } from 'vue'
 import ApexChart from 'vue3-apexcharts'
 import type { ApexOptions } from 'apexcharts'
+import { formatNumber, formatUnit } from '../../utils/dashboard-formatters'
 
 const props = defineProps<{
   items: readonly {
@@ -10,7 +11,7 @@ const props = defineProps<{
   }[]
 }>()
 
-const colors = ['#7F56D9', '#DC6803', '#D92D20', '#1570EF', '#079455']
+const colors = ['var(--uui-brand-600)', 'var(--uui-warning-600)', 'var(--uui-error-600)', 'var(--uui-blue-600)', 'var(--uui-success-600)']
 const chartSeries = computed(() => props.items.map(item => item.total))
 const totalIncident = computed(() =>
   props.items.reduce((total, item) => total + item.total, 0)
@@ -41,8 +42,8 @@ const chartOptions = computed<ApexOptions>(() => ({
             offsetY: -12,
             fontSize: '24px',
             fontWeight: 600,
-            color: '#101828',
-            formatter: () => totalIncident.value.toLocaleString('id-ID')
+            color: 'var(--uui-gray-900)',
+            formatter: () => formatNumber(totalIncident.value)
           },
           total: {
             show: true,
@@ -50,8 +51,8 @@ const chartOptions = computed<ApexOptions>(() => ({
             label: 'Gangguan',
             fontSize: '14px',
             fontWeight: 500,
-            color: '#667085',
-            formatter: () => totalIncident.value.toLocaleString('id-ID')
+            color: 'var(--uui-gray-500)',
+            formatter: () => formatNumber(totalIncident.value)
           }
         }
       }
@@ -59,7 +60,7 @@ const chartOptions = computed<ApexOptions>(() => ({
   },
   tooltip: {
     y: {
-      formatter: value => `${value.toLocaleString('id-ID')} gangguan`
+      formatter: value => formatUnit(value, 'gangguan')
     }
   }
 }))
@@ -80,7 +81,7 @@ const chartOptions = computed<ApexOptions>(() => ({
         :key="item.category"
         class="flex items-center justify-between gap-3 text-sm"
       >
-        <span class="flex min-w-0 items-center gap-2 text-[#6F6B7D]">
+        <span class="flex min-w-0 items-center gap-2 text-[var(--uui-gray-700)]">
           <span
             class="h-2.5 w-2.5 shrink-0 rounded-full"
             :style="{ backgroundColor: colors[index] }"
@@ -88,7 +89,7 @@ const chartOptions = computed<ApexOptions>(() => ({
           />
           <span class="truncate">{{ item.category }}</span>
         </span>
-        <span class="font-semibold text-[#5D596C]">{{ item.total }}</span>
+        <span class="font-semibold text-[var(--uui-gray-900)]">{{ item.total }}</span>
       </div>
     </div>
   </div>

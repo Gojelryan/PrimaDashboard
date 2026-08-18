@@ -1,5 +1,3 @@
-const employeeCountFormatter = new Intl.NumberFormat('id-ID')
-
 const technicianNames = [
   'Andi Pratama Yusuf',
   'Rizal Pongoh',
@@ -120,6 +118,9 @@ const attendanceOrder = ['Hadir', 'Terlambat', 'Cuti', 'Sakit', 'Tidak Hadir']
 const technicalEmployeeDetails = employeeDetails.filter(
   employee => employee.division === 'Teknis'
 )
+export const marketingEmployeeDetails = employeeDetails.filter(
+  employee => employee.division === 'Market'
+)
 const technicalOnsiteTotal = Math.round(technicalEmployeeDetails.length * 5 / 7)
 
 export const employeeMetrics = {
@@ -137,15 +138,14 @@ export const employeeMetrics = {
     total: technicalEmployeeDetails.length,
     onsite: technicalOnsiteTotal,
     standby: technicalEmployeeDetails.length - technicalOnsiteTotal
+  },
+  marketing: {
+    total: marketingEmployeeDetails.length
   }
 }
 
 export const technicianEmployeeNames = technicalEmployeeDetails
   .map(employee => employee.employee)
-
-export function formatEmployeeCount(value: number) {
-  return employeeCountFormatter.format(value)
-}
 
 export function getEmployeeAttendanceTotal(label: string) {
   return employeeMetrics.attendance.find(item => item.label === label)?.total ?? 0

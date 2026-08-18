@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import type { Component } from 'vue'
 import BaseCard from './BaseCard.vue'
 import CardHeader from './CardHeader.vue'
@@ -18,24 +18,16 @@ defineProps<{
   }[]
 }>()
 
-const markerColorMap: Record<string, string> = {
-  '#2563EB': '#1570EF',
-  '#CBD5E1': '#D0D5DD'
-}
-
-function resolveMarkerColor(color: string) {
-  return markerColorMap[color.toUpperCase()] ?? color
-}
 </script>
 
 <template>
-  <BaseCard class="min-h-52" padding="compact">
+  <BaseCard class="min-h-52" hierarchy="subtle" padding="compact">
     <CardHeader
       :title="title"
       :subtitle="subtitle"
       :icon="icon"
-      :icon-bg="iconBg ?? 'bg-[#EFF8FF]'"
-      :icon-color="iconColor ?? 'text-[#1570EF]'"
+      :icon-bg="iconBg ?? 'bg-[var(--uui-blue-50)]'"
+      :icon-color="iconColor ?? 'text-[var(--uui-blue-600)]'"
       icon-size="sm"
     />
 
@@ -46,7 +38,7 @@ function resolveMarkerColor(color: string) {
         text-2xl
         font-bold
         leading-none
-        text-[#101828]
+        text-[var(--uui-gray-900)]
       "
     >
       {{ value }}
@@ -77,7 +69,7 @@ function resolveMarkerColor(color: string) {
             min-w-0
             truncate
             text-sm
-            text-[#344054]
+            text-[var(--uui-gray-700)]
           "
         >
           <span
@@ -88,7 +80,7 @@ function resolveMarkerColor(color: string) {
               shrink-0
               rounded-full
             "
-            :style="{ backgroundColor: resolveMarkerColor(item.markerColor) }"
+            :style="{ backgroundColor: item.markerColor }"
           />
 
           <span class="min-w-0 truncate">
@@ -100,7 +92,7 @@ function resolveMarkerColor(color: string) {
           class="
             shrink-0
             font-semibold
-            text-[#101828]
+            text-[var(--uui-gray-900)]
           "
           :class="itemLayout === 'stacked'
             ? 'text-2xl leading-none'

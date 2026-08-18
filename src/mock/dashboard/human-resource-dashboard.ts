@@ -1,7 +1,7 @@
 import {
   employeeMetrics,
-  formatEmployeeCount,
 } from './employee-metrics'
+import { formatEmployeeCount } from '../../utils/dashboard-formatters'
 
 export const employeeOvertimeDetails = [
   {

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import type { Component } from 'vue'
 import BaseCard from './BaseCard.vue'
 import CardHeader from './CardHeader.vue'
@@ -18,7 +18,11 @@ defineProps<{
 </script>
 
 <template>
-  <BaseCard>
+  <BaseCard
+    hierarchy="prominent"
+    class="border-t-2"
+    :class="borderColor"
+  >
     <CardHeader
       :title="title"
       :icon="icon"
@@ -27,11 +31,11 @@ defineProps<{
       title-as="h2"
     />
 
-    <p class="mt-4 text-3xl font-bold text-[#101828] sm:text-4xl">
+    <p class="mt-4 text-3xl font-bold text-[var(--uui-gray-900)] sm:text-4xl">
       {{ value }}
     </p>
 
-    <hr class="my-5 border-[#EAECF0]">
+    <hr class="my-5 border-[var(--uui-gray-200)]">
 
     <!-- Detail -->
 
@@ -47,7 +51,7 @@ defineProps<{
             "
         >
 
-            <span class="text-[#344054]">
+            <span class="text-[var(--uui-gray-700)]">
 
                 {{ item.label }}
 
@@ -56,7 +60,7 @@ defineProps<{
             <span
                 class="
                     font-semibold
-                    text-[#101828]
+                    text-[var(--uui-gray-900)]
                 "
             >
 

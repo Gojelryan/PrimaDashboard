@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { ref } from 'vue'
 import {
   Building2,
@@ -73,15 +73,14 @@ const retailCustomerColumns = [
       gap-4
       sm:gap-6
       md:grid-cols-2
-      2xl:auto-rows-[224px]
       2xl:grid-cols-4
     "
   >
     <MarketingCustomerCard
       v-bind="corporateCustomerSummary"
       :icon="Building2"
-      icon-bg="bg-[#D9F7FC]"
-      icon-color="text-[#00CFE8]"
+      icon-bg="bg-[var(--uui-blue-50)]"
+      icon-color="text-[var(--uui-blue-600)]"
     >
       <template #footer>
         <DetailAction inline @click="activeCustomerDetail = 'corporate'" />
@@ -91,8 +90,8 @@ const retailCustomerColumns = [
     <MarketingCustomerCard
       v-bind="retailCustomerSummary"
       :icon="Store"
-      icon-bg="bg-[#DDF6E8]"
-      icon-color="text-[#28C76F]"
+      icon-bg="bg-[var(--uui-success-50)]"
+      icon-color="text-[var(--uui-success-600)]"
     >
       <template #footer>
         <DetailAction inline @click="activeCustomerDetail = 'retail'" />
@@ -102,15 +101,15 @@ const retailCustomerColumns = [
     <MarketingTargetCard
       v-bind="targetCorporatePerformance"
       :icon="Target"
-      icon-bg="bg-[#E9E7FD]"
-      icon-color="text-[#7367F0]"
+      icon-bg="bg-[var(--uui-brand-100)]"
+      icon-color="text-[var(--uui-brand-600)]"
     />
 
     <MarketingTargetCard
       v-bind="targetRetailPerformance"
       :icon="Wifi"
-      icon-bg="bg-[#E9E7FD]"
-      icon-color="text-[#7367F0]"
+      icon-bg="bg-[var(--uui-brand-100)]"
+      icon-color="text-[var(--uui-brand-600)]"
     />
 
     <DetailTableModal

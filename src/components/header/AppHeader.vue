@@ -1,15 +1,18 @@
-<script setup lang="ts">
-import { Moon, Sun, UserRound } from 'lucide-vue-next'
+﻿<script setup lang="ts">
+import { Monitor, Moon, Sun, UserRound } from 'lucide-vue-next'
+
+type ThemePreference = 'light' | 'dark' | 'system'
 
 defineProps<{
   title: string
   sidebarOpen: boolean
-  theme: 'light' | 'dark'
+  theme: ThemePreference
+  resolvedTheme: 'light' | 'dark'
 }>()
 
 const emit = defineEmits<{
   (e: 'toggle-sidebar'): void
-  (e: 'set-theme', theme: 'light' | 'dark'): void
+  (e: 'set-theme', theme: ThemePreference): void
 }>()
 </script>
 
@@ -19,7 +22,7 @@ const emit = defineEmits<{
       h-16
       bg-white
       border-b
-      border-[#EAECF0]
+      border-[var(--uui-gray-200)]
       flex
       items-center
       justify-between
@@ -45,11 +48,11 @@ const emit = defineEmits<{
           items-center
           justify-center
           rounded-lg
-          text-[#475467]
-          hover:bg-[#F2F4F7]
+          text-[var(--uui-gray-600)]
+          hover:bg-[var(--uui-gray-100)]
           focus-visible:outline-2
           focus-visible:outline-offset-2
-          focus-visible:outline-[#7F56D9]
+          focus-visible:outline-[var(--uui-brand-600)]
           lg:hidden
         "
         @click="emit('toggle-sidebar')"
@@ -73,7 +76,7 @@ const emit = defineEmits<{
 
       </button>
 
-      <h2 class="truncate text-lg font-semibold text-[#101828] lg:text-xl">
+      <h2 class="truncate text-lg font-semibold text-[var(--uui-gray-900)] lg:text-xl">
         {{ title }}
       </h2>
 
@@ -83,7 +86,7 @@ const emit = defineEmits<{
     <div class="flex items-center gap-2 sm:gap-3">
 
       <div
-        class="flex h-10 w-10 items-center justify-center rounded-full border border-[#EAECF0] bg-[#F9FAFB] text-[#475467] shadow-[0_1px_2px_rgba(16,24,40,0.05)]"
+        class="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--uui-gray-200)] bg-[var(--uui-page)] text-[var(--uui-gray-600)] shadow-[0_1px_2px_rgba(16,24,40,0.05)]"
         title="Profil pengguna"
         aria-label="Profil pengguna"
       >
@@ -91,16 +94,30 @@ const emit = defineEmits<{
       </div>
 
       <div
-        class="theme-switcher flex h-10 items-center rounded-lg border border-[#EAECF0] bg-[#F9FAFB] p-1 shadow-[0_1px_2px_rgba(16,24,40,0.05)]"
+        class="theme-switcher flex h-10 items-center rounded-lg border border-[var(--uui-gray-200)] bg-[var(--uui-page)] p-1 shadow-[0_1px_2px_rgba(16,24,40,0.05)]"
         role="group"
         aria-label="Pilihan tema"
       >
         <button
           type="button"
           class="theme-option flex h-8 items-center justify-center gap-1.5 rounded-md px-2 text-sm font-medium transition-colors sm:px-2.5"
+          :class="theme === 'system'
+            ? 'theme-option-active bg-white text-[var(--uui-gray-900)]'
+            : 'text-[var(--uui-gray-500)]'"
+          :aria-pressed="theme === 'system'"
+          :title="`Ikuti tema sistem (saat ini ${resolvedTheme})`"
+          @click="emit('set-theme', 'system')"
+        >
+          <Monitor class="h-4 w-4" aria-hidden="true" />
+          <span class="hidden lg:inline">System</span>
+        </button>
+
+        <button
+          type="button"
+          class="theme-option flex h-8 items-center justify-center gap-1.5 rounded-md px-2 text-sm font-medium transition-colors sm:px-2.5"
           :class="theme === 'light'
-            ? 'theme-option-active bg-white text-[#101828]'
-            : 'text-[#667085]'"
+            ? 'theme-option-active bg-white text-[var(--uui-gray-900)]'
+            : 'text-[var(--uui-gray-500)]'"
           :aria-pressed="theme === 'light'"
           title="Gunakan tema terang"
           @click="emit('set-theme', 'light')"
@@ -113,8 +130,8 @@ const emit = defineEmits<{
           type="button"
           class="theme-option flex h-8 items-center justify-center gap-1.5 rounded-md px-2 text-sm font-medium transition-colors sm:px-2.5"
           :class="theme === 'dark'
-            ? 'theme-option-active bg-white text-[#101828]'
-            : 'text-[#667085]'"
+            ? 'theme-option-active bg-white text-[var(--uui-gray-900)]'
+            : 'text-[var(--uui-gray-500)]'"
           :aria-pressed="theme === 'dark'"
           title="Gunakan tema gelap"
           @click="emit('set-theme', 'dark')"

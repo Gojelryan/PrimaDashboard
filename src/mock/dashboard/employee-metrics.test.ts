@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest'
 
-import { employeeMetrics } from './employee-metrics'
+import {
+  employeeMetrics,
+  marketingEmployeeDetails,
+} from './employee-metrics'
 import { summaryCards } from './summary-cards'
 import { technicalOperationsDashboard } from './technical-operations-dashboard'
 
@@ -42,6 +45,13 @@ describe('employee metrics shared totals', () => {
       Number.isFinite(member.dailyInstallation) &&
       Number.isFinite(member.foWithdrawalMeters)
     )).toBe(true)
+  })
+
+  it('exposes the Market division roster for the Marketing dashboard', () => {
+    expect(marketingEmployeeDetails).toHaveLength(7)
+    expect(employeeMetrics.marketing.total).toBe(marketingEmployeeDetails.length)
+    expect(marketingEmployeeDetails.every(employee => employee.division === 'Market'))
+      .toBe(true)
   })
 
 })

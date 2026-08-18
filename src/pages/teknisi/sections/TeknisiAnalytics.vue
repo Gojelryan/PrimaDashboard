@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import {
   ChartLine,
   MapPinned,
@@ -22,17 +22,16 @@ const technicianDashboard = technicalOperationsDashboard.technician
       grid-cols-1
       gap-4
       sm:gap-6
-      xl:auto-rows-[360px]
       xl:grid-cols-12
     "
   >
-    <div class="h-[360px] xl:col-span-6 xl:h-full">
+    <div class="dashboard-chart-panel-compact xl:col-span-6">
       <AnalyticsCard
         title="Grafik Instalasi Pelanggan Baru"
         subtitle="Minggu ini"
         :icon="ChartLine"
-        icon-bg="bg-[#D9F7FC]"
-        icon-color="text-[#00CFE8]"
+        icon-bg="bg-[var(--uui-blue-50)]"
+        icon-color="text-[var(--uui-blue-600)]"
       >
         <TechnicianDailyInstallationChart
           :categories="technicianDashboard.dailyInstallations.map(point => point.date)"
@@ -41,12 +40,12 @@ const technicianDashboard = technicalOperationsDashboard.technician
       </AnalyticsCard>
     </div>
 
-    <div class="min-h-[360px] xl:col-span-6 xl:h-full">
+    <div class="dashboard-chart-panel-compact xl:col-span-6">
       <TechnicianPanelCard
         title="Proyek Berdasarkan Lokasi / Proyek Berjalan"
         :icon="MapPinned"
-        icon-bg="bg-[#FFF0E1]"
-        icon-color="text-[#FF9F43]"
+        icon-bg="bg-[var(--uui-warning-50)]"
+        icon-color="text-[var(--uui-warning-600)]"
       >
         <div class="space-y-5">
           <div
@@ -61,18 +60,18 @@ const technicianDashboard = technicalOperationsDashboard.technician
               text-sm
             "
           >
-            <span class="min-w-0 truncate text-[#6F6B7D]">
+            <span class="min-w-0 truncate text-[var(--uui-gray-700)]">
               {{ project.name }}
             </span>
 
-            <div class="h-2 rounded-full bg-[#F1F0F2]">
+            <div class="h-2 rounded-full bg-[var(--uui-gray-100)]">
               <div
-                class="h-2 rounded-full bg-[#FF9F43]"
+                class="h-2 rounded-full bg-[var(--uui-warning-600)]"
                 :style="{ width: `${project.progressPercent}%` }"
               />
             </div>
 
-            <span class="text-right font-semibold text-[#5D596C]">
+            <span class="text-right font-semibold text-[var(--uui-gray-900)]">
               {{ project.progressPercent }}%
             </span>
           </div>

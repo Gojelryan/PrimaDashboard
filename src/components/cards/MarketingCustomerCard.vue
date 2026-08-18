@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import type { Component } from 'vue'
 import BaseCard from './BaseCard.vue'
 import CardHeader from './CardHeader.vue'
@@ -21,7 +21,7 @@ withDefaults(defineProps<{
 </script>
 
 <template>
-  <BaseCard class="min-h-[224px]" padding="compact">
+  <BaseCard padding="compact">
     <CardHeader
       :title="title"
       :icon="icon"
@@ -30,27 +30,27 @@ withDefaults(defineProps<{
       icon-size="sm"
     />
 
-    <p class="mt-3 text-2xl font-bold leading-none text-[#101828]">
+    <p class="mt-3 text-2xl font-bold leading-none text-[var(--uui-gray-900)]">
       {{ total }}
     </p>
 
     <div class="mt-4 space-y-2">
       <div class="flex items-center justify-between gap-4 text-sm leading-tight">
-        <span class="min-w-0 truncate text-[#344054]">
+        <span class="min-w-0 truncate text-[var(--uui-gray-700)]">
           {{ newCustomerLabel }}
         </span>
 
-        <span class="shrink-0 font-semibold text-[#101828]">
+        <span class="shrink-0 font-semibold text-[var(--uui-gray-900)]">
           {{ newCustomer }}
         </span>
       </div>
 
       <div class="flex items-center justify-between gap-4 text-sm leading-tight">
-        <span class="min-w-0 truncate text-[#344054]">
+        <span class="min-w-0 truncate text-[var(--uui-gray-700)]">
           {{ churnCustomerLabel }}
         </span>
 
-        <span class="shrink-0 font-semibold text-[#101828]">
+        <span class="shrink-0 font-semibold text-[var(--uui-gray-900)]">
           {{ churnCustomer }}
         </span>
       </div>
@@ -58,11 +58,11 @@ withDefaults(defineProps<{
 
     <div class="mt-auto flex items-end justify-between gap-3 pt-4">
       <div class="min-w-0">
-        <p class="text-sm text-[#667085]">
+        <p class="text-sm text-[var(--uui-gray-500)]">
           Outstanding
         </p>
 
-        <p class="mt-1 truncate text-xl font-bold leading-none text-[#101828]">
+        <p class="mt-1 truncate text-xl font-bold leading-none text-[var(--uui-gray-900)]">
           {{ outstanding }}
         </p>
       </div>

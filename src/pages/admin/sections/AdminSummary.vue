@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { ref } from 'vue'
 import {
   AlertTriangle,
@@ -37,27 +37,27 @@ const isolatedCustomerSummary = [
 const statusPresentation = [
   {
     icon: Users,
-    iconBg: 'bg-[#E9E7FD]',
-    iconColor: 'text-[#7367F0]',
-    accent: 'bg-[#7367F0]'
+    iconBg: 'bg-[var(--uui-brand-100)]',
+    iconColor: 'text-[var(--uui-brand-600)]',
+    accent: 'bg-[var(--uui-brand-600)]'
   },
   {
     icon: UserCheck,
-    iconBg: 'bg-[#DDF6E8]',
-    iconColor: 'text-[#28C76F]',
-    accent: 'bg-[#28C76F]'
+    iconBg: 'bg-[var(--uui-success-50)]',
+    iconColor: 'text-[var(--uui-success-600)]',
+    accent: 'bg-[var(--uui-success-600)]'
   },
   {
     icon: Ban,
-    iconBg: 'bg-[#FFF0E1]',
-    iconColor: 'text-[#FF9F43]',
-    accent: 'bg-[#FF9F43]'
+    iconBg: 'bg-[var(--uui-warning-50)]',
+    iconColor: 'text-[var(--uui-warning-600)]',
+    accent: 'bg-[var(--uui-warning-600)]'
   },
   {
     icon: UserX,
-    iconBg: 'bg-[#FCE5E6]',
-    iconColor: 'text-[#EA5455]',
-    accent: 'bg-[#EA5455]'
+    iconBg: 'bg-[var(--uui-error-50)]',
+    iconColor: 'text-[var(--uui-error-600)]',
+    accent: 'bg-[var(--uui-error-600)]'
   }
 ]
 </script>
@@ -77,11 +77,11 @@ const statusPresentation = [
           :icon-color="statusPresentation[index].iconColor"
         />
 
-        <p class="mt-3 text-3xl font-semibold tracking-tight text-[#101828]">
+        <p class="mt-3 text-3xl font-semibold tracking-tight text-[var(--uui-gray-900)]">
           {{ status.value }}
         </p>
 
-        <p class="mt-2 text-sm text-[#667085]">
+        <p class="mt-2 text-sm text-[var(--uui-gray-500)]">
           {{ status.caption }}
         </p>
 
@@ -93,13 +93,13 @@ const statusPresentation = [
     </div>
 
     <div
-      class="mt-4 flex items-start gap-3 rounded-lg border border-[#FF9F43]/30 bg-[#FFF0E1] px-4 py-3 text-sm text-[#B76E00]"
+      class="mt-4 flex items-start gap-3 rounded-lg border border-[var(--uui-warning-600)]/30 bg-[var(--uui-warning-50)] px-4 py-3 text-sm text-[var(--uui-warning-700)]"
       role="alert"
     >
       <AlertTriangle class="mt-0.5 h-5 w-5 shrink-0" aria-hidden="true" />
       <div>
         <p class="font-semibold">Pelanggan membutuhkan tindak lanjut</p>
-        <p class="mt-0.5 text-[#8A5A13]">
+        <p class="mt-0.5 text-[var(--uui-warning-700)]">
           Terdapat 100 pelanggan berstatus isolir. Prioritaskan verifikasi
           pembayaran dan jadwal aktivasi kembali.
         </p>

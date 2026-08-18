@@ -1,4 +1,4 @@
-import {
+﻿import {
   Users,
   BriefcaseBusiness,
   Ticket,
@@ -7,14 +7,16 @@ import {
 } from 'lucide-vue-next'
 import {
   customerMetrics,
-  formatCustomerCount,
-  formatCustomerCurrencyCompact,
 } from './customer-metrics'
 import {
   employeeMetrics,
-  formatEmployeeCount,
   getEmployeeAttendanceTotal,
 } from './employee-metrics'
+import {
+  formatCustomerCount,
+  formatCustomerCurrencyCompact,
+  formatEmployeeCount,
+} from '../../utils/dashboard-formatters'
 
 const unavailableEmployeeTotal = employeeMetrics.total
   - getEmployeeAttendanceTotal('Hadir')
@@ -25,9 +27,9 @@ export const summaryCards = [
     title: 'Total Karyawan',
     value: formatEmployeeCount(employeeMetrics.total),
     icon: Users,
-    iconBg: 'bg-[#E9E7FD]',
-    iconColor: 'text-[#7367F0]',
-    borderColor: 'border-[#7367F0]',
+    iconBg: 'bg-[var(--uui-brand-100)]',
+    iconColor: 'text-[var(--uui-brand-600)]',
+    borderColor: 'border-[var(--uui-brand-600)]',
     items: [
       { label: 'Hadir', value: formatEmployeeCount(getEmployeeAttendanceTotal('Hadir')) },
       { label: 'Terlambat', value: formatEmployeeCount(getEmployeeAttendanceTotal('Terlambat')) },
@@ -39,9 +41,9 @@ export const summaryCards = [
     title: 'Total Pekerjaan',
     value: '124',
     icon: BriefcaseBusiness,
-    iconBg: 'bg-[#FFF0E1]',
-    iconColor: 'text-[#FF9F43]',
-    borderColor: 'border-[#FF9F43]',
+    iconBg: 'bg-[var(--uui-warning-50)]',
+    iconColor: 'text-[var(--uui-warning-600)]',
+    borderColor: 'border-[var(--uui-warning-600)]',
     items: [
       { label: 'Selesai', value: '80' },
       { label: 'On Progress', value: '35' },
@@ -53,9 +55,9 @@ export const summaryCards = [
     title: 'Total Ticket',
     value: '42',
     icon: Ticket,
-    iconBg: 'bg-[#FCE5E6]',
-    iconColor: 'text-[#EA5455]',
-    borderColor: 'border-[#EA5455]',
+    iconBg: 'bg-[var(--uui-error-50)]',
+    iconColor: 'text-[var(--uui-error-600)]',
+    borderColor: 'border-[var(--uui-error-600)]',
     items: [
       { label: 'Closing', value: '20' },
       { label: 'On Progress', value: '18' },
@@ -67,9 +69,9 @@ export const summaryCards = [
     title: 'Corporate',
     value: formatCustomerCount(customerMetrics.corporate.total),
     icon: Building2,
-    iconBg: 'bg-[#D9F7FC]',
-    iconColor: 'text-[#00CFE8]',
-    borderColor: 'border-[#00CFE8]',
+    iconBg: 'bg-[var(--uui-blue-50)]',
+    iconColor: 'text-[var(--uui-blue-600)]',
+    borderColor: 'border-[var(--uui-blue-600)]',
     items: [
       { label: 'Pelanggan Baru', value: formatCustomerCount(customerMetrics.corporate.movement.newCustomer) },
       { label: 'Pelanggan Putus', value: formatCustomerCount(customerMetrics.corporate.movement.churnCustomer) },
@@ -81,9 +83,9 @@ export const summaryCards = [
     title: 'Retail',
     value: formatCustomerCount(customerMetrics.retail.total),
     icon: ShoppingCart,
-    iconBg: 'bg-[#DDF6E8]',
-    iconColor: 'text-[#28C76F]',
-    borderColor: 'border-[#28C76F]',
+    iconBg: 'bg-[var(--uui-success-50)]',
+    iconColor: 'text-[var(--uui-success-600)]',
+    borderColor: 'border-[var(--uui-success-600)]',
     items: [
       { label: 'Pelanggan Baru', value: formatCustomerCount(customerMetrics.retail.movement.newCustomer) },
       { label: 'Pelanggan Putus', value: formatCustomerCount(customerMetrics.retail.movement.churnCustomer) },

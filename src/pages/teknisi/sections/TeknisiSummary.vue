@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import {
   computed,
   ref,
@@ -15,6 +15,7 @@ import DetailAction from '../../../components/cards/DetailAction.vue'
 import DetailTableModal from '../../../components/modals/DetailTableModal.vue'
 import { technicianJobDetails } from '../../../mock/dashboard/priority-detail-data'
 import { technicalOperationsDashboard } from '../../../mock/dashboard/technical-operations-dashboard'
+import { formatNumber } from '../../../utils/dashboard-formatters'
 
 const technicianDashboard = technicalOperationsDashboard.technician
 const isJobDetailOpen = ref(false)
@@ -37,17 +38,17 @@ const jobSummary = [
   { label: 'Tunda', value: String(technicianDashboard.jobs.pending), tone: 'warning' as const }
 ]
 const teamItems = [
-  { label: 'Onsite', value: technicianDashboard.team.onsite.toLocaleString('id-ID') },
-  { label: 'Standby', value: technicianDashboard.team.standby.toLocaleString('id-ID') }
+  { label: 'Onsite', value: formatNumber(technicianDashboard.team.onsite) },
+  { label: 'Standby', value: formatNumber(technicianDashboard.team.standby) }
 ]
 const jobItems = [
-  { label: 'Selesai', value: technicianDashboard.jobs.completed.toLocaleString('id-ID') },
-  { label: 'On Progress', value: technicianDashboard.jobs.inProgress.toLocaleString('id-ID') },
-  { label: 'Tunda', value: technicianDashboard.jobs.pending.toLocaleString('id-ID') }
+  { label: 'Selesai', value: formatNumber(technicianDashboard.jobs.completed) },
+  { label: 'On Progress', value: formatNumber(technicianDashboard.jobs.inProgress) },
+  { label: 'Tunda', value: formatNumber(technicianDashboard.jobs.pending) }
 ]
 
 const infrastructureProgressStyle = computed(() => ({
-  background: `conic-gradient(#7F56D9 ${technicianDashboard.infrastructureBuilt.progressPercent * 3.6}deg, #F2F4F7 0deg)`
+  background: `conic-gradient(var(--uui-brand-600) ${technicianDashboard.infrastructureBuilt.progressPercent * 3.6}deg, var(--uui-gray-100) 0deg)`
 }))
 </script>
 
@@ -59,17 +60,16 @@ const infrastructureProgressStyle = computed(() => ({
       grid-cols-1
       gap-4
       sm:gap-6
-      lg:auto-rows-[248px]
       lg:grid-cols-12
     "
   >
     <div class="h-full lg:col-span-3">
       <TechnicianMetricCard
         title="Total Tim"
-        :value="technicianDashboard.team.total.toLocaleString('id-ID')"
+        :value="formatNumber(technicianDashboard.team.total)"
         :icon="UsersRound"
-        icon-bg="bg-[#D9F7FC]"
-        icon-color="text-[#00CFE8]"
+        icon-bg="bg-[var(--uui-blue-50)]"
+        icon-color="text-[var(--uui-blue-600)]"
         :items="teamItems"
       />
     </div>
@@ -79,10 +79,10 @@ const infrastructureProgressStyle = computed(() => ({
     >
       <TechnicianMetricCard
         title="Total Pekerjaan"
-        :value="technicianDashboard.jobs.total.toLocaleString('id-ID')"
+        :value="formatNumber(technicianDashboard.jobs.total)"
         :icon="BriefcaseBusiness"
-        icon-bg="bg-[#FFF0E1]"
-        icon-color="text-[#FF9F43]"
+        icon-bg="bg-[var(--uui-warning-50)]"
+        icon-color="text-[var(--uui-warning-600)]"
         :items="jobItems"
       >
         <template #footer>
@@ -95,8 +95,8 @@ const infrastructureProgressStyle = computed(() => ({
       <TechnicianPanelCard
         title="Total Infrastruktur Terbangun"
         :icon="Network"
-        icon-bg="bg-[#E9E7FD]"
-        icon-color="text-[#7367F0]"
+        icon-bg="bg-[var(--uui-brand-100)]"
+        icon-color="text-[var(--uui-brand-600)]"
       >
         <div
           class="
@@ -110,13 +110,13 @@ const infrastructureProgressStyle = computed(() => ({
           "
         >
           <div>
-            <p class="text-2xl font-bold leading-none text-[#5D596C]">
-              {{ technicianDashboard.infrastructureBuilt.totalKm.toLocaleString('id-ID') }} km
+            <p class="text-2xl font-bold leading-none text-[var(--uui-gray-900)]">
+              {{ formatNumber(technicianDashboard.infrastructureBuilt.totalKm) }} km
             </p>
 
-            <p class="mt-2 text-xs text-[#A5A2AD]">
+            <p class="mt-2 text-xs text-[var(--uui-gray-500)]">
               target tahun 2026:
-              {{ technicianDashboard.infrastructureBuilt.targetKm.toLocaleString('id-ID') }} km
+              {{ formatNumber(technicianDashboard.infrastructureBuilt.targetKm) }} km
             </p>
           </div>
 
@@ -142,7 +142,7 @@ const infrastructureProgressStyle = computed(() => ({
                 bg-white
                 text-xl
                 font-bold
-                text-[#6F6B7D]
+                text-[var(--uui-gray-700)]
               "
             >
               {{ technicianDashboard.infrastructureBuilt.progressPercent }}%
@@ -155,12 +155,12 @@ const infrastructureProgressStyle = computed(() => ({
               :key="area.area"
               class="flex items-center justify-between gap-4 text-sm leading-tight"
             >
-              <span class="min-w-0 truncate text-[#6F6B7D]">
+              <span class="min-w-0 truncate text-[var(--uui-gray-700)]">
                 {{ area.area }}
               </span>
 
-              <span class="shrink-0 font-semibold text-[#5D596C]">
-                {{ area.totalKm.toLocaleString('id-ID') }} km
+              <span class="shrink-0 font-semibold text-[var(--uui-gray-900)]">
+                {{ formatNumber(area.totalKm) }} km
               </span>
             </div>
           </div>

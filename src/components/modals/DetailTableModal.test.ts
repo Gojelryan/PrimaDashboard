@@ -86,4 +86,26 @@ describe('DetailTableModal pagination', () => {
     expect(wrapper.text()).toContain('CST-025')
     expect(wrapper.text()).not.toContain('CST-001')
   })
+
+  it('emits the selected row from an optional eye action', async () => {
+    const wrapper = mount(DetailTableModal, {
+      props: {
+        open: true,
+        title: 'Detail Tim',
+        columns: [{ key: 'customer', label: 'Pelanggan' }],
+        rows: rows.slice(0, 1),
+        rowActionLabel: 'Lihat pelanggan Corporate'
+      },
+      global: {
+        stubs: {
+          Teleport: true
+        }
+      }
+    })
+
+    mountedWrappers.push(wrapper)
+    await wrapper.get('[aria-label="Lihat pelanggan Corporate: CST-001"]').trigger('click')
+
+    expect(wrapper.emitted('rowAction')).toEqual([[rows[0]]])
+  })
 })

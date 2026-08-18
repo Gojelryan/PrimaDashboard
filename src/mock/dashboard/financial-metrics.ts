@@ -63,17 +63,3 @@ export const financialMetrics: FinancialMovementData = {
 export const selectedFinancialMetric = financialMetrics.monthly.find(
   item => item.label === financialMetrics.selectedMonth
 ) ?? financialMetrics.monthly[financialMetrics.monthly.length - 1]
-
-export function formatFinancialCurrency(value: number) {
-  return `Rp ${new Intl.NumberFormat('id-ID').format(value)}`
-}
-
-export function formatFinancialCurrencyCompact(value: number) {
-  if (value >= 1_000_000_000) {
-    return `Rp ${new Intl.NumberFormat('id-ID', {
-      maximumFractionDigits: 1
-    }).format(value / 1_000_000_000)} M`
-  }
-
-  return `Rp ${new Intl.NumberFormat('id-ID').format(value / 1_000_000)} Jt`
-}

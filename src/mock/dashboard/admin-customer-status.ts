@@ -1,8 +1,10 @@
 import {
   adminCustomerStatusMetrics,
+} from './customer-metrics'
+import {
   formatCustomerCount,
   formatCustomerPercentage,
-} from './customer-metrics'
+} from '../../utils/dashboard-formatters'
 
 export const adminCustomerStatus = [
   {

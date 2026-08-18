@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { ref } from 'vue'
 import {
   LineChart,
@@ -11,6 +11,7 @@ import CustomerGrowthChart from '../../../components/charts/CustomerGrowthChart.
 import DetailTableModal from '../../../components/modals/DetailTableModal.vue'
 import { customerGrowth } from '../../../mock/dashboard/customer-growth'
 import { partnerDistribution } from '../../../mock/dashboard/partner-distribution'
+import { formatNumber } from '../../../utils/dashboard-formatters'
 
 const isPartnerDetailOpen = ref(false)
 
@@ -32,28 +33,27 @@ const partnerColumns = [
       grid-cols-1
       gap-4
       sm:gap-6
-      xl:auto-rows-[420px]
       xl:grid-cols-12
     "
   >
-    <div class="h-[460px] sm:h-[480px] xl:col-span-6 xl:h-full">
+    <div class="dashboard-chart-panel xl:col-span-6">
       <AnalyticsCard
         title="Tren Pelanggan & Pendapatan"
         :subtitle="customerGrowth.periodLabel"
         :icon="LineChart"
-        icon-bg="bg-[#D9F7FC]"
-        icon-color="text-[#00CFE8]"
+        icon-bg="bg-[var(--uui-blue-50)]"
+        icon-color="text-[var(--uui-blue-600)]"
       >
         <CustomerGrowthChart :data="customerGrowth" />
       </AnalyticsCard>
     </div>
 
-    <div class="min-h-[420px] xl:col-span-6 xl:h-full">
+    <div class="dashboard-chart-panel xl:col-span-6">
       <MarketingBranchCard
         title="Distribusi Mitra"
         :icon="MapPinned"
-        icon-bg="bg-[#FFF0E1]"
-        icon-color="text-[#FF9F43]"
+        icon-bg="bg-[var(--uui-warning-50)]"
+        icon-color="text-[var(--uui-warning-600)]"
         :data="partnerDistribution"
         @detail="isPartnerDetailOpen = true"
       />
@@ -66,8 +66,8 @@ const partnerColumns = [
       :columns="partnerColumns"
       :rows="partnerDistribution.partners"
       :summary="[
-        { label: 'Total Mitra', value: partnerDistribution.totalPartner.toLocaleString('id-ID') },
-        { label: 'Total Pelanggan', value: partnerDistribution.totalCustomer.toLocaleString('id-ID'), tone: 'success' }
+        { label: 'Total Mitra', value: formatNumber(partnerDistribution.totalPartner) },
+        { label: 'Total Pelanggan', value: formatNumber(partnerDistribution.totalCustomer), tone: 'success' }
       ]"
       search-placeholder="Cari nama Mitra atau wilayah..."
       @close="isPartnerDetailOpen = false"

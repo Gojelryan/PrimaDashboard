@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { computed, ref } from 'vue'
 import { Clock3, Users } from 'lucide-vue-next'
 
@@ -41,20 +41,20 @@ const totalOvertimeHours = computed(() =>
         title="Lembur"
         :subtitle="`Per ${humanResourceDashboard.period}`"
         :icon="Clock3"
-        icon-bg="bg-[#FFF0E1]"
-        icon-color="text-[#FF9F43]"
+        icon-bg="bg-[var(--uui-warning-50)]"
+        icon-color="text-[var(--uui-warning-600)]"
       >
         <div class="overflow-x-auto">
           <div class="grid min-w-[360px] grid-cols-[minmax(0,1fr)_100px] gap-4 text-sm">
-            <p class="font-semibold text-[#5D596C]">Nama</p>
-            <p class="text-right font-semibold text-[#5D596C]">Lembur (jam)</p>
+            <p class="font-semibold text-[var(--uui-gray-900)]">Nama</p>
+            <p class="text-right font-semibold text-[var(--uui-gray-900)]">Lembur (jam)</p>
 
             <template
               v-for="item in humanResourceDashboard.overtime"
               :key="item.name"
             >
-              <p class="truncate text-[#6F6B7D]">{{ item.name }}</p>
-              <p class="text-right text-[#6F6B7D]">{{ item.hours }}</p>
+              <p class="truncate text-[var(--uui-gray-700)]">{{ item.name }}</p>
+              <p class="text-right text-[var(--uui-gray-700)]">{{ item.hours }}</p>
             </template>
           </div>
         </div>
@@ -71,8 +71,8 @@ const totalOvertimeHours = computed(() =>
         title="Lembur Divisi"
         :subtitle="humanResourceDashboard.period"
         :icon="Users"
-        icon-bg="bg-[#E9E7FD]"
-        icon-color="text-[#7367F0]"
+        icon-bg="bg-[var(--uui-brand-100)]"
+        icon-color="text-[var(--uui-brand-600)]"
       >
         <HumanResourceOvertimeChart
           :items="humanResourceDashboard.overtimeByDivision"

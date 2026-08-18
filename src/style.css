@@ -5,6 +5,8 @@
     background: #f9fafb;
     font-synthesis: none;
     color-scheme: light;
+    --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
     --uui-brand-25: #fcfaff;
     --uui-brand-50: #f9f5ff;
     --uui-brand-100: #f4ebff;
@@ -21,11 +23,13 @@
     --uui-gray-700: #344054;
     --uui-gray-900: #101828;
     --uui-success-50: #ecfdf3;
+    --uui-success-500: #17b26a;
     --uui-success-600: #079455;
     --uui-warning-50: #fffaeb;
     --uui-warning-600: #dc6803;
     --uui-warning-700: #b54708;
     --uui-error-50: #fef3f2;
+    --uui-error-500: #f97066;
     --uui-error-600: #d92d20;
     --uui-blue-50: #eff8ff;
     --uui-blue-600: #1570ef;
@@ -35,6 +39,7 @@
     --uui-sidebar: #2f3349;
     --uui-sidebar-border: #464b62;
     --uui-sidebar-hover: #3c415a;
+    --uui-sidebar-text-muted: #bfc3d4;
     --uui-shadow-xs: 0 1px 2px rgba(16, 24, 40, 0.05);
     --uui-shadow-sm:
         0 1px 3px rgba(16, 24, 40, 0.1),
@@ -61,11 +66,13 @@
     --uui-gray-700: #e2e8f0;
     --uui-gray-900: #f8fafc;
     --uui-success-50: #102a22;
+    --uui-success-500: #4ade80;
     --uui-success-600: #4ade80;
     --uui-warning-50: #302414;
     --uui-warning-600: #fbbf24;
     --uui-warning-700: #fcd34d;
     --uui-error-50: #321b24;
+    --uui-error-500: #fb7185;
     --uui-error-600: #fb7185;
     --uui-blue-50: #13243e;
     --uui-blue-600: #60a5fa;
@@ -75,6 +82,7 @@
     --uui-sidebar: #151d2e;
     --uui-sidebar-border: #2c3a4f;
     --uui-sidebar-hover: #1e293b;
+    --uui-sidebar-text-muted: #94a3b8;
     --uui-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.25);
     --uui-shadow-sm:
         0 1px 3px rgba(0, 0, 0, 0.34),
@@ -95,11 +103,20 @@ body,
 body {
     background: var(--uui-page);
     color: var(--uui-gray-700);
-    font-family:
-        Inter,
-        system-ui,
-        sans-serif;
+    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+}
+
+.dashboard-chart-panel {
+    min-height: clamp(24rem, 42vw, 31rem);
+}
+
+.dashboard-chart-panel-compact {
+    min-height: clamp(22rem, 34vw, 26rem);
+}
+
+.dashboard-monitor-panel {
+    min-height: clamp(32rem, 52vw, 38.75rem);
 }
 
 .theme-shell,
@@ -144,90 +161,6 @@ table tbody tr {
 
 * {
     scrollbar-color: var(--uui-gray-300) transparent;
-}
-
-/*
- * Compatibility mapping for dashboard components that previously used
- * Vuexy palette values as Tailwind arbitrary utilities. This keeps the
- * content layer untouched while the visual system is driven centrally.
- */
-[class~="text-[#5D596C]"] { color: var(--uui-gray-900); }
-[class~="text-[#6F6B7D]"] { color: var(--uui-gray-700); }
-[class~="text-[#A5A2AD]"] { color: var(--uui-gray-500); }
-[class~="text-[#101828]"] { color: var(--uui-gray-900); }
-[class~="text-[#344054]"] { color: var(--uui-gray-700); }
-[class~="text-[#475467]"] { color: var(--uui-gray-600); }
-[class~="text-[#667085]"] { color: var(--uui-gray-500); }
-[class~="text-[#7367F0]"] { color: var(--uui-brand-600); }
-[class~="text-[#7F56D9]"] { color: var(--uui-brand-600); }
-[class~="text-[#2563EB]"] { color: var(--uui-blue-600); }
-[class~="text-[#1570EF]"] { color: var(--uui-blue-600); }
-[class~="text-[#28C76F]"] { color: var(--uui-success-600); }
-[class~="text-[#00CFE8]"] { color: var(--uui-blue-600); }
-[class~="text-[#FF9F43]"] { color: var(--uui-warning-600); }
-[class~="text-[#DC6803]"] { color: var(--uui-warning-600); }
-[class~="text-[#EA5455]"] { color: var(--uui-error-600); }
-[class~="text-[#B76E00]"],
-[class~="text-[#8A5A13]"] { color: var(--uui-warning-700); }
-
-[class~="bg-[#F8F7FA]"] { background-color: var(--uui-gray-50); }
-[class~="bg-[#F9FAFB]"] { background-color: var(--uui-page); }
-[class~="bg-[#F2F4F7]"] { background-color: var(--uui-gray-100); }
-[class~="bg-[#F1F0F2]"] { background-color: var(--uui-gray-100); }
-[class~="bg-[#DBDADE]"] { background-color: var(--uui-gray-300); }
-[class~="bg-[#E9E7FD]"] { background-color: var(--uui-brand-100); }
-[class~="bg-[#F4EBFF]"],
-[class~="bg-[#F9F5FF]"] { background-color: var(--uui-brand-50); }
-[class~="bg-[#DDF6E8]"] { background-color: var(--uui-success-50); }
-[class~="bg-[#D9F7FC]"],
-[class~="bg-[#EFF8FF]"] { background-color: var(--uui-blue-50); }
-[class~="bg-[#FFF0E1]"] { background-color: var(--uui-warning-50); }
-[class~="bg-[#FCE5E6]"] { background-color: var(--uui-error-50); }
-[class~="bg-[#7367F0]"] { background-color: var(--uui-brand-600); }
-[class~="bg-[#28C76F]"] { background-color: var(--uui-success-600); }
-[class~="bg-[#00CFE8]"] { background-color: var(--uui-blue-600); }
-[class~="bg-[#FF9F43]"] { background-color: var(--uui-warning-600); }
-[class~="bg-[#EA5455]"] { background-color: var(--uui-error-600); }
-
-[class~="border-[#DBDADE]"] { border-color: var(--uui-gray-200); }
-[class~="border-[#EAECF0]"] { border-color: var(--uui-gray-200); }
-[class~="border-[#7367F0]"] { border-color: var(--uui-brand-600); }
-[class~="border-[#28C76F]"] { border-color: var(--uui-success-600); }
-[class~="border-[#00CFE8]"] { border-color: var(--uui-blue-600); }
-[class~="border-[#FF9F43]"] { border-color: var(--uui-warning-600); }
-[class~="border-[#EA5455]"] { border-color: var(--uui-error-600); }
-[class~="border-[#FF9F43]/30"] { border-color: #fedf89; }
-
-[class~="divide-[#F1F0F2]"] > :not(:last-child) {
-    border-color: var(--uui-gray-100);
-}
-
-[class~="divide-[#DBDADE]"] > :not(:last-child) {
-    border-color: var(--uui-gray-200);
-}
-
-[class~="divide-[#EAECF0]"] > :not(:last-child) {
-    border-color: var(--uui-gray-200);
-}
-
-[class~="hover:bg-[#F8F7FA]"]:hover {
-    background-color: var(--uui-gray-50);
-}
-
-[class~="hover:bg-[#F2F4F7]"]:hover {
-    background-color: var(--uui-gray-100);
-}
-
-[class~="accent-[#7367F0]"] {
-    accent-color: var(--uui-brand-600);
-}
-
-[class~="focus:border-[#7367F0]"]:focus {
-    border-color: var(--uui-brand-600);
-}
-
-[class~="focus-visible:outline-[#7367F0]"]:focus-visible {
-    outline-color: var(--uui-brand-600);
 }
 
 [class~="shadow-[0_2px_6px_rgba(47,43,61,0.10)]"] {

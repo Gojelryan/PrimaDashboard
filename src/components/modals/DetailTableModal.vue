@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import {
   computed,
   nextTick,
@@ -12,6 +12,7 @@ import {
   ArrowUpDown,
   ChevronLeft,
   ChevronRight,
+  Eye,
   Search,
   X,
 } from 'lucide-vue-next'
@@ -46,16 +47,19 @@ const props = withDefaults(defineProps<{
   searchPlaceholder?: string
   emptyText?: string
   pageSize?: number
+  rowActionLabel?: string
 }>(), {
   description: undefined,
   summary: () => [],
   searchPlaceholder: 'Cari data...',
   emptyText: 'Data tidak ditemukan.',
-  pageSize: 0
+  pageSize: 0,
+  rowActionLabel: undefined,
 })
 
 const emit = defineEmits<{
   close: []
+  rowAction: [row: DetailTableRow]
 }>()
 
 const searchQuery = ref('')
@@ -214,10 +218,10 @@ function getAlignmentClass(alignment?: DetailTableColumn['align']) {
 }
 
 function getSummaryClass(tone?: DetailModalSummary['tone']) {
-  if (tone === 'success') return 'bg-[#DDF6E8] text-[#28C76F]'
-  if (tone === 'warning') return 'bg-[#FFF0E1] text-[#FF9F43]'
-  if (tone === 'error') return 'bg-[#FCE5E6] text-[#EA5455]'
-  return 'bg-[#F8F7FA] text-[#101828]'
+  if (tone === 'success') return 'bg-[var(--uui-success-50)] text-[var(--uui-success-600)]'
+  if (tone === 'warning') return 'bg-[var(--uui-warning-50)] text-[var(--uui-warning-600)]'
+  if (tone === 'error') return 'bg-[var(--uui-error-50)] text-[var(--uui-error-600)]'
+  return 'bg-[var(--uui-gray-50)] text-[var(--uui-gray-900)]'
 }
 
 function getBadgeClass(value: string | number) {
@@ -233,7 +237,7 @@ function getBadgeClass(value: string | number) {
     normalizedValue === 'aktif' ||
     normalizedValue === 'hadir'
   ) {
-    return 'bg-[#DDF6E8] text-[#28C76F]'
+    return 'bg-[var(--uui-success-50)] text-[var(--uui-success-600)]'
   }
 
   if (
@@ -244,7 +248,7 @@ function getBadgeClass(value: string | number) {
     normalizedValue === 'sakit' ||
     normalizedValue === 'tidak hadir'
   ) {
-    return 'bg-[#FCE5E6] text-[#EA5455]'
+    return 'bg-[var(--uui-error-50)] text-[var(--uui-error-600)]'
   }
 
   if (
@@ -256,10 +260,10 @@ function getBadgeClass(value: string | number) {
     normalizedValue === 'terlambat' ||
     normalizedValue === 'cuti'
   ) {
-    return 'bg-[#FFF0E1] text-[#FF9F43]'
+    return 'bg-[var(--uui-warning-50)] text-[var(--uui-warning-600)]'
   }
 
-  return 'bg-[#EFF8FF] text-[#1570EF]'
+  return 'bg-[var(--uui-blue-50)] text-[var(--uui-blue-600)]'
 }
 
 watch(
@@ -313,26 +317,26 @@ onBeforeUnmount(() => {
     >
       <div
         v-if="open"
-        class="fixed inset-0 z-50 flex items-center justify-center bg-[#101828]/60 p-4 sm:p-6"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-[var(--uui-gray-900)]/60 p-4 sm:p-6"
         role="presentation"
         @click.self="closeModal"
       >
         <section
-          class="flex max-h-[90vh] w-full max-w-6xl flex-col overflow-hidden rounded-xl border border-[#EAECF0] bg-white shadow-2xl"
+          class="flex max-h-[90vh] w-full max-w-6xl flex-col overflow-hidden rounded-xl border border-[var(--uui-gray-200)] bg-white shadow-2xl"
           role="dialog"
           aria-modal="true"
           aria-labelledby="detail-modal-title"
           :aria-describedby="description ? 'detail-modal-description' : undefined"
         >
-          <header class="flex shrink-0 items-start justify-between gap-4 border-b border-[#EAECF0] px-4 py-4 sm:px-6">
+          <header class="flex shrink-0 items-start justify-between gap-4 border-b border-[var(--uui-gray-200)] px-4 py-4 sm:px-6">
             <div class="min-w-0">
-              <h2 id="detail-modal-title" class="text-xl font-semibold text-[#101828]">
+              <h2 id="detail-modal-title" class="text-xl font-semibold text-[var(--uui-gray-900)]">
                 {{ title }}
               </h2>
               <p
                 v-if="description"
                 id="detail-modal-description"
-                class="mt-1 text-sm text-[#667085]"
+                class="mt-1 text-sm text-[var(--uui-gray-500)]"
               >
                 {{ description }}
               </p>
@@ -341,7 +345,7 @@ onBeforeUnmount(() => {
             <button
               ref="closeButton"
               type="button"
-              class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-[#667085] transition-colors hover:bg-[#F2F4F7] hover:text-[#101828]"
+              class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-[var(--uui-gray-500)] transition-colors hover:bg-[var(--uui-gray-100)] hover:text-[var(--uui-gray-900)]"
               aria-label="Tutup detail"
               @click="closeModal"
             >
@@ -369,18 +373,18 @@ onBeforeUnmount(() => {
               <label class="relative block w-full sm:max-w-sm">
                 <span class="sr-only">{{ searchPlaceholder }}</span>
                 <Search
-                  class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#667085]"
+                  class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--uui-gray-500)]"
                   aria-hidden="true"
                 />
                 <input
                   v-model="searchQuery"
                   type="search"
-                  class="h-10 w-full rounded-lg border border-[#EAECF0] bg-white pl-9 pr-3 text-sm text-[#101828] outline-none placeholder:text-[#667085] focus:border-[#7367F0]"
+                  class="h-10 w-full rounded-lg border border-[var(--uui-gray-200)] bg-white pl-9 pr-3 text-sm text-[var(--uui-gray-900)] outline-none placeholder:text-[var(--uui-gray-500)] focus:border-[var(--uui-brand-600)]"
                   :placeholder="searchPlaceholder"
                 >
               </label>
 
-              <p class="text-sm text-[#667085]" aria-live="polite">
+              <p class="text-sm text-[var(--uui-gray-500)]" aria-live="polite">
                 <template v-if="hasPagination">
                   {{ firstDisplayedRow }}–{{ lastDisplayedRow }} dari {{ filteredRows.length }} data
                 </template>
@@ -390,10 +394,10 @@ onBeforeUnmount(() => {
               </p>
             </div>
 
-            <div class="mt-4 overflow-x-auto rounded-lg border border-[#EAECF0]">
+            <div class="mt-4 overflow-x-auto rounded-lg border border-[var(--uui-gray-200)]">
               <table class="w-full min-w-[820px] text-sm">
                 <thead>
-                  <tr class="border-b border-[#EAECF0] text-xs uppercase tracking-wide text-[#667085]">
+                  <tr class="border-b border-[var(--uui-gray-200)] text-xs uppercase tracking-wide text-[var(--uui-gray-500)]">
                     <th
                       v-for="column in columns"
                       :key="column.key"
@@ -405,7 +409,7 @@ onBeforeUnmount(() => {
                       <button
                         v-if="column.sortable"
                         type="button"
-                        class="inline-flex w-full items-center gap-1.5 rounded-sm hover:text-[#344054] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7367F0]"
+                        class="inline-flex w-full items-center gap-1.5 rounded-sm hover:text-[var(--uui-gray-700)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--uui-brand-600)]"
                         :class="column.align === 'right' ? 'justify-end' : ''"
                         :aria-label="`Urutkan berdasarkan ${column.label}`"
                         @click="sortBy(column)"
@@ -429,18 +433,25 @@ onBeforeUnmount(() => {
                       </button>
                       <template v-else>{{ column.label }}</template>
                     </th>
+                    <th
+                      v-if="rowActionLabel"
+                      scope="col"
+                      class="px-4 py-3 text-center font-semibold"
+                    >
+                      Aksi
+                    </th>
                   </tr>
                 </thead>
-                <tbody class="divide-y divide-[#EAECF0]">
+                <tbody class="divide-y divide-[var(--uui-gray-200)]">
                   <tr
                     v-for="row in displayedRows"
                     :key="row.id"
-                    class="hover:bg-[#F8F7FA]"
+                    class="hover:bg-[var(--uui-gray-50)]"
                   >
                     <td
                       v-for="column in columns"
                       :key="column.key"
-                      class="whitespace-nowrap px-4 py-3 text-[#344054]"
+                      class="whitespace-nowrap px-4 py-3 text-[var(--uui-gray-700)]"
                       :class="getAlignmentClass(column.align)"
                     >
                       <span
@@ -452,12 +463,26 @@ onBeforeUnmount(() => {
                       </span>
                       <span v-else>{{ row[column.key] }}</span>
                     </td>
+                    <td
+                      v-if="rowActionLabel"
+                      class="whitespace-nowrap px-4 py-2 text-center"
+                    >
+                      <button
+                        type="button"
+                        class="inline-flex h-8 w-8 items-center justify-center rounded-lg text-[var(--uui-gray-500)] transition-colors hover:bg-[var(--uui-brand-100)] hover:text-[var(--uui-brand-600)]"
+                        :aria-label="`${rowActionLabel}: ${row.id}`"
+                        :title="rowActionLabel"
+                        @click="emit('rowAction', row)"
+                      >
+                        <Eye class="h-4 w-4" aria-hidden="true" />
+                      </button>
+                    </td>
                   </tr>
 
                   <tr v-if="!filteredRows.length">
                     <td
-                      :colspan="columns.length"
-                      class="px-4 py-12 text-center text-sm text-[#667085]"
+                      :colspan="columns.length + (rowActionLabel ? 1 : 0)"
+                      class="px-4 py-12 text-center text-sm text-[var(--uui-gray-500)]"
                     >
                       {{ emptyText }}
                     </td>
@@ -467,14 +492,14 @@ onBeforeUnmount(() => {
             </div>
           </div>
 
-          <footer class="flex shrink-0 items-center justify-between gap-4 border-t border-[#EAECF0] px-4 py-3 sm:px-6">
+          <footer class="flex shrink-0 items-center justify-between gap-4 border-t border-[var(--uui-gray-200)] px-4 py-3 sm:px-6">
             <div
               v-if="hasPagination && filteredRows.length"
               class="flex items-center gap-2"
             >
               <button
                 type="button"
-                class="inline-flex items-center gap-1 rounded-lg border border-[#EAECF0] bg-white px-3 py-2 text-sm font-semibold text-[#344054] transition-colors hover:bg-[#F8F7FA] disabled:cursor-not-allowed disabled:opacity-40"
+                class="inline-flex items-center gap-1 rounded-lg border border-[var(--uui-gray-200)] bg-white px-3 py-2 text-sm font-semibold text-[var(--uui-gray-700)] transition-colors hover:bg-[var(--uui-gray-50)] disabled:cursor-not-allowed disabled:opacity-40"
                 :disabled="currentPage === 1"
                 aria-label="Halaman sebelumnya"
                 @click="previousPage"
@@ -483,13 +508,13 @@ onBeforeUnmount(() => {
                 <span class="hidden sm:inline">Sebelumnya</span>
               </button>
 
-              <span class="min-w-24 text-center text-sm text-[#667085]">
+              <span class="min-w-24 text-center text-sm text-[var(--uui-gray-500)]">
                 Halaman {{ currentPage }} dari {{ totalPages }}
               </span>
 
               <button
                 type="button"
-                class="inline-flex items-center gap-1 rounded-lg border border-[#EAECF0] bg-white px-3 py-2 text-sm font-semibold text-[#344054] transition-colors hover:bg-[#F8F7FA] disabled:cursor-not-allowed disabled:opacity-40"
+                class="inline-flex items-center gap-1 rounded-lg border border-[var(--uui-gray-200)] bg-white px-3 py-2 text-sm font-semibold text-[var(--uui-gray-700)] transition-colors hover:bg-[var(--uui-gray-50)] disabled:cursor-not-allowed disabled:opacity-40"
                 :disabled="currentPage === totalPages"
                 aria-label="Halaman berikutnya"
                 @click="nextPage"
@@ -503,7 +528,7 @@ onBeforeUnmount(() => {
 
             <button
               type="button"
-              class="rounded-lg border border-[#EAECF0] bg-white px-4 py-2 text-sm font-semibold text-[#344054] transition-colors hover:bg-[#F8F7FA]"
+              class="rounded-lg border border-[var(--uui-gray-200)] bg-white px-4 py-2 text-sm font-semibold text-[var(--uui-gray-700)] transition-colors hover:bg-[var(--uui-gray-50)]"
               @click="closeModal"
             >
               Tutup

@@ -1,9 +1,10 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import ApexChart from 'vue3-apexcharts'
 import type { ApexOptions } from 'apexcharts'
 import { ChevronDown } from 'lucide-vue-next'
 import type { FinancialMovementData } from '../../types/dashboard'
+import { formatCompactCurrency, formatCurrency } from '../../utils/dashboard-formatters'
 
 const props = defineProps<{
   data: FinancialMovementData
@@ -88,7 +89,7 @@ const chartOptions = computed<ApexOptions>(() => ({
     }
   },
 
-  colors: ['#079455', '#DC6803'],
+  colors: ['var(--uui-success-600)', 'var(--uui-warning-600)'],
 
   dataLabels: {
     enabled: false
@@ -115,7 +116,7 @@ const chartOptions = computed<ApexOptions>(() => ({
   },
 
   grid: {
-    borderColor: '#EAECF0',
+    borderColor: 'var(--uui-gray-200)',
     strokeDashArray: 4
   },
 
@@ -125,7 +126,7 @@ const chartOptions = computed<ApexOptions>(() => ({
     ),
     labels: {
       style: {
-        colors: '#667085'
+        colors: 'var(--uui-gray-500)'
       }
     }
   },
@@ -147,21 +148,6 @@ const chartOptions = computed<ApexOptions>(() => ({
   }
 }))
 
-function formatCurrency(value: number) {
-  return new Intl.NumberFormat('id-ID', {
-    style: 'currency',
-    currency: 'IDR',
-    maximumFractionDigits: 0
-  }).format(value)
-}
-
-function formatCompactCurrency(value: number) {
-  const billion = value / 1000000000
-
-  return `Rp ${billion.toLocaleString('id-ID', {
-    maximumFractionDigits: 1
-  })} M`
-}
 </script>
 
 <template>
@@ -178,11 +164,11 @@ function formatCompactCurrency(value: number) {
           <!-- Pemasukan -->
           <div>
 
-            <p class="text-sm text-[#A5A2AD]">
+            <p class="text-sm text-[var(--uui-gray-500)]">
               Pemasukan
             </p>
 
-            <h3 class="mt-0 text-xl font-bold text-[#5D596C]">
+            <h3 class="mt-0 text-xl font-bold text-[var(--uui-gray-900)]">
               {{ formatCurrency(selectedFinancial.income) }}
             </h3>
 
@@ -191,11 +177,11 @@ function formatCompactCurrency(value: number) {
           <!-- Pengeluaran -->
           <div>
 
-            <p class="text-sm text-[#A5A2AD]">
+            <p class="text-sm text-[var(--uui-gray-500)]">
               Pengeluaran
             </p>
 
-            <h3 class="mt-0 text-xl font-bold text-[#5D596C]">
+            <h3 class="mt-0 text-xl font-bold text-[var(--uui-gray-900)]">
               {{ formatCurrency(selectedFinancial.expense) }}
             </h3>
 
@@ -209,13 +195,13 @@ function formatCompactCurrency(value: number) {
           <span
             class="rounded-md px-3 py-1 text-sm font-semibold"
             :class="incomeGrowthPercent >= 0
-              ? 'bg-[#DDF6E8] text-[#28C76F]'
-              : 'bg-[#FCE5E6] text-[#EA5455]'"
+              ? 'bg-[var(--uui-success-50)] text-[var(--uui-success-600)]'
+              : 'bg-[var(--uui-error-50)] text-[var(--uui-error-600)]'"
           >
             {{ incomeGrowthPercent > 0 ? '+' : '' }}{{ incomeGrowthPercent }}%
           </span>
 
-          <span class="text-sm text-[#A5A2AD]">
+          <span class="text-sm text-[var(--uui-gray-500)]">
             dari bulan lalu
           </span>
 
@@ -235,16 +221,16 @@ function formatCompactCurrency(value: number) {
             w-48
             rounded-lg
             border
-            border-[#DBDADE]
+            border-[var(--uui-gray-200)]
             bg-white
             pl-4
             pr-12
             text-sm
-            text-[#6F6B7D]
+            text-[var(--uui-gray-700)]
             shadow-[0_2px_6px_rgba(47,43,61,0.10)]
             outline-none
             transition
-            focus:border-[#7367F0]
+            focus:border-[var(--uui-brand-600)]
             cursor-pointer
          "
          >
@@ -265,7 +251,7 @@ function formatCompactCurrency(value: number) {
               h-5
               w-5
               -translate-y-1/2
-              text-[#A5A2AD]
+              text-[var(--uui-gray-500)]
               "
          />
 
@@ -274,7 +260,7 @@ function formatCompactCurrency(value: number) {
     </div>
 
     <!-- Divider -->
-    <div class="my-5 shrink-0 border-b border-[#DBDADE]"></div>
+    <div class="my-5 shrink-0 border-b border-[var(--uui-gray-200)]"></div>
 
       <!-- Chart -->
     <div class="min-h-0 flex-1 overflow-hidden">

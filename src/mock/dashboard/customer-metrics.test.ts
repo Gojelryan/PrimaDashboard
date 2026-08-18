@@ -5,12 +5,12 @@ import { adminPaymentCustomers } from './admin-payment-customers'
 import {
   adminCustomerStatusMetrics,
   customerMetrics,
-  formatCustomerCurrency,
   retailAcquisitionCapacity,
   sharedCustomerSegments,
   totalCustomerCount,
   totalCustomerOutstanding
 } from './customer-metrics'
+import { formatCustomerCurrency } from '../../utils/dashboard-formatters'
 import {
   corporateCustomerDetails,
   retailPackageFees,
@@ -23,6 +23,10 @@ import {
   retailCustomerSummary
 } from './marketing-customer-summary'
 import {
+  marketingCustomerSegments,
+  marketingCustomerTotal,
+} from './marketing-customers-by-service'
+import {
   targetCorporatePerformance,
   targetRetailPerformance
 } from './marketing-target-performance'
@@ -31,6 +35,10 @@ import {
   partnerDistribution,
 } from './partner-distribution'
 import { portStatus } from './marketing-port-status'
+import {
+  commercialProjects,
+  totalCommercialProjectValue,
+} from './commercial-performance'
 
 function parseCustomerCount(value: string) {
   return Number(value.replace(/\./g, ''))
@@ -72,6 +80,16 @@ describe('customer data reconciliation', () => {
     expect(adminRetail?.total).toBe(retailCustomerSummary.total)
     expect(adminRetail?.outstanding).toBe(retailCustomerSummary.outstanding)
     expect(adminPartner?.total).toBe('1.945')
+    expect(marketingCustomerTotal).toBe('8.261')
+    expect(marketingCustomerSegments.map(segment => segment.value)).toEqual([
+      '271',
+      '5.625',
+      '1.945',
+      '420'
+    ])
+    expect(
+      marketingCustomerSegments.reduce((total, segment) => total + segment.percentage, 0)
+    ).toBeCloseTo(100)
   })
 
   it('reconciles payment methods and partner-area distribution', () => {
@@ -149,6 +167,12 @@ describe('customer data reconciliation', () => {
 
     expect(receivableCard?.value).toBe(formatCustomerCurrency(totalCustomerOutstanding))
     expect(totalCustomerOutstanding).toBe(2_165_800_000)
+  })
+
+  it('exposes the shared project contract portfolio in Finance', () => {
+    expect(financeDashboard.projectContracts.items).toBe(commercialProjects)
+    expect(financeDashboard.projectContracts.totalValue).toBe(totalCommercialProjectValue)
+    expect(totalCommercialProjectValue).toBe(13_850_000_000)
   })
 
   it('provides 100 deterministic, unique sample rows for each customer popup', () => {

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { computed, ref } from 'vue'
 import {
   Activity,
@@ -34,26 +34,26 @@ const totalHistory = nocDashboard.incidentHistory.reduce(
 
 function getLatencyClass(latency: number) {
   if (latency >= 100) {
-    return 'bg-[#FCE5E6] text-[#EA5455]'
+    return 'bg-[var(--uui-error-50)] text-[var(--uui-error-600)]'
   }
 
   if (latency >= 50) {
-    return 'bg-[#FFF0E1] text-[#FF9F43]'
+    return 'bg-[var(--uui-warning-50)] text-[var(--uui-warning-600)]'
   }
 
-  return 'bg-[#DDF6E8] text-[#28C76F]'
+  return 'bg-[var(--uui-success-50)] text-[var(--uui-success-600)]'
 }
 
 function getCapacityClass(utilization: number) {
   if (utilization >= 90) {
-    return 'bg-[#EA5455]'
+    return 'bg-[var(--uui-error-600)]'
   }
 
   if (utilization >= 75) {
-    return 'bg-[#FF9F43]'
+    return 'bg-[var(--uui-warning-600)]'
   }
 
-  return 'bg-[#7367F0]'
+  return 'bg-[var(--uui-brand-600)]'
 }
 
 function getCapacityStatus(utilization: number) {
@@ -93,26 +93,26 @@ const warningPopTotal = computed(() =>
 
 <template>
   <section class="mt-4 grid grid-cols-1 gap-4 sm:mt-6 sm:gap-6 xl:grid-cols-12">
-    <div class="min-h-[620px] xl:col-span-5">
+    <div class="dashboard-monitor-panel xl:col-span-5">
       <DashboardPanelCard
         title="Respons Latency"
         subtitle="Latency endpoint pelanggan"
         :icon="Activity"
-        icon-bg="bg-[#D9F7FC]"
-        icon-color="text-[#00CFE8]"
+        icon-bg="bg-[var(--uui-blue-50)]"
+        icon-color="text-[var(--uui-blue-600)]"
       >
         <div class="h-full overflow-y-auto pr-1">
-          <div class="divide-y divide-[#DBDADE]">
+          <div class="divide-y divide-[var(--uui-gray-200)]">
             <div
               v-for="endpoint in nocDashboard.latencyResponses"
               :key="endpoint.name + endpoint.ip"
               class="flex items-center justify-between gap-3 py-3 first:pt-0"
             >
               <div class="min-w-0">
-                <p class="truncate text-sm font-medium text-[#5D596C]">
+                <p class="truncate text-sm font-medium text-[var(--uui-gray-900)]">
                   {{ endpoint.name }}
                 </p>
-                <p class="mt-0.5 text-xs text-[#A5A2AD]">{{ endpoint.ip }}</p>
+                <p class="mt-0.5 text-xs text-[var(--uui-gray-500)]">{{ endpoint.ip }}</p>
               </div>
               <span
                 class="shrink-0 rounded px-2 py-1 text-xs font-semibold"
@@ -126,13 +126,13 @@ const warningPopTotal = computed(() =>
       </DashboardPanelCard>
     </div>
 
-    <div class="grid min-h-[620px] auto-rows-auto gap-4 sm:gap-6 xl:col-span-4">
+    <div class="dashboard-monitor-panel grid auto-rows-auto gap-4 sm:gap-6 xl:col-span-4">
       <DashboardPanelCard
         title="Grafik Gangguan"
         subtitle="Berdasarkan kategori"
         :icon="ChartPie"
-        icon-bg="bg-[#E9E7FD]"
-        icon-color="text-[#7367F0]"
+        icon-bg="bg-[var(--uui-brand-100)]"
+        icon-color="text-[var(--uui-brand-600)]"
       >
         <NocIncidentChart :items="nocDashboard.incidentCategories" />
       </DashboardPanelCard>
@@ -141,8 +141,8 @@ const warningPopTotal = computed(() =>
         title="Riwayat Gangguan"
         :subtitle="nocDashboard.period.label"
         :icon="Clock3"
-        icon-bg="bg-[#FFF0E1]"
-        icon-color="text-[#FF9F43]"
+        icon-bg="bg-[var(--uui-warning-50)]"
+        icon-color="text-[var(--uui-warning-600)]"
       >
         <div class="grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
           <div
@@ -150,13 +150,13 @@ const warningPopTotal = computed(() =>
             :key="item.area"
             class="flex items-center justify-between gap-3"
           >
-            <span class="text-[#6F6B7D]">{{ item.area }}</span>
-            <span class="font-semibold text-[#5D596C]">{{ item.total }}</span>
+            <span class="text-[var(--uui-gray-700)]">{{ item.area }}</span>
+            <span class="font-semibold text-[var(--uui-gray-900)]">{{ item.total }}</span>
           </div>
         </div>
-        <div class="mt-4 flex justify-between border-t border-[#DBDADE] pt-3 text-sm">
-          <span class="font-semibold text-[#5D596C]">Total</span>
-          <span class="font-semibold text-[#EA5455]">{{ totalHistory }}</span>
+        <div class="mt-4 flex justify-between border-t border-[var(--uui-gray-200)] pt-3 text-sm">
+          <span class="font-semibold text-[var(--uui-gray-900)]">Total</span>
+          <span class="font-semibold text-[var(--uui-error-600)]">{{ totalHistory }}</span>
         </div>
       </DashboardPanelCard>
 
@@ -164,20 +164,20 @@ const warningPopTotal = computed(() =>
         title="Kesehatan Jaringan"
         :value="networkHealth.value"
         :icon="Activity"
-        icon-bg="bg-[#DDF6E8]"
-        icon-color="text-[#28C76F]"
+        icon-bg="bg-[var(--uui-success-50)]"
+        icon-color="text-[var(--uui-success-600)]"
         item-layout="stacked"
         :items="networkHealth.items"
       />
     </div>
 
-    <div class="min-h-[620px] xl:col-span-3">
+    <div class="dashboard-monitor-panel xl:col-span-3">
       <DashboardPanelCard
         title="Kapasitas POP"
         subtitle="Utilisasi bandwidth"
         :icon="RadioTower"
-        icon-bg="bg-[#DDF6E8]"
-        icon-color="text-[#28C76F]"
+        icon-bg="bg-[var(--uui-success-50)]"
+        icon-color="text-[var(--uui-success-600)]"
       >
         <div class="flex h-full min-h-0 flex-col">
           <div class="min-h-0 flex-1 space-y-4 overflow-y-auto pr-1">
@@ -186,16 +186,16 @@ const warningPopTotal = computed(() =>
               :key="pop.name"
             >
               <div class="flex items-center justify-between gap-3 text-sm">
-                <span class="font-medium text-[#5D596C]">{{ pop.name }}</span>
-                <span class="text-[#6F6B7D]">
+                <span class="font-medium text-[var(--uui-gray-900)]">{{ pop.name }}</span>
+                <span class="text-[var(--uui-gray-700)]">
                   {{ pop.capacityGbps }} Gbps · {{ pop.utilizationPercent }}%
                 </span>
               </div>
-              <div class="mt-1 flex items-center justify-between gap-3 text-xs text-[#A5A2AD]">
+              <div class="mt-1 flex items-center justify-between gap-3 text-xs text-[var(--uui-gray-500)]">
                 <span>Terpakai {{ pop.usedGbps }} Gbps</span>
                 <span>Tersedia {{ pop.availableGbps }} Gbps</span>
               </div>
-              <div class="mt-2 h-2 overflow-hidden rounded-full bg-[#F1F0F2]">
+              <div class="mt-2 h-2 overflow-hidden rounded-full bg-[var(--uui-gray-100)]">
                 <div
                   class="h-full rounded-full"
                   :class="getCapacityClass(pop.utilizationPercent)"

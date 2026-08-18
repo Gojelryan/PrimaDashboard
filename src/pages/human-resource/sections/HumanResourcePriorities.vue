@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { computed, ref } from 'vue'
 import { ClipboardCheck, WalletCards } from 'lucide-vue-next'
 
@@ -61,8 +61,8 @@ const waitingHrTotal = computed(() =>
     <TechnicianPanelCard
       title="Prioritas Human Resource"
       :icon="ClipboardCheck"
-      icon-bg="bg-[#FCE5E6]"
-      icon-color="text-[#EA5455]"
+      icon-bg="bg-[var(--uui-error-50)]"
+      icon-color="text-[var(--uui-error-600)]"
     >
       <div class="space-y-2 text-sm">
         <div
@@ -70,9 +70,9 @@ const waitingHrTotal = computed(() =>
           :key="item.label"
           class="flex flex-col gap-1 sm:flex-row sm:justify-between sm:gap-4"
         >
-          <span class="text-[#6F6B7D]">{{ item.label }}</span>
+          <span class="text-[var(--uui-gray-700)]">{{ item.label }}</span>
           <div class="flex items-center justify-between gap-2 sm:justify-end">
-            <span class="font-medium text-[#5D596C]">{{ item.value }}</span>
+            <span class="font-medium text-[var(--uui-gray-900)]">{{ item.value }}</span>
             <DetailAction
               v-if="item.detailType === 'leave-request'"
               inline
@@ -88,16 +88,16 @@ const waitingHrTotal = computed(() =>
       title="Payroll bulan ini"
       :subtitle="humanResourceDashboard.period"
       :icon="WalletCards"
-      icon-bg="bg-[#DDF6E8]"
-      icon-color="text-[#28C76F]"
+      icon-bg="bg-[var(--uui-success-50)]"
+      icon-color="text-[var(--uui-success-600)]"
     >
       <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <p class="text-xl font-bold text-[#5D596C]">
+        <p class="text-xl font-bold text-[var(--uui-gray-900)]">
           {{ humanResourceDashboard.payroll.total }}
         </p>
-        <p class="text-sm text-[#28C76F]">
+        <p class="text-sm text-[var(--uui-success-600)]">
           {{ humanResourceDashboard.payroll.growth }}
-          <span class="text-[#A5A2AD]">(dari bulan lalu)</span>
+          <span class="text-[var(--uui-gray-500)]">(dari bulan lalu)</span>
         </p>
       </div>
 

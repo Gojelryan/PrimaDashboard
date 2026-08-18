@@ -1,9 +1,11 @@
 import {
   adminCustomerSegmentMetrics,
   customerMetrics,
+} from './customer-metrics'
+import {
   formatCustomerCount,
   formatCustomerCurrency,
-} from './customer-metrics'
+} from '../../utils/dashboard-formatters'
 
 export const adminCustomerSegments = [
   {

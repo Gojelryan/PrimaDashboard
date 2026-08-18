@@ -1,7 +1,8 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { computed } from 'vue'
 import ApexChart from 'vue3-apexcharts'
 import type { ApexOptions } from 'apexcharts'
+import { formatUnit } from '../../utils/dashboard-formatters'
 
 const props = defineProps<{
   items: {
@@ -18,14 +19,14 @@ const chartOptions = computed<ApexOptions>(() => ({
   },
   labels: props.items.map(item => item.label),
   colors: [
-    '#7F56D9',
-    '#079455',
-    '#DC6803',
-    '#D92D20',
-    '#1570EF',
-    '#9E77ED',
-    '#17B26A',
-    '#667085'
+    'var(--uui-brand-600)',
+    'var(--uui-success-600)',
+    'var(--uui-warning-600)',
+    'var(--uui-error-600)',
+    'var(--uui-blue-600)',
+    'var(--uui-brand-500)',
+    'var(--uui-success-500)',
+    'var(--uui-gray-500)'
   ],
   legend: { show: false },
   dataLabels: { enabled: false },
@@ -37,7 +38,7 @@ const chartOptions = computed<ApexOptions>(() => ({
   },
   tooltip: {
     y: {
-      formatter: value => `${value.toLocaleString('id-ID')} jam`
+      formatter: value => formatUnit(value, 'jam')
     }
   }
 }))
@@ -58,8 +59,8 @@ const chartOptions = computed<ApexOptions>(() => ({
         :key="item.label"
         class="flex items-center justify-between gap-3 text-sm"
       >
-        <span class="text-[#6F6B7D]">■ {{ item.label }}</span>
-        <span class="font-semibold text-[#5D596C]">{{ item.hours }} jam</span>
+        <span class="text-[var(--uui-gray-700)]">■ {{ item.label }}</span>
+        <span class="font-semibold text-[var(--uui-gray-900)]">{{ item.hours }} jam</span>
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import pinisiLogo from '../../assets/pinisi-white.svg'
 import {
   dashboardNavigationItems,
@@ -29,7 +29,7 @@ const emit = defineEmits<{
       />
       <div>
         <h1 class="text-lg font-semibold tracking-tight text-white">PINISI</h1>
-        <p class="text-[11px] text-[#BFC3D4]">Executive Dashboard</p>
+        <p class="text-[11px] text-[var(--uui-sidebar-text-muted)]">Executive Dashboard</p>
       </div>
     </div>
 
@@ -46,8 +46,8 @@ const emit = defineEmits<{
             type="button"
             class="flex min-h-11 w-full cursor-pointer items-center gap-3 rounded-md px-3 py-2.5 text-left text-sm transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             :class="activePage === item.id
-              ? 'bg-[#7F56D9] font-semibold text-white shadow-[0_1px_2px_rgba(16,24,40,0.20)]'
-              : 'font-medium text-[#D0D5DD] hover:bg-[var(--uui-sidebar-hover)] hover:text-white'"
+              ? 'bg-[var(--uui-brand-600)] font-semibold text-white shadow-[0_1px_2px_rgba(16,24,40,0.20)]'
+              : 'font-medium text-[var(--uui-gray-300)] hover:bg-[var(--uui-sidebar-hover)] hover:text-white'"
             :aria-current="activePage === item.id ? 'page' : undefined"
             @click="emit('select-page', item.id)"
           >

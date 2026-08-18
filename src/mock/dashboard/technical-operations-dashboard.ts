@@ -7,6 +7,7 @@ import {
   technicianEmployeeNames,
 } from './employee-metrics'
 import { internetCapacity, popCapacity } from './internet-capacity'
+import { commercialProjects } from './commercial-performance'
 
 const dailyInstallationPerformance = [2, 3, 2, 2, 4, 3, 5]
 const foWithdrawalPerformance = [3000, 800, 12100, 20000, 8400, 2800, 12000]
@@ -53,22 +54,10 @@ export const technicalOperationsDashboard = {
       { date: '30/7', total: 39 },
       { date: '31/7', total: 35 }
     ],
-    runningProjects: [
-      { name: 'Pembangunan FO Gowa - Takalar', progressPercent: 40 },
-      {
-        name: 'Instalasi Jaringan Aktif - Kampus UNM Makassar',
-        progressPercent: 70
-      },
-      { name: 'Pembangunan FO Kabupaten Wajo', progressPercent: 30 },
-      {
-        name: 'Pembangunan FO Kawasan Perumahan ABCD',
-        progressPercent: 80
-      },
-      {
-        name: 'Instalasi 30 Titik CCTV Pemda Bulukumba',
-        progressPercent: 50
-      }
-    ],
+    runningProjects: commercialProjects.map(project => ({
+      name: project.name,
+      progressPercent: project.progressPercent,
+    })),
     teamPerformance: technicianEmployeeNames.map((name, index) => ({
       name,
       dailyInstallation: dailyInstallationPerformance[

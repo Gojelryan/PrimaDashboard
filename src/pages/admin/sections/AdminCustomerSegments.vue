@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import {
   ArrowDownRight,
   ArrowUpRight,
@@ -15,27 +15,27 @@ import { adminCustomerSegments } from '../../../mock/dashboard/admin-customer-se
 const segmentPresentation = [
   {
     icon: Building2,
-    iconBg: 'bg-[#D9F7FC]',
-    iconColor: 'text-[#00CFE8]',
-    accent: 'bg-[#00CFE8]'
+    iconBg: 'bg-[var(--uui-blue-50)]',
+    iconColor: 'text-[var(--uui-blue-600)]',
+    accent: 'bg-[var(--uui-blue-600)]'
   },
   {
     icon: Store,
-    iconBg: 'bg-[#DDF6E8]',
-    iconColor: 'text-[#28C76F]',
-    accent: 'bg-[#28C76F]'
+    iconBg: 'bg-[var(--uui-success-50)]',
+    iconColor: 'text-[var(--uui-success-600)]',
+    accent: 'bg-[var(--uui-success-600)]'
   },
   {
     icon: Radio,
-    iconBg: 'bg-[#E9E7FD]',
-    iconColor: 'text-[#7367F0]',
-    accent: 'bg-[#7367F0]'
+    iconBg: 'bg-[var(--uui-brand-100)]',
+    iconColor: 'text-[var(--uui-brand-600)]',
+    accent: 'bg-[var(--uui-brand-600)]'
   },
   {
     icon: Handshake,
-    iconBg: 'bg-[#FFF0E1]',
-    iconColor: 'text-[#FF9F43]',
-    accent: 'bg-[#FF9F43]'
+    iconBg: 'bg-[var(--uui-warning-50)]',
+    iconColor: 'text-[var(--uui-warning-600)]',
+    accent: 'bg-[var(--uui-warning-600)]'
   }
 ]
 </script>
@@ -44,8 +44,8 @@ const segmentPresentation = [
   <section class="mt-4 sm:mt-6">
     <div class="mb-3 flex items-center justify-between gap-4">
       <div>
-        <h2 class="text-lg font-semibold text-[#5D596C]">Segmen Pelanggan</h2>
-        <p class="mt-1 text-sm text-[#A5A2AD]">
+        <h2 class="text-lg font-semibold text-[var(--uui-gray-900)]">Segmen Pelanggan</h2>
+        <p class="mt-1 text-sm text-[var(--uui-gray-500)]">
           Mutasi dan outstanding per segmen
         </p>
       </div>
@@ -64,37 +64,37 @@ const segmentPresentation = [
           :icon-color="segmentPresentation[index].iconColor"
         />
 
-        <p class="mt-3 text-2xl font-semibold text-[#101828]">
+        <p class="mt-3 text-2xl font-semibold text-[var(--uui-gray-900)]">
           {{ segment.total }}
         </p>
-        <p class="mt-1 text-xs text-[#A5A2AD]">
+        <p class="mt-1 text-xs text-[var(--uui-gray-500)]">
           Periode mutasi: {{ segment.periodLabel }}
         </p>
 
         <div class="mt-5 grid grid-cols-2 gap-3">
-          <div class="rounded-md bg-[#DDF6E8] p-3">
-            <p class="flex items-center gap-1 text-xs font-medium text-[#28C76F]">
+          <div class="rounded-md bg-[var(--uui-success-50)] p-3">
+            <p class="flex items-center gap-1 text-xs font-medium text-[var(--uui-success-600)]">
               <ArrowUpRight class="h-3.5 w-3.5" aria-hidden="true" />
               Pelanggan Baru
             </p>
-            <p class="mt-1 text-lg font-semibold text-[#5D596C]">
+            <p class="mt-1 text-lg font-semibold text-[var(--uui-gray-900)]">
               {{ segment.newCustomer }}
             </p>
           </div>
-          <div class="rounded-md bg-[#FCE5E6] p-3">
-            <p class="flex items-center gap-1 text-xs font-medium text-[#EA5455]">
+          <div class="rounded-md bg-[var(--uui-error-50)] p-3">
+            <p class="flex items-center gap-1 text-xs font-medium text-[var(--uui-error-600)]">
               <ArrowDownRight class="h-3.5 w-3.5" aria-hidden="true" />
               Pelanggan Putus
             </p>
-            <p class="mt-1 text-lg font-semibold text-[#5D596C]">
+            <p class="mt-1 text-lg font-semibold text-[var(--uui-gray-900)]">
               {{ segment.churnCustomer }}
             </p>
           </div>
         </div>
 
-        <div class="mt-4 flex items-center justify-between gap-3 border-t border-[#DBDADE] pt-4">
-          <span class="text-sm text-[#A5A2AD]">Outstanding</span>
-          <span class="text-sm font-semibold text-[#FF9F43]">
+        <div class="mt-4 flex items-center justify-between gap-3 border-t border-[var(--uui-gray-200)] pt-4">
+          <span class="text-sm text-[var(--uui-gray-500)]">Outstanding</span>
+          <span class="text-sm font-semibold text-[var(--uui-warning-600)]">
             {{ segment.outstanding }}
           </span>
         </div>

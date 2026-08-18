@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { ref } from 'vue'
 import {
   Activity,
@@ -49,21 +49,21 @@ const summaryCards = [
     title: 'Total Ticket',
     value: nocDashboard.tickets.total,
     icon: TicketCheck,
-    iconBg: 'bg-[#E9E7FD]',
-    iconColor: 'text-[#7367F0]',
-    accent: 'bg-[#7367F0]',
+    iconBg: 'bg-[var(--uui-brand-100)]',
+    iconColor: 'text-[var(--uui-brand-600)]',
+    accent: 'bg-[var(--uui-brand-600)]',
     items: [
       {
         label: 'Selesai',
         value: nocDashboard.tickets.completed,
         icon: CircleCheck,
-        color: 'text-[#28C76F]'
+        color: 'text-[var(--uui-success-600)]'
       },
       {
         label: 'Tunda',
         value: nocDashboard.tickets.pending,
         icon: Clock3,
-        color: 'text-[#FF9F43]'
+        color: 'text-[var(--uui-warning-600)]'
       }
     ]
   },
@@ -71,27 +71,27 @@ const summaryCards = [
     title: 'Total Gangguan',
     value: nocDashboard.incidentSummary.total,
     icon: TriangleAlert,
-    iconBg: 'bg-[#FCE5E6]',
-    iconColor: 'text-[#EA5455]',
-    accent: 'bg-[#EA5455]',
+    iconBg: 'bg-[var(--uui-error-50)]',
+    iconColor: 'text-[var(--uui-error-600)]',
+    accent: 'bg-[var(--uui-error-600)]',
     items: [
       {
         label: 'Selesai',
         value: nocDashboard.incidentSummary.completed,
         icon: CircleCheck,
-        color: 'text-[#28C76F]'
+        color: 'text-[var(--uui-success-600)]'
       },
       {
         label: 'On Progress',
         value: nocDashboard.incidentSummary.inProgress,
         icon: Activity,
-        color: 'text-[#00CFE8]'
+        color: 'text-[var(--uui-blue-600)]'
       },
       {
         label: 'Tunda',
         value: nocDashboard.incidentSummary.pending,
         icon: Clock3,
-        color: 'text-[#FF9F43]'
+        color: 'text-[var(--uui-warning-600)]'
       }
     ]
   }
@@ -99,8 +99,8 @@ const summaryCards = [
 
 function getAlarmClass(severity: string) {
   return severity === 'critical'
-    ? 'bg-[#FCE5E6] text-[#EA5455]'
-    : 'bg-[#FFF0E1] text-[#FF9F43]'
+    ? 'bg-[var(--uui-error-50)] text-[var(--uui-error-600)]'
+    : 'bg-[var(--uui-warning-50)] text-[var(--uui-warning-600)]'
 }
 
 function formatAlarmTime(occurredAt: string) {
@@ -122,7 +122,7 @@ function formatAlarmTime(occurredAt: string) {
         :icon-color="card.iconColor"
       />
 
-      <p class="mt-3 text-2xl font-semibold text-[#101828]">
+      <p class="mt-3 text-2xl font-semibold text-[var(--uui-gray-900)]">
         {{ card.value }}
       </p>
 
@@ -132,7 +132,7 @@ function formatAlarmTime(occurredAt: string) {
           :key="item.label"
           class="flex items-center justify-between gap-3 text-sm"
         >
-          <span class="flex items-center gap-2 text-[#6F6B7D]">
+          <span class="flex items-center gap-2 text-[var(--uui-gray-700)]">
             <component
               :is="item.icon"
               class="h-4 w-4"
@@ -141,7 +141,7 @@ function formatAlarmTime(occurredAt: string) {
             />
             {{ item.label }}
           </span>
-          <span class="font-semibold text-[#5D596C]">{{ item.value }}</span>
+          <span class="font-semibold text-[var(--uui-gray-900)]">{{ item.value }}</span>
         </div>
       </div>
 
@@ -161,11 +161,11 @@ function formatAlarmTime(occurredAt: string) {
       <CardHeader
         title="Alarm Layanan"
         :icon="BellRing"
-        icon-bg="bg-[#FFF0E1]"
-        icon-color="text-[#FF9F43]"
+        icon-bg="bg-[var(--uui-warning-50)]"
+        icon-color="text-[var(--uui-warning-600)]"
       />
 
-      <p class="mt-3 text-2xl font-semibold text-[#101828]">
+      <p class="mt-3 text-2xl font-semibold text-[var(--uui-gray-900)]">
         {{ nocDashboard.serviceAlarms.length }}
       </p>
 
@@ -182,7 +182,7 @@ function formatAlarmTime(occurredAt: string) {
             {{ alarm.label }}
           </span>
           <time
-            class="shrink-0 font-semibold text-[#5D596C]"
+            class="shrink-0 font-semibold text-[var(--uui-gray-900)]"
             :datetime="alarm.occurredAt"
             :aria-label="`Terjadi pukul ${formatAlarmTime(alarm.occurredAt)}`"
           >

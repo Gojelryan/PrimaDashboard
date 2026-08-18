@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import type { Component } from 'vue'
 import BaseCard from './BaseCard.vue'
 import CardHeader from './CardHeader.vue'
@@ -28,7 +28,7 @@ defineProps<{
 
     <p
       v-if="value"
-      class="mt-4 text-2xl font-bold leading-none text-[#101828]"
+      class="mt-4 text-2xl font-bold leading-none text-[var(--uui-gray-900)]"
     >
       {{ value }}
     </p>
@@ -42,11 +42,11 @@ defineProps<{
         :key="item.label"
         class="flex items-center justify-between gap-4 text-sm leading-tight"
       >
-        <span class="min-w-0 truncate text-[#344054]">
+        <span class="min-w-0 truncate text-[var(--uui-gray-700)]">
           {{ item.label }}
         </span>
 
-        <span class="shrink-0 font-semibold text-[#101828]">
+        <span class="shrink-0 font-semibold text-[var(--uui-gray-900)]">
           {{ item.value }}
         </span>
       </div>
